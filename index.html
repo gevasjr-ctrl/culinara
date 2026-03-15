@@ -2057,53 +2057,78 @@ const PREP_ITEMS = [
   { cat:"Sourdough Dough Program", name:"Sourdough pizza dough", qty:"~78 balls/sac", freq:"daily", note:"Organic 00 flour · Water · Salt · Sourdough starter. 320g per ball. 72hr cold ferment — plan 3 days ahead." },
 
   // PIZZA BASES
-  { cat:"Pizza Bases", name:"Pizza tomato sauce base", qty:"~1 batch", freq:"twice weekly", note:"6 cans Farinex pelées · ½ cup salt · ⅛ cup pepper · 2 cups oil. Food mill → follow video. Store: basement dry stock; once made, refrigerate." },
-  { cat:"Pizza Bases", name:"Gluten-free Neapolitan crust", qty:"par stock", freq:"as needed", note:"⚠ Comes frozen from GFS. Keep par stock in freezer. Always have some ready for service. +$4 surcharge (currently losing $1.34/sale — raise to +$6)." },
+  { cat:"Pizza Bases", name:"Pizza tomato sauce base", qty:"~1 batch", numQty:1, qtyUnit:"batch", freq:"twice weekly", note:"6 cans Farinex pelées · ½ cup salt · ⅛ cup pepper · 2 cups oil. Food mill → follow video. Store: basement dry stock; once made, refrigerate." },
+  { cat:"Pizza Bases", name:"Gluten-free Neapolitan crust", qty:"par stock", numQty:6, qtyUnit:"crusts", freq:"as needed", note:"⚠ Comes frozen from GFS. Keep par stock in freezer. Always have some ready for service. +$4 surcharge (currently losing $1.34/sale — raise to +$6)." },
 
   // PREPARED PROTEINS
-  { cat:"Prepared Proteins", name:"House-smoked bacon (48hr brine + smoke)", qty:"~7 KG case", freq:"twice weekly", note:"⚠ PLAN 2 DAYS AHEAD. Brine: 5.5L water · 275g salt · 183g brown sugar · 11 garlic cloves (smashed) · 7 bay leaves · 1 tbsp + 2 tsp black peppercorns · cider vinegar. Heat until dissolved, add herbs, cool fully. Submerge pork belly, fully covered. Brine 48hr walk-in. Smoke on oven smoking setting. Used: Brooklyn Pineapple, Heart-Tay-tack, Kale Caesar, Chicken Club." },
-  { cat:"Prepared Proteins", name:"Grilled chicken breast (marinated)", qty:"~5 KG case", freq:"twice weekly", note:"BBQ Chicken pizza · Salad add-on · Chicken Club. Marinate minimum 4hr. Cook fully — 155°F internal." },
-  { cat:"Prepared Proteins", name:"Crumbled artisanal sausage (Terra Agri)", qty:"5 sausages/pizza", freq:"twice weekly", note:"Terra Agri sausages. Remove from bag, pull apart into bin. Flat top: preheat 10min, half heat, MAX 375°F — under-cook slightly (finishes in oven on pizza). Storage: freezer raw · cooked in inserts in fridge. Used: Heart-Tay-tack, Blue Sausage." },
-  { cat:"Prepared Proteins", name:"Prosciutto (Macchi ~6 KG leg)", qty:"per order", freq:"weekly", note:"Slicer setting 0.8. Store: 4 slices per parchment paper in bin. Used: Prosciutto pizza, Italian Sandwich." },
+  { cat:"Prepared Proteins", name:"House-smoked bacon (48hr brine + smoke)", qty:"~7 KG case", numQty:7, qtyUnit:"kg", freq:"twice weekly", note:"⚠ PLAN 2 DAYS AHEAD. Brine: 5.5L water · 275g salt · 183g brown sugar · 11 garlic cloves (smashed) · 7 bay leaves · 1 tbsp + 2 tsp black peppercorns · cider vinegar. Heat until dissolved, add herbs, cool fully. Submerge pork belly, fully covered. Brine 48hr walk-in. Smoke on oven smoking setting. Used: Brooklyn Pineapple, Heart-Tay-tack, Kale Caesar, Chicken Club." },
+  { cat:"Prepared Proteins", name:"Grilled chicken breast (marinated)", qty:"~5 KG case", numQty:5, qtyUnit:"kg", freq:"twice weekly", note:"BBQ Chicken pizza · Salad add-on · Chicken Club. Marinate minimum 4hr. Cook fully — 155°F internal." },
+  { cat:"Prepared Proteins", name:"Crumbled artisanal sausage (Terra Agri)", qty:"5 sausages/pizza", numQty:20, qtyUnit:"sausages", freq:"twice weekly", note:"Terra Agri sausages. Remove from bag, pull apart into bin. Flat top: preheat 10min, half heat, MAX 375°F — under-cook slightly (finishes in oven on pizza). Storage: freezer raw · cooked in inserts in fridge. Used: Heart-Tay-tack, Blue Sausage." },
+  { cat:"Prepared Proteins", name:"Prosciutto (Macchi ~6 KG leg)", qty:"per order", numQty:1, qtyUnit:"leg", freq:"weekly", note:"Slicer setting 0.8. Store: 4 slices per parchment paper in bin. Used: Prosciutto pizza, Italian Sandwich." },
 
   // CHEESE PREPARATIONS
-  { cat:"Cheese Preparations", name:"Whipped ricotta", qty:"as needed", freq:"twice weekly", note:"Ricotta — whip until smooth. Used: Funghi pizza, Italian Sandwich." },
+  { cat:"Cheese Preparations", name:"Whipped ricotta", qty:"as needed", numQty:2, qtyUnit:"kg", freq:"twice weekly", note:"Ricotta — whip until smooth. Used: Funghi pizza, Italian Sandwich." },
 
   // SAUCES & DRIZZLES
-  { cat:"Sauces & Drizzles", name:"House Caesar dressing ⚠ Raw egg", qty:"1 batch", freq:"twice weekly", note:"⚠ RAW EGG — 48hr max shelf life. 16 egg yolks · 50g anchovies · 200g parm · 40g garlic · 80g dijon · 80g capers · 2L oil · 500ml water · 50ml lemon · 20g salt · 10g pepper. Robot coupe: blitz parm/anchovies/garlic/capers/salt/pepper → add yolks & dijon → slowly add oil → add water & lemon." },
-  { cat:"Sauces & Drizzles", name:"House BBQ sauce", qty:"1 batch", freq:"weekly", note:"Ketchup · 1 cup Worcestershire · 1 cup teriyaki · 1 cup honey · 1 cup hot honey · 2 cups brown sugar · salt & pepper. Mix in metal bowl. Used: BBQ Chicken pizza." },
-  { cat:"Sauces & Drizzles", name:"Nduja-hot honey drizzle", qty:"1 batch", freq:"weekly", note:"2L honey · 1 cup chili flakes · 1 ball nduja. Slow simmer in pot, 75°C — do NOT boil. Add nduja, stir slowly until mixed. Used: Smokin' Hot pizza." },
-  { cat:"Sauces & Drizzles", name:"Hot honey drizzle (plain)", qty:"1 batch", freq:"weekly", note:"2L honey · 1 cup chili flakes. Slow simmer, 75°C — do NOT boil. Let sit. Base for BBQ sauce & nduja drizzle." },
-  { cat:"Sauces & Drizzles", name:"House tahini drizzle", qty:"2 bottles", freq:"weekly", note:"500g tahini · 50ml lemon juice (2 lemons) · 1 tsp cumin · 50g honey · 8g salt · 500g water. Small robot coupe: blend lemon/tahini/cumin/salt/honey → slowly add water while mixing. Yield: 2 bottles. Used: Mama G salad." },
-  { cat:"Sauces & Drizzles", name:"House garlic aioli", qty:"1 batch", freq:"weekly", note:"4 egg yolks · 20g garlic · 20g lemon juice · 8g salt · 750ml oil · 125ml water. Used: Chicken Club sandwich." },
+  { cat:"Sauces & Drizzles", name:"House Caesar dressing ⚠ Raw egg", qty:"1 batch", numQty:1, qtyUnit:"batch", freq:"twice weekly", note:"⚠ RAW EGG — 48hr max shelf life. 16 egg yolks · 50g anchovies · 200g parm · 40g garlic · 80g dijon · 80g capers · 2L oil · 500ml water · 50ml lemon · 20g salt · 10g pepper. Robot coupe: blitz parm/anchovies/garlic/capers/salt/pepper → add yolks & dijon → slowly add oil → add water & lemon." },
+  { cat:"Sauces & Drizzles", name:"House BBQ sauce", qty:"1 batch", numQty:1, qtyUnit:"batch", freq:"weekly", note:"Ketchup · 1 cup Worcestershire · 1 cup teriyaki · 1 cup honey · 1 cup hot honey · 2 cups brown sugar · salt & pepper. Mix in metal bowl. Used: BBQ Chicken pizza." },
+  { cat:"Sauces & Drizzles", name:"Nduja-hot honey drizzle", qty:"1 batch", numQty:1, qtyUnit:"batch", freq:"weekly", note:"2L honey · 1 cup chili flakes · 1 ball nduja. Slow simmer in pot, 75°C — do NOT boil. Add nduja, stir slowly until mixed. Used: Smokin' Hot pizza." },
+  { cat:"Sauces & Drizzles", name:"Hot honey drizzle (plain)", qty:"1 batch", numQty:1, qtyUnit:"batch", freq:"weekly", note:"2L honey · 1 cup chili flakes. Slow simmer, 75°C — do NOT boil. Let sit. Base for BBQ sauce & nduja drizzle." },
+  { cat:"Sauces & Drizzles", name:"House tahini drizzle", qty:"2 bottles", numQty:2, qtyUnit:"bottles", freq:"weekly", note:"500g tahini · 50ml lemon juice (2 lemons) · 1 tsp cumin · 50g honey · 8g salt · 500g water. Small robot coupe: blend lemon/tahini/cumin/salt/honey → slowly add water while mixing. Yield: 2 bottles. Used: Mama G salad." },
+  { cat:"Sauces & Drizzles", name:"House garlic aioli", qty:"1 batch", numQty:1, qtyUnit:"batch", freq:"weekly", note:"4 egg yolks · 20g garlic · 20g lemon juice · 8g salt · 750ml oil · 125ml water. Used: Chicken Club sandwich." },
 
   // SPREADS & PASTES
-  { cat:"Spreads & Pastes", name:"House fig spread", qty:"1 batch", freq:"weekly", note:"450g fig · 150g brown sugar · 50g apple cider vinegar · 50g honey · 750ml water. Simmer in pan 10min → robot coupe (add water if too thick). Used: Prosciutto pizza." },
-  { cat:"Spreads & Pastes", name:"Housemade nut-free pesto", qty:"1 batch", freq:"weekly", note:"240g basil · 90g roasted sunflower seeds · 15g garlic · 95g parm · 30ml lemon juice · 12g salt · ½ tsp pepper · 500ml oil. Robot coupe: blitz everything except oil → slowly add oil. Used: Le Végétarien, Caprese Sandwich." },
-  { cat:"Spreads & Pastes", name:"Housemade hummus", qty:"1 batch", freq:"weekly", note:"2kg chickpeas · 1 lemon juice · 15g cumin · 22g salt · 40g garlic · 250ml water · 125ml oil. Robot coupe: blitz all except oil → add oil slowly. Used: Mama G salad." },
+  { cat:"Spreads & Pastes", name:"House fig spread", qty:"1 batch", numQty:1, qtyUnit:"batch", freq:"weekly", note:"450g fig · 150g brown sugar · 50g apple cider vinegar · 50g honey · 750ml water. Simmer in pan 10min → robot coupe (add water if too thick). Used: Prosciutto pizza." },
+  { cat:"Spreads & Pastes", name:"Housemade nut-free pesto", qty:"1 batch", numQty:1, qtyUnit:"batch", freq:"weekly", note:"240g basil · 90g roasted sunflower seeds · 15g garlic · 95g parm · 30ml lemon juice · 12g salt · ½ tsp pepper · 500ml oil. Robot coupe: blitz everything except oil → slowly add oil. Used: Le Végétarien, Caprese Sandwich." },
+  { cat:"Spreads & Pastes", name:"Housemade hummus", qty:"1 batch", numQty:1, qtyUnit:"batch", freq:"weekly", note:"2kg chickpeas · 1 lemon juice · 15g cumin · 22g salt · 40g garlic · 250ml water · 125ml oil. Robot coupe: blitz all except oil → add oil slowly. Used: Mama G salad." },
 
   // DRESSINGS
-  { cat:"Dressings", name:"House Greek dressing", qty:"1 batch", freq:"weekly", note:"650ml oil · 350ml red wine vinegar · 50ml lemon juice · 25g dijon · 10g garlic · 6g oregano · 10g salt · 4g pepper · 10g sugar. Robot coupe: blend everything → done. Used: Greek salad." },
-  { cat:"Dressings", name:"House red wine vinaigrette", qty:"1 batch", freq:"weekly", note:"3 cups red wine vinegar · 1 tbsp dijon · 2 tbsp honey · 1L oil · salt & pepper. Robot coupe: blend all except oil → slowly add oil. Used: Caprese salad, Mama G salad." },
+  { cat:"Dressings", name:"House Greek dressing", qty:"1 batch", numQty:1, qtyUnit:"batch", freq:"weekly", note:"650ml oil · 350ml red wine vinegar · 50ml lemon juice · 25g dijon · 10g garlic · 6g oregano · 10g salt · 4g pepper · 10g sugar. Robot coupe: blend everything → done. Used: Greek salad." },
+  { cat:"Dressings", name:"House red wine vinaigrette", qty:"1 batch", numQty:1, qtyUnit:"batch", freq:"weekly", note:"3 cups red wine vinegar · 1 tbsp dijon · 2 tbsp honey · 1L oil · salt & pepper. Robot coupe: blend all except oil → slowly add oil. Used: Caprese salad, Mama G salad." },
 
   // INFUSED OILS
-  { cat:"Infused Oils", name:"Garlic-infused olive oil", qty:"~2L", freq:"weekly", note:"2 cups garlic · 2L oil. Boil in pan, whisk together. Used: Funghi, Blue Sausage, Prosciutto pizzas." },
-  { cat:"Infused Oils", name:"Hot/spicy chili oil", qty:"~2L", freq:"weekly", note:"½ cup chili flakes · 2L oil. Boil in pan, whisk together. Used: Funghi, Blue Sausage, Prosciutto pizzas." },
+  { cat:"Infused Oils", name:"Garlic-infused olive oil", qty:"~2L", numQty:2, qtyUnit:"litres", freq:"weekly", note:"2 cups garlic · 2L oil. Boil in pan, whisk together. Used: Funghi, Blue Sausage, Prosciutto pizzas." },
+  { cat:"Infused Oils", name:"Hot/spicy chili oil", qty:"~2L", numQty:2, qtyUnit:"litres", freq:"weekly", note:"½ cup chili flakes · 2L oil. Boil in pan, whisk together. Used: Funghi, Blue Sausage, Prosciutto pizzas." },
 
   // VEGETABLES & PRODUCE
-  { cat:"Vegetables & Produce", name:"Kale (massage & dress)", qty:"2 caisses", freq:"twice weekly", note:"Massage with lemon & salt 10min. Used: Kale Caesar salad." },
-  { cat:"Vegetables & Produce", name:"Crispy kale (Mama G)", qty:"as needed", freq:"twice weekly", note:"Pull kale bite-size. Lightly oil (1 tbsp per pan), salt & pepper lightly. Oven kale program — do NOT let go dark. Used: Mama G salad." },
-  { cat:"Vegetables & Produce", name:"Romaine (chop & wash)", qty:"24 heads/case", freq:"twice weekly", note:"~⅓ head per Greek salad. Keep dry until service." },
-  { cat:"Vegetables & Produce", name:"Roasted pineapple", qty:"4 pineapples", freq:"twice weekly", note:"Fresh pineapple cubed. Brown sugar. Pan on medium-high heat, sear slowly 5min. Used: Brooklyn Pineapple." },
-  { cat:"Vegetables & Produce", name:"Roasted sweet potatoes (Mama G)", qty:"4 sweet potatoes", freq:"twice weekly", note:"Peel, cut ½\" cubes, ensure dry. Oil 30ml · 1 tbsp salt & pepper. Baking sheet + parchment. 375°F fan high 15min — toss halfway through. Used: Mama G salad." },
-  { cat:"Vegetables & Produce", name:"Pickled red onion", qty:"1 batch", freq:"weekly", note:"⚠ 24hr ahead. 1kg red onion (¼\" slices) · 650ml red wine vinegar · 315ml water · 100g sugar · 25g salt · 10 star anise · 2 tbsp whole peppercorns. Bring liquid to boil, pour over onions. Cool 24hr — NO lid. Then cover. Used: Mama G salad." },
-  { cat:"Vegetables & Produce", name:"Roasted sunflower seeds", qty:"as needed", freq:"weekly", note:"Sunflower seeds · very little oil (toss to coat) · touch of salt & pepper. Fan 2, 375°F, 13min — toss at 6min. Used: Mama G salad, Nut-free pesto." },
+  { cat:"Vegetables & Produce", name:"Kale (massage & dress)", qty:"2 caisses", numQty:2, qtyUnit:"caisses", freq:"twice weekly", note:"Massage with lemon & salt 10min. Used: Kale Caesar salad." },
+  { cat:"Vegetables & Produce", name:"Crispy kale (Mama G)", qty:"as needed", numQty:1, qtyUnit:"caisse", freq:"twice weekly", note:"Pull kale bite-size. Lightly oil (1 tbsp per pan), salt & pepper lightly. Oven kale program — do NOT let go dark. Used: Mama G salad." },
+  { cat:"Vegetables & Produce", name:"Romaine (chop & wash)", qty:"24 heads/case", numQty:24, qtyUnit:"heads", freq:"twice weekly", note:"~⅓ head per Greek salad. Keep dry until service." },
+  { cat:"Vegetables & Produce", name:"Roasted pineapple", qty:"4 pineapples", numQty:4, qtyUnit:"pineapples", freq:"twice weekly", note:"Fresh pineapple cubed. Brown sugar. Pan on medium-high heat, sear slowly 5min. Used: Brooklyn Pineapple." },
+  { cat:"Vegetables & Produce", name:"Roasted sweet potatoes (Mama G)", qty:"4 sweet potatoes", numQty:4, qtyUnit:"sweet potatoes", freq:"twice weekly", note:"Peel, cut ½\" cubes, ensure dry. Oil 30ml · 1 tbsp salt & pepper. Baking sheet + parchment. 375°F fan high 15min — toss halfway through. Used: Mama G salad." },
+  { cat:"Vegetables & Produce", name:"Pickled red onion", qty:"1 batch", numQty:1, qtyUnit:"batch", freq:"weekly", note:"⚠ 24hr ahead. 1kg red onion (¼\" slices) · 650ml red wine vinegar · 315ml water · 100g sugar · 25g salt · 10 star anise · 2 tbsp whole peppercorns. Bring liquid to boil, pour over onions. Cool 24hr — NO lid. Then cover. Used: Mama G salad." },
+  { cat:"Vegetables & Produce", name:"Roasted sunflower seeds", qty:"as needed", numQty:2, qtyUnit:"cups", freq:"weekly", note:"Sunflower seeds · very little oil (toss to coat) · touch of salt & pepper. Fan 2, 375°F, 13min — toss at 6min. Used: Mama G salad, Nut-free pesto." },
 
   // BREADS & PACKAGING
-  { cat:"Breads & Packaging", name:"Sourdough sandwich bread", qty:"as needed", freq:"twice weekly", note:"Stretch pizza dough balls to sandwich size on bin. 1 dough ball = 2 sandwich breads. Used: All sandwiches." },
-  { cat:"Breads & Packaging", name:"House croutons (Caesar)", qty:"1 batch = 2 baguettes + 3 loaves", freq:"twice weekly", note:"14g yeast · 10g sugar · 650g lukewarm water · 1kg 00 flour · 20g salt. Whisk yeast/sugar/water. Add flour & salt. Mix with hook, speed 3, 5min. 1 batch: 2 baguettes (275g each) + 3 loaves (380g each). Used: Kale Caesar, Kids Caesar." },
-  { cat:"Breads & Packaging", name:"Dough-to-Go bags", qty:"~10/day", freq:"daily", note:"⭐ 89% margin. Pre-bag sourdough ball (320g) with instruction card. High priority item." },
+  { cat:"Breads & Packaging", name:"Sourdough sandwich bread", qty:"as needed", numQty:8, qtyUnit:"breads", freq:"twice weekly", note:"Stretch pizza dough balls to sandwich size on bin. 1 dough ball = 2 sandwich breads. Used: All sandwiches." },
+  { cat:"Breads & Packaging", name:"House croutons (Caesar)", qty:"1 batch = 2 baguettes + 3 loaves", numQty:1, qtyUnit:"batch", freq:"twice weekly", note:"14g yeast · 10g sugar · 650g lukewarm water · 1kg 00 flour · 20g salt. Whisk yeast/sugar/water. Add flour & salt. Mix with hook, speed 3, 5min. 1 batch: 2 baguettes (275g each) + 3 loaves (380g each). Used: Kale Caesar, Kids Caesar." },
+  { cat:"Breads & Packaging", name:"Dough-to-Go bags", qty:"~10/day", numQty:10, qtyUnit:"bags", freq:"daily", note:"⭐ 89% margin. Pre-bag sourdough ball (320g) with instruction card. High priority item." },
 ];
+
+// User overrides for prep quantities (persists while page is open)
+const PREP_OVERRIDES = {};
+function setPrepOverride(idx, val) {
+  const parsed = parseFloat(val);
+  const aiVal = PREP_ITEMS[idx] ? PREP_ITEMS[idx].numQty : null;
+  if (!isNaN(parsed) && parsed >= 0) {
+    PREP_OVERRIDES[idx] = parsed;
+  } else {
+    delete PREP_OVERRIDES[idx];
+  }
+  const isEdited = PREP_OVERRIDES[idx] !== undefined && PREP_OVERRIDES[idx] !== aiVal;
+  const badge = document.getElementById('prep-badge-' + idx);
+  if (badge) {
+    if (isEdited) {
+      badge.style.background = 'rgba(245,166,35,0.15)';
+      badge.style.color = '#F5A623';
+      badge.textContent = '✏ edited';
+    } else {
+      badge.style.background = 'rgba(79,142,247,0.15)';
+      badge.style.color = '#4F8EF7';
+      badge.textContent = '✦ AI';
+    }
+  }
+}
 
 const ORDER_DATA = [
   { supplier:"Gordon Food Service", schedule:"Order Tue for Thu delivery", color:"#2563eb", items:[
@@ -2668,14 +2693,28 @@ function renderPrep() {
     return `<div style="margin-bottom:22px;">
       <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:10px;">${cat}</div>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px;">
-        ${items.map(i=>`<div class="prep-card">
+        ${items.map(i=>{
+          const gIdx=PREP_ITEMS.indexOf(i);
+          const curVal=PREP_OVERRIDES[gIdx]!==undefined?PREP_OVERRIDES[gIdx]:i.numQty;
+          const isEdited=PREP_OVERRIDES[gIdx]!==undefined&&PREP_OVERRIDES[gIdx]!==i.numQty;
+          const badgeStyle=isEdited?'background:rgba(245,166,35,0.15);color:#F5A623;':'background:rgba(79,142,247,0.15);color:#4F8EF7;';
+          const badgeText=isEdited?'✏ edited':'✦ AI';
+          return `<div class="prep-card">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
             <span class="freq-tag ${freqClass(i.freq)}">${freqLabel(i.freq)}</span>
           </div>
-          <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px;">${i.name}</div>
-          <div style="font-size:22px;font-weight:800;color:#2563eb;letter-spacing:-0.02em;margin-bottom:6px;">${i.qty}</div>
+          <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:10px;">${i.name}</div>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+            <input type="number" id="prep-qty-${gIdx}" value="${curVal}" min="0"
+              oninput="setPrepOverride(${gIdx},this.value)"
+              style="width:72px;background:rgba(79,142,247,0.1);border:1px solid rgba(79,142,247,0.3);border-radius:8px;color:var(--text);font-size:22px;font-weight:800;padding:5px 8px;text-align:center;outline:none;-moz-appearance:textfield;appearance:textfield;">
+            <div>
+              <div style="font-size:12px;font-weight:600;color:var(--muted);line-height:1.3;">${i.qtyUnit}</div>
+              <div id="prep-badge-${gIdx}" style="font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;margin-top:4px;display:inline-block;${badgeStyle}">${badgeText}</div>
+            </div>
+          </div>
           <div style="font-size:11.5px;color:var(--muted);line-height:1.5;">${i.note}</div>
-        </div>`).join('')}
+        </div>`;}).join('')}
       </div>
     </div>`;
   }).join('');
