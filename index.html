@@ -1399,14 +1399,129 @@ tr:last-child td { border-bottom: none; }
     <div><div class="section-title">Integrations</div><div class="section-sub">Connect your POS, accounting, and invoice systems</div></div>
   </div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-    <div class="card" style="padding:20px;">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
-        <div style="width:36px;height:36px;background:rgba(255,159,10,0.12);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;">⚡</div>
-        <div><div style="font-size:14px;font-weight:700;">Lightspeed Restaurant</div><div style="font-size:12px;color:var(--muted);">Real-time sales, items, and covers</div></div>
-        <button class="btn-primary" style="margin-left:auto;font-size:12px;padding:7px 14px;" onclick="alert('OAuth flow: connects your Lightspeed account. Syncs sales every 15 min.')">Connect</button>
+    <!-- Lightspeed Connected Card -->
+    <div class="card" style="padding:20px;border-color:rgba(48,209,88,0.2);">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+        <div style="width:36px;height:36px;background:rgba(255,159,10,0.12);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">⚡</div>
+        <div style="flex:1;">
+          <div style="font-size:14px;font-weight:700;">Lightspeed Restaurant</div>
+          <div style="font-size:12px;color:var(--muted);">K-Series · Real-time sales & covers</div>
+        </div>
+        <div id="ls-status-badge" style="display:inline-flex;align-items:center;gap:5px;background:rgba(48,209,88,0.12);color:#30D158;padding:5px 11px;border-radius:7px;font-size:12px;font-weight:700;">
+          <div style="width:6px;height:6px;background:#30D158;border-radius:99px;animation:blink 2s infinite;"></div>Connected
+        </div>
       </div>
-      <div class="setting-row"><div><div style="font-size:13px;font-weight:500;">Sync frequency</div><div style="font-size:12px;color:var(--muted);">How often to pull sales data</div></div><select style="border:1px solid var(--border);border-radius:7px;padding:6px 10px;font-size:12.5px;font-family:'Inter',sans-serif;"><option>Every 15 min</option><option>Hourly</option><option>Daily</option></select></div>
-      <div class="setting-row"><div><div style="font-size:13px;font-weight:500;">What syncs</div><div style="font-size:12px;color:var(--muted);">Units sold, revenue, voids, modifiers, covers</div></div></div>
+
+      <!-- Account info -->
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:9px;padding:12px 14px;margin-bottom:14px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <div>
+            <div style="font-size:10.5px;color:var(--muted);font-weight:700;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:3px;">Account</div>
+            <div style="font-size:13px;font-weight:600;">Bottē Restaurant</div>
+          </div>
+          <div>
+            <div style="font-size:10.5px;color:var(--muted);font-weight:700;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:3px;">Location ID</div>
+            <div style="font-size:13px;font-weight:600;font-family:monospace;color:#4F8EF7;">bk_8f3a921c</div>
+          </div>
+          <div>
+            <div style="font-size:10.5px;color:var(--muted);font-weight:700;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:3px;">Last Sync</div>
+            <div id="ls-last-sync" style="font-size:13px;font-weight:600;color:#34C97A;">2 min ago</div>
+          </div>
+          <div>
+            <div style="font-size:10.5px;color:var(--muted);font-weight:700;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:3px;">Next Sync</div>
+            <div id="ls-next-sync" style="font-size:13px;font-weight:600;">in 13 min</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sync now button + scopes -->
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
+        <button onclick="runLightspeedSync()" id="ls-sync-btn" class="btn-primary" style="font-size:12px;padding:7px 16px;">↻ Sync Now</button>
+        <select id="ls-freq" style="border:1px solid var(--border);border-radius:7px;padding:6px 10px;font-size:12px;font-family:inherit;background:var(--bg-card);color:var(--text);flex:1;">
+          <option selected>Every 15 min</option><option>Every 30 min</option><option>Hourly</option>
+        </select>
+        <button onclick="disconnectLightspeed()" style="background:none;border:none;color:var(--muted);font-size:11.5px;cursor:pointer;font-family:inherit;white-space:nowrap;">Disconnect</button>
+      </div>
+
+      <!-- What syncs -->
+      <div style="display:flex;flex-wrap:wrap;gap:6px;">
+        <span style="font-size:11px;background:rgba(52,201,122,0.1);color:#34C97A;padding:3px 9px;border-radius:6px;font-weight:600;">✓ Sales by item</span>
+        <span style="font-size:11px;background:rgba(52,201,122,0.1);color:#34C97A;padding:3px 9px;border-radius:6px;font-weight:600;">✓ Revenue</span>
+        <span style="font-size:11px;background:rgba(52,201,122,0.1);color:#34C97A;padding:3px 9px;border-radius:6px;font-weight:600;">✓ Covers / tickets</span>
+        <span style="font-size:11px;background:rgba(52,201,122,0.1);color:#34C97A;padding:3px 9px;border-radius:6px;font-weight:600;">✓ Voids & comps</span>
+        <span style="font-size:11px;background:rgba(52,201,122,0.1);color:#34C97A;padding:3px 9px;border-radius:6px;font-weight:600;">✓ Menu prices</span>
+      </div>
+
+      <!-- Sync log -->
+      <div style="margin-top:14px;border-top:1px solid rgba(255,255,255,0.06);padding-top:12px;">
+        <div style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">Recent Syncs</div>
+        <div id="ls-sync-log" style="display:flex;flex-direction:column;gap:4px;">
+          <div style="display:flex;justify-content:space-between;font-size:11.5px;"><span style="color:#34C97A;">✓ 47 records pulled</span><span style="color:var(--muted);">Mar 15 · 12:32 AM</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:11.5px;"><span style="color:#34C97A;">✓ 52 records pulled</span><span style="color:var(--muted);">Mar 15 · 12:17 AM</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:11.5px;"><span style="color:#34C97A;">✓ 38 records pulled</span><span style="color:var(--muted);">Mar 15 · 12:02 AM</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lightspeed OAuth Connect Modal -->
+    <div id="ls-connect-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(6px);z-index:9999;align-items:center;justify-content:center;">
+      <div style="background:#1F2433;border:1px solid rgba(255,255,255,0.1);border-radius:18px;padding:32px;width:500px;max-width:92vw;box-shadow:0 24px 80px rgba(0,0,0,0.6);">
+        <!-- Step 1: Intro -->
+        <div id="ls-step-1">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+            <div style="width:44px;height:44px;background:rgba(255,159,10,0.15);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">⚡</div>
+            <div>
+              <div style="font-size:17px;font-weight:700;">Connect Lightspeed Restaurant</div>
+              <div style="font-size:12px;color:var(--muted);margin-top:2px;">Authorize Culinara to read your sales data</div>
+            </div>
+            <button onclick="closeLsModal()" style="margin-left:auto;background:rgba(255,255,255,0.07);border:none;color:var(--muted);width:30px;height:30px;border-radius:7px;cursor:pointer;font-size:15px;font-family:inherit;display:flex;align-items:center;justify-content:center;">✕</button>
+          </div>
+          <div style="background:rgba(255,255,255,0.04);border-radius:10px;padding:14px 16px;margin-bottom:18px;">
+            <div style="font-size:11.5px;font-weight:700;color:var(--muted);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:10px;">What Culinara will access</div>
+            <div style="display:flex;flex-direction:column;gap:7px;">
+              <div style="display:flex;align-items:center;gap:8px;font-size:13px;"><span style="color:#34C97A;">✓</span> Sales data — items sold, quantities, revenue</div>
+              <div style="display:flex;align-items:center;gap:8px;font-size:13px;"><span style="color:#34C97A;">✓</span> Menu items & pricing</div>
+              <div style="display:flex;align-items:center;gap:8px;font-size:13px;"><span style="color:#34C97A;">✓</span> Covers and ticket counts</div>
+              <div style="display:flex;align-items:center;gap:8px;font-size:13px;"><span style="color:var(--muted);">✕</span> <span style="color:var(--muted);">No access to payment card data or staff PINs</span></div>
+            </div>
+          </div>
+          <div style="background:rgba(79,142,247,0.07);border:1px solid rgba(79,142,247,0.2);border-radius:9px;padding:11px 14px;margin-bottom:20px;">
+            <div style="font-size:12px;color:#4F8EF7;line-height:1.6;">You'll be redirected to Lightspeed to log in and approve access. We never see your password. OAuth 2.0 — revoke any time from your Lightspeed account settings.</div>
+          </div>
+          <div style="display:flex;gap:10px;">
+            <button onclick="closeLsModal()" style="flex:1;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:var(--text);border-radius:9px;padding:11px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;">Cancel</button>
+            <button onclick="startLsOAuth()" style="flex:2;background:#F59E0B;border:none;color:#000;border-radius:9px;padding:11px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;">Open Lightspeed Login →</button>
+          </div>
+        </div>
+        <!-- Step 2: Connecting -->
+        <div id="ls-step-2" style="display:none;text-align:center;padding:20px 0;">
+          <div style="font-size:36px;margin-bottom:14px;animation:spin 1s linear infinite;display:inline-block;">⟳</div>
+          <div style="font-size:15px;font-weight:700;margin-bottom:6px;">Connecting to Lightspeed…</div>
+          <div id="ls-step2-msg" style="font-size:12px;color:var(--muted);">Waiting for authorization…</div>
+        </div>
+        <!-- Step 3: Select location -->
+        <div id="ls-step-3" style="display:none;">
+          <div style="font-size:17px;font-weight:700;margin-bottom:6px;">Select your business location</div>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:18px;">Found 1 location in your Lightspeed account</div>
+          <div onclick="selectLsLocation()" style="border:2px solid rgba(79,142,247,0.5);background:rgba(79,142,247,0.07);border-radius:11px;padding:14px 16px;cursor:pointer;margin-bottom:18px;">
+            <div style="font-size:14px;font-weight:700;">Bottē Restaurant</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:3px;">Hudson, QC · Location ID: bk_8f3a921c</div>
+            <div style="font-size:11px;color:#4F8EF7;margin-top:6px;">✓ Selected</div>
+          </div>
+          <button onclick="selectLsLocation()" style="width:100%;background:#4F8EF7;border:none;color:#fff;border-radius:9px;padding:11px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;">Connect this location →</button>
+        </div>
+        <!-- Step 4: Done -->
+        <div id="ls-step-4" style="display:none;text-align:center;padding:12px 0;">
+          <div style="font-size:40px;margin-bottom:12px;">✅</div>
+          <div style="font-size:16px;font-weight:700;margin-bottom:5px;">Lightspeed connected!</div>
+          <div style="font-size:12px;color:var(--muted);margin-bottom:18px;">Pulling your first batch of data…</div>
+          <div style="background:rgba(52,201,122,0.08);border:1px solid rgba(52,201,122,0.2);border-radius:10px;padding:12px 16px;text-align:left;margin-bottom:18px;">
+            <div style="font-size:11.5px;color:#34C97A;font-weight:700;margin-bottom:8px;">FIRST PULL COMPLETE</div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.7;">• 1,911 sale lines imported<br>• 23 menu items matched<br>• Jan 25 – Mar 15, 2026 range detected<br>• Food cost calculated: <strong style="color:var(--text);">39.1%</strong></div>
+          </div>
+          <button onclick="closeLsModal()" style="width:100%;background:#34C97A;border:none;color:#fff;border-radius:9px;padding:11px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;">Go to Dashboard →</button>
+        </div>
+      </div>
     </div>
     <div class="card" style="padding:20px;">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
@@ -2998,6 +3113,234 @@ function exportInventoryCSV() {
   a.download = 'botte-inventory-mar15-2026.csv';
   a.click();
 }
+
+// ─── Lightspeed Integration Functions ─────────────────────────────────────────
+
+function closeLsModal() {
+  const modal = document.getElementById('ls-connect-modal');
+  if (modal) modal.style.display = 'none';
+  // Reset to step 1 for next open
+  ['ls-step-1','ls-step-2','ls-step-3','ls-step-4'].forEach((id,i) => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = i === 0 ? 'block' : 'none';
+  });
+}
+
+function disconnectLightspeed() {
+  if (!confirm('Disconnect Lightspeed? Real-time sync will stop and the dashboard will no longer auto-update.')) return;
+  const card = document.querySelector('[id="ls-status-badge"]')?.closest('.card');
+  if (!card) return;
+  card.style.borderColor = '';
+  card.innerHTML = `
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+      <div style="width:36px;height:36px;background:rgba(255,159,10,0.12);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">⚡</div>
+      <div style="flex:1;">
+        <div style="font-size:14px;font-weight:700;">Lightspeed Restaurant</div>
+        <div style="font-size:12px;color:var(--muted);">K-Series · Real-time sales & covers</div>
+      </div>
+      <div style="display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,0.07);color:var(--muted);padding:5px 11px;border-radius:7px;font-size:12px;font-weight:700;">Not connected</div>
+    </div>
+    <div style="font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.6;">Connect Lightspeed to automatically pull sales data, track food cost in real time, and sync your menu items.</div>
+    <button class="btn-primary" style="width:100%;padding:10px;" onclick="openLsModal()">⚡ Connect Lightspeed →</button>`;
+}
+
+function openLsModal() {
+  closeLsModal(); // reset steps first
+  const modal = document.getElementById('ls-connect-modal');
+  if (modal) modal.style.display = 'flex';
+}
+
+function startLsOAuth() {
+  // Advance to step 2 — connecting animation
+  document.getElementById('ls-step-1').style.display = 'none';
+  document.getElementById('ls-step-2').style.display = 'block';
+
+  const msgs = [
+    'Waiting for authorization…',
+    'Opening Lightspeed login window…',
+    'Authorizing — waiting for your approval…',
+    'Authorization received ✓',
+    'Exchanging tokens…',
+    'Fetching business locations…',
+  ];
+  let i = 0;
+  const msgEl = document.getElementById('ls-step2-msg');
+  const interval = setInterval(() => {
+    if (msgEl && i < msgs.length) msgEl.textContent = msgs[i++];
+    else { clearInterval(interval); advanceLsToStep3(); }
+  }, 600);
+}
+
+function advanceLsToStep3() {
+  document.getElementById('ls-step-2').style.display = 'none';
+  document.getElementById('ls-step-3').style.display = 'block';
+}
+
+function selectLsLocation() {
+  document.getElementById('ls-step-3').style.display = 'none';
+  document.getElementById('ls-step-4').style.display = 'block';
+  // After 2s, close modal and restore connected card
+  setTimeout(() => {
+    closeLsModal();
+    _restoreLsConnectedCard();
+  }, 2200);
+}
+
+function _restoreLsConnectedCard() {
+  // Find the card by looking for a card that either has the disconnect button or was replaced
+  const cards = document.querySelectorAll('#section-settings .card');
+  let lsCard = null;
+  cards.forEach(c => { if (c.textContent.includes('Lightspeed Restaurant')) lsCard = c; });
+  if (!lsCard) return;
+  lsCard.style.borderColor = 'rgba(48,209,88,0.2)';
+  lsCard.innerHTML = `
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+      <div style="width:36px;height:36px;background:rgba(255,159,10,0.12);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">⚡</div>
+      <div style="flex:1;"><div style="font-size:14px;font-weight:700;">Lightspeed Restaurant</div><div style="font-size:12px;color:var(--muted);">K-Series · Real-time sales & covers</div></div>
+      <div id="ls-status-badge" style="display:inline-flex;align-items:center;gap:5px;background:rgba(48,209,88,0.12);color:#30D158;padding:5px 11px;border-radius:7px;font-size:12px;font-weight:700;">
+        <div style="width:6px;height:6px;background:#30D158;border-radius:99px;animation:blink 2s infinite;"></div>Connected
+      </div>
+    </div>
+    <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:9px;padding:12px 14px;margin-bottom:14px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <div><div style="font-size:10.5px;color:var(--muted);font-weight:700;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:3px;">Account</div><div style="font-size:13px;font-weight:600;">Bottē Restaurant</div></div>
+        <div><div style="font-size:10.5px;color:var(--muted);font-weight:700;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:3px;">Location ID</div><div style="font-size:13px;font-weight:600;font-family:monospace;color:#4F8EF7;">bk_8f3a921c</div></div>
+        <div><div style="font-size:10.5px;color:var(--muted);font-weight:700;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:3px;">Last Sync</div><div id="ls-last-sync" style="font-size:13px;font-weight:600;color:#34C97A;">just now</div></div>
+        <div><div style="font-size:10.5px;color:var(--muted);font-weight:700;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:3px;">Next Sync</div><div id="ls-next-sync" style="font-size:13px;font-weight:600;">in 15 min</div></div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
+      <button onclick="runLightspeedSync()" id="ls-sync-btn" class="btn-primary" style="font-size:12px;padding:7px 16px;">↻ Sync Now</button>
+      <select id="ls-freq" style="border:1px solid var(--border);border-radius:7px;padding:6px 10px;font-size:12px;font-family:inherit;background:var(--bg-card);color:var(--text);flex:1;">
+        <option selected>Every 15 min</option><option>Every 30 min</option><option>Hourly</option>
+      </select>
+      <button onclick="disconnectLightspeed()" style="background:none;border:none;color:var(--muted);font-size:11.5px;cursor:pointer;font-family:inherit;white-space:nowrap;">Disconnect</button>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;">
+      <span style="font-size:11px;background:rgba(52,201,122,0.1);color:#34C97A;padding:3px 9px;border-radius:6px;font-weight:600;">✓ Sales by item</span>
+      <span style="font-size:11px;background:rgba(52,201,122,0.1);color:#34C97A;padding:3px 9px;border-radius:6px;font-weight:600;">✓ Revenue</span>
+      <span style="font-size:11px;background:rgba(52,201,122,0.1);color:#34C97A;padding:3px 9px;border-radius:6px;font-weight:600;">✓ Covers / tickets</span>
+      <span style="font-size:11px;background:rgba(52,201,122,0.1);color:#34C97A;padding:3px 9px;border-radius:6px;font-weight:600;">✓ Voids & comps</span>
+      <span style="font-size:11px;background:rgba(52,201,122,0.1);color:#34C97A;padding:3px 9px;border-radius:6px;font-weight:600;">✓ Menu prices</span>
+    </div>
+    <div style="margin-top:14px;border-top:1px solid rgba(255,255,255,0.06);padding-top:12px;">
+      <div style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">Recent Syncs</div>
+      <div id="ls-sync-log" style="display:flex;flex-direction:column;gap:4px;">
+        <div style="display:flex;justify-content:space-between;font-size:11.5px;"><span style="color:#34C97A;">✓ First sync — 1,911 records</span><span style="color:var(--muted);">Mar 15 · just now</span></div>
+      </div>
+    </div>`;
+}
+
+function runLightspeedSync() {
+  const btn = document.getElementById('ls-sync-btn');
+  if (!btn || btn.disabled) return;
+  btn.disabled = true;
+  btn.textContent = '⟳ Syncing…';
+  btn.style.opacity = '0.6';
+
+  setTimeout(() => {
+    // Update last sync display
+    const lastSync = document.getElementById('ls-last-sync');
+    if (lastSync) { lastSync.textContent = 'just now'; lastSync.style.color = '#34C97A'; }
+    const nextSync = document.getElementById('ls-next-sync');
+    if (nextSync) nextSync.textContent = 'in 15 min';
+
+    // Prepend new log entry
+    const log = document.getElementById('ls-sync-log');
+    if (log) {
+      const records = Math.floor(Math.random() * 30) + 28;
+      const now = new Date();
+      const timeStr = `Mar 15 · ${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+      const entry = document.createElement('div');
+      entry.style.cssText = 'display:flex;justify-content:space-between;font-size:11.5px;';
+      entry.innerHTML = `<span style="color:#34C97A;">✓ ${records} records pulled</span><span style="color:var(--muted);">${timeStr}</span>`;
+      log.insertBefore(entry, log.firstChild);
+      // Keep max 4 entries
+      while (log.children.length > 4) log.removeChild(log.lastChild);
+    }
+
+    // Restore button
+    btn.disabled = false;
+    btn.textContent = '↻ Sync Now';
+    btn.style.opacity = '1';
+  }, 1800);
+}
+
+// ─── LightspeedAPI — K-Series REST client (for production Next.js migration) ──
+class LightspeedAPI {
+  constructor({ accessToken, businessLocationId }) {
+    this.token = accessToken;
+    this.baseUrl = 'https://api.lsk.lightspeed.app/f/v2';
+    this.locationId = businessLocationId;
+  }
+
+  _headers() {
+    return { Authorization: `Bearer ${this.token}`, 'Content-Type': 'application/json' };
+  }
+
+  // GET /business-location/{id}/sales?from=ISO8601&to=ISO8601&include=payments&limit=100
+  async getSales({ from, to, limit = 100, cursor } = {}) {
+    const url = new URL(`${this.baseUrl}/business-location/${this.locationId}/sales`);
+    if (from)   url.searchParams.set('from', from);
+    if (to)     url.searchParams.set('to', to);
+    if (cursor) url.searchParams.set('cursor', cursor);
+    url.searchParams.set('include', 'payments');
+    url.searchParams.set('limit', String(limit));
+    const r = await fetch(url.toString(), { headers: this._headers() });
+    if (!r.ok) throw new Error(`Lightspeed ${r.status}: ${await r.text()}`);
+    return r.json(); // { data: SaleLine[], meta: { cursor } }
+  }
+
+  // GET /business-location/{id}/sales-daily?date=YYYY-MM-DD
+  async getDailySales(date) {
+    const url = `${this.baseUrl}/business-location/${this.locationId}/sales-daily?date=${date}`;
+    const r = await fetch(url, { headers: this._headers() });
+    if (!r.ok) throw new Error(`Lightspeed ${r.status}: ${await r.text()}`);
+    return r.json();
+  }
+
+  // GET /business-location/{id}/menu-items — full menu with prices
+  async getMenuItems() {
+    const url = `${this.baseUrl}/business-location/${this.locationId}/menu-items?limit=200`;
+    const r = await fetch(url, { headers: this._headers() });
+    if (!r.ok) throw new Error(`Lightspeed ${r.status}: ${await r.text()}`);
+    return r.json();
+  }
+
+  // Paginate all sales within date range (handles cursor)
+  async getAllSalesInRange({ from, to }) {
+    let allData = [], cursor = null;
+    do {
+      const page = await this.getSales({ from, to, limit: 100, cursor });
+      allData = allData.concat(page.data || []);
+      cursor = page.meta?.cursor || null;
+    } while (cursor);
+    return allData;
+  }
+
+  // OAuth helper — build authorization URL
+  static buildAuthUrl({ clientId, redirectUri, state }) {
+    const url = new URL('https://api.lsk.lightspeed.app/oauth/authorize');
+    url.searchParams.set('response_type', 'code');
+    url.searchParams.set('client_id', clientId);
+    url.searchParams.set('redirect_uri', redirectUri);
+    if (state) url.searchParams.set('state', state);
+    return url.toString();
+  }
+
+  // OAuth helper — exchange code for tokens (call from server-side to keep secret safe)
+  static async exchangeCode({ code, clientId, clientSecret, redirectUri }) {
+    const r = await fetch('https://api.lsk.lightspeed.app/oauth/token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ grant_type:'authorization_code', code, client_id:clientId, client_secret:clientSecret, redirect_uri:redirectUri }),
+    });
+    if (!r.ok) throw new Error(`Token exchange failed ${r.status}: ${await r.text()}`);
+    return r.json(); // { access_token, refresh_token, expires_in }
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 
 const SOCIAL_DATA = {
   pushItems: [
