@@ -163,6 +163,7 @@ tr:last-child td { border-bottom: none; }
 .tag-salads { background: rgba(255,159,10,0.12); color: #FF9F0A; }
 .tag-sandwiches { background: rgba(191,90,242,0.12); color: #BF5AF2; }
 .tag-other { background: rgba(255,255,255,0.08); color: #AEAEB2; }
+.tag-beverages { background:rgba(6,182,212,0.12); color:#06B6D4; }
 .eng-star { background: rgba(48,209,88,0.12); color: #30D158; }
 .eng-puzzle { background: rgba(10,132,255,0.12); color: #3D9BFF; }
 .eng-plowhorse { background: rgba(255,159,10,0.12); color: #FF9F0A; }
@@ -230,6 +231,24 @@ tr:last-child td { border-bottom: none; }
 
 .chart-grid { display: grid; grid-template-columns: 1.1fr 2fr; gap: 14px; margin-bottom: 20px; }
 .bottom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+/* ── Report Modal ─────────────────────────────────────── */
+.modal-overlay { position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px; }
+.modal-box { background:var(--bg-card);border:1px solid var(--border-strong);border-radius:18px;width:100%;max-width:900px;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,0.6); }
+.modal-header { padding:20px 26px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--bg-card);border-radius:18px 18px 0 0;z-index:1; }
+.modal-body { padding:24px 26px; }
+.modal-close-btn { background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--text);width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:18px;line-height:1;display:flex;align-items:center;justify-content:center; }
+.modal-close-btn:hover { background:rgba(255,255,255,0.12); }
+/* ── Quick-Add FAB ────────────────────────────────────── */
+#quick-add-fab { position:fixed;bottom:28px;right:28px;width:54px;height:54px;background:#4F8EF7;border:none;border-radius:99px;color:#fff;font-size:26px;cursor:pointer;box-shadow:0 8px 28px rgba(79,142,247,0.5);z-index:100;display:none;align-items:center;justify-content:center;transition:transform 0.15s,box-shadow 0.15s; }
+#quick-add-fab:hover { transform:scale(1.08);box-shadow:0 12px 36px rgba(79,142,247,0.6); }
+/* ── Guidelines banner ────────────────────────────────── */
+.guideline-banner { background:rgba(79,142,247,0.06);border:1px solid rgba(79,142,247,0.15);border-radius:10px;padding:11px 16px;margin-bottom:18px;cursor:pointer;transition:background 0.15s; }
+.guideline-banner:hover { background:rgba(79,142,247,0.09); }
+.guideline-banner summary { font-size:12px;font-weight:700;color:#4F8EF7;list-style:none;display:flex;align-items:center;gap:6px; }
+.guideline-banner ul { margin:10px 0 2px 18px;padding:0;font-size:12px;color:var(--muted);line-height:1.9; }
+/* ── Inline edit ──────────────────────────────────────── */
+.inline-edit-input { background:rgba(79,142,247,0.1);border:1px solid rgba(79,142,247,0.35);border-radius:6px;color:var(--text);font-size:13px;font-weight:600;padding:3px 7px;width:70px;text-align:center;outline:none; }
 </style>
 </head>
 <body>
@@ -388,8 +407,8 @@ tr:last-child td { border-bottom: none; }
     <div style="background:linear-gradient(135deg,#111828,#141E32 50%,#111828);border:1px solid rgba(79,142,247,0.18);border-radius:14px;padding:24px 28px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;overflow:hidden;position:relative;">
       <div>
         <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#4F8EF7;margin-bottom:8px;">TOTAL RECOVERABLE VALUE THIS PERIOD</div>
-        <div style="font-size:3.2rem;font-weight:900;letter-spacing:-0.05em;color:#FF9F0A;line-height:1;">$3,064</div>
-        <div style="font-size:13px;color:#48484A;margin-top:8px;">Across 5 identified opportunities · 49 days</div>
+        <div style="font-size:3.2rem;font-weight:900;letter-spacing:-0.05em;color:#FF9F0A;line-height:1;">$3,550</div>
+        <div style="font-size:13px;color:#48484A;margin-top:8px;">Across 8 identified opportunities · 49 days</div>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <div style="font-size:10.5px;color:#4F8EF7;font-weight:700;letter-spacing:0.06em;text-align:right;margin-bottom:2px;">BREAKDOWN</div>
@@ -401,6 +420,12 @@ tr:last-child td { border-bottom: none; }
         </div>
         <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.07);border-radius:9px;padding:9px 14px;">
           <div style="font-size:12.5px;color:#AEAEB2;">Volume growth → <b style="color:#FF9F0A;">+$779</b> potential</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.07);border-radius:9px;padding:9px 14px;">
+          <div style="display:flex;justify-content:space-between;font-size:12px;padding:5px 0;border-top:1px solid rgba(255,255,255,0.06);">
+            <span style="color:var(--muted);">Bev attach rate →</span>
+            <span style="color:#06B6D4;font-weight:700;">+$486 potential</span>
+          </div>
         </div>
       </div>
     </div>
@@ -492,6 +517,59 @@ tr:last-child td { border-bottom: none; }
         <div class="big-impact bad">37.25%</div>
         <div style="font-size:11px;color:var(--muted);">food cost</div>
         <button class="btn-ghost" style="font-size:12px;padding:7px 14px;" onclick="navigate('profitability')">View Item</button>
+      </div>
+    </div>
+
+    <!-- Insight Card 6: Bev Attach Rate -->
+    <div class="insight-card" style="border-color:rgba(6,182,212,0.25);">
+      <div class="insight-icon" style="background:rgba(6,182,212,0.12);color:#06B6D4;font-size:20px;">🍺</div>
+      <div class="insight-content">
+        <div class="insight-title">Drink attach rate is 33.7% — industry benchmark is 40%+</div>
+        <div class="insight-desc">You're serving 644 beverages across 1,911 covers. Closing the gap to 40% means ~120 additional drinks per period. At an average $7.64 with 78% GM, that's <strong>+$486 gross profit</strong> with zero new overhead — just verbal suggestive selling at the table.</div>
+        <div class="insight-action">
+          <span class="impact-badge" style="background:rgba(6,182,212,0.12);color:#06B6D4;">REVENUE OPPORTUNITY</span>
+          <span class="impact-dollar" style="color:#06B6D4;">+$486 potential / period</span>
+        </div>
+      </div>
+      <div class="insight-side">
+        <div class="big-impact" style="color:#06B6D4;">+$486</div>
+        <div style="font-size:11px;color:var(--muted);">attach gap</div>
+      </div>
+    </div>
+
+    <!-- Insight Card 7: Soft Drink upsell -->
+    <div class="insight-card" style="border-color:rgba(245,166,35,0.2);">
+      <div class="insight-icon" style="background:rgba(245,166,35,0.1);color:#F5A623;font-size:20px;">⬆️</div>
+      <div class="insight-content">
+        <div class="insight-title">Soft Drink is a plowhorse — upsell to Sparkling Water</div>
+        <div class="insight-desc">Soft Drink moves 156 units at $4 ($3.55 GM). Sparkling Water is $5 with $4.10 GM — an extra <strong>$0.55 per switch</strong>. Train servers to offer "still or sparkling?" first. At even 30% conversion (47 units), that's +$19/period with no added cost.</div>
+        <div class="insight-action">
+          <span class="impact-badge" style="background:rgba(245,166,35,0.1);color:#F5A623;">UPSELL</span>
+          <span class="impact-dollar" style="color:#F5A623;">+$0.55 GM per switch</span>
+        </div>
+      </div>
+      <div class="insight-side">
+        <div class="big-impact" style="color:#F5A623;">+$19</div>
+        <div style="font-size:11px;color:var(--muted);">easy win</div>
+      </div>
+    </div>
+
+    <!-- Insight Card 8: Competitive differentiation -->
+    <div class="insight-card" style="border-color:rgba(167,139,250,0.25);background:linear-gradient(135deg,rgba(167,139,250,0.04),rgba(79,142,247,0.03));">
+      <div class="insight-icon" style="background:rgba(167,139,250,0.12);color:#A78BFA;font-size:20px;">🏆</div>
+      <div class="insight-content">
+        <div class="insight-title">CulinaraOs vs. the competition — what they can't match</div>
+        <div class="insight-desc">MarketMan, Restaurant365, Apicbase, and Craftable all track food cost — but none combine AI dollar insights, live POS sync, combined F&B tracking, a 3-day fermentation planner, and real beverage attach analytics in a single view.</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:11px;">
+          <div style="padding:6px 10px;background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.15);border-radius:7px;font-size:11.5px;color:var(--muted);">✦ AI dollar insights (not just %)</div>
+          <div style="padding:6px 10px;background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.15);border-radius:7px;font-size:11.5px;color:var(--muted);">⚡ Live Lightspeed POS sync</div>
+          <div style="padding:6px 10px;background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.15);border-radius:7px;font-size:11.5px;color:var(--muted);">🍺 Combined F&amp;B cost tracking</div>
+          <div style="padding:6px 10px;background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.15);border-radius:7px;font-size:11.5px;color:var(--muted);">🫓 3-day fermentation planner</div>
+        </div>
+      </div>
+      <div class="insight-side">
+        <div class="big-impact" style="color:#A78BFA;">5</div>
+        <div style="font-size:11px;color:var(--muted);">unique edges</div>
       </div>
     </div>
 
@@ -596,6 +674,25 @@ tr:last-child td { border-bottom: none; }
     </div>
   </div>
 
+  <!-- Beverage + Prime Cost KPIs -->
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px;">
+    <div class="card" style="padding:16px 20px;border-color:rgba(6,182,212,0.2);">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:#06B6D4;margin-bottom:6px;">Bev Cost %</div>
+      <div style="font-size:2rem;font-weight:800;letter-spacing:-0.03em;color:#06B6D4;line-height:1;">20.4%</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:5px;">$992 on $4,870 bev rev · healthy</div>
+    </div>
+    <div class="card" style="padding:16px 20px;border-color:rgba(245,166,35,0.2);">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:#F5A623;margin-bottom:6px;">Drink Attach Rate</div>
+      <div style="font-size:2rem;font-weight:800;letter-spacing:-0.03em;color:#F5A623;line-height:1;">33.7%</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:5px;">644 drinks / 1,911 covers · benchmark 40%+</div>
+    </div>
+    <div class="card" style="padding:16px 20px;border-color:rgba(240,82,82,0.2);">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:#F05252;margin-bottom:6px;">Prime Cost</div>
+      <div style="font-size:2rem;font-weight:800;letter-spacing:-0.03em;color:#F05252;line-height:1;">71.5%</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:5px;">Food 39.1% + Labour 32.4% · target &lt;65%</div>
+    </div>
+  </div>
+
   <!-- 7-Week Trend Chart -->
   <div class="card" style="padding:20px;margin-bottom:20px;">
     <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;">
@@ -667,9 +764,18 @@ tr:last-child td { border-bottom: none; }
 <!-- ===== SECTION: FOOD COST ===== -->
 <div id="section-profitability" class="section" style="padding:28px 32px;">
   <div class="section-header">
-    <div><div class="section-title">Food Cost by Item</div><div class="section-sub">All 23 menu items · Jan 25 – Mar 15, 2026</div></div>
+    <div><div class="section-title">Food Cost by Item</div><div class="section-sub">All 29 menu items · Jan 25 – Mar 15, 2026</div></div>
     <button class="btn-ghost" onclick="window.print()">↓ Export</button>
   </div>
+  <details class="guideline-banner">
+    <summary>📋 Keeping this accurate</summary>
+    <ul>
+      <li>Update item costs whenever a supplier invoice changes — even small shifts compound fast.</li>
+      <li>Check the <strong>Food Cost %</strong> column weekly. Anything above 35% needs a pricing review or a supplier conversation.</li>
+      <li>Use the <strong>Quick Add</strong> button (bottom-right) to add new menu items or log a price change in seconds.</li>
+      <li>GF upgrades, add-ons, and modifiers should each have their own row so true costs are visible.</li>
+    </ul>
+  </details>
   <div class="filter-row">
     <button class="filter-btn active" onclick="filterTable('all',this)">All items</button>
     <button class="filter-btn" onclick="filterTable('Pizza Rossa',this)">Pizza Rossa</button>
@@ -678,6 +784,7 @@ tr:last-child td { border-bottom: none; }
     <button class="filter-btn" onclick="filterTable('Salads',this)">Salads</button>
     <button class="filter-btn" onclick="filterTable('Sandwiches',this)">Sandwiches</button>
     <button class="filter-btn" onclick="filterTable('Other',this)">Other</button>
+    <button class="filter-btn" onclick="filterTable('Beverages',this)">🍺 Beverages</button>
   </div>
   <div class="card" style="overflow:hidden;margin-bottom:16px;">
     <table><thead><tr>
@@ -739,6 +846,15 @@ tr:last-child td { border-bottom: none; }
     <div><div class="section-title">Prep &amp; Recipes</div><div class="section-sub">Weekly quantities based on ~35 covers/day</div></div>
     <button class="btn-ghost" onclick="window.print()">🖨 Print Guide</button>
   </div>
+  <details class="guideline-banner">
+    <summary>📋 How to use Prep &amp; Recipes</summary>
+    <ul>
+      <li>Quantities are calculated from your 7-day sales average (~35 covers/day). Adjust the covers input if your week looks busier or slower.</li>
+      <li>Click any quantity to edit it inline — your change is saved locally and persists until you reset.</li>
+      <li>Print this guide before each shift using the <strong>Print Guide</strong> button. It formats cleanly on letter paper.</li>
+      <li>Use the <strong>Quick Add</strong> button to add a new prep task (e.g., a seasonal special or catering item).</li>
+    </ul>
+  </details>
   <div id="prep-content"></div>
 </div>
 
@@ -1112,14 +1228,18 @@ tr:last-child td { border-bottom: none; }
 <!-- ===== SECTION: ORDER GUIDE ===== -->
 <div id="section-orders" class="section" style="padding:28px 32px;">
   <div class="section-header">
-    <div><div class="section-title">Order Guide</div><div class="section-sub">5 suppliers · weekly estimated costs</div></div>
+    <div><div class="section-title">Order Guide</div><div class="section-sub">6 suppliers · weekly estimated costs</div></div>
   </div>
-  <div style="display:grid;grid-template-columns:repeat(5,minmax(120px,1fr));gap:12px;margin-bottom:20px;overflow-x:auto;padding-bottom:4px;">
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px;margin-bottom:20px;overflow-x:auto;padding-bottom:4px;">
     <div class="card kpi" style="padding:14px 16px;border-top:3px solid #4F8EF7;"><div class="kpi-label" style="font-size:11.5px;color:#4F8EF7;">Gordon FS</div><div style="font-size:18px;font-weight:800;letter-spacing:-0.02em;">$1,067<span style="font-size:12px;font-weight:500;color:var(--muted);">/wk</span></div><div style="font-size:11px;color:var(--muted);margin-top:3px;">3 inv · Tue→Thu</div></div>
     <div class="card kpi" style="padding:14px 16px;border-top:3px solid #F05252;"><div class="kpi-label" style="font-size:11.5px;color:#F05252;">Farinex</div><div style="font-size:18px;font-weight:800;letter-spacing:-0.02em;">$509<span style="font-size:12px;font-weight:500;color:var(--muted);">/wk</span></div><div style="font-size:11px;color:var(--muted);margin-top:3px;">2 inv · Flour &amp; tomato</div></div>
     <div class="card kpi" style="padding:14px 16px;border-top:3px solid #34C97A;"><div class="kpi-label" style="font-size:11.5px;color:#34C97A;">Les Jardins</div><div style="font-size:18px;font-weight:800;letter-spacing:-0.02em;">$243<span style="font-size:12px;font-weight:500;color:var(--muted);">/wk</span></div><div style="font-size:11px;color:var(--muted);margin-top:3px;">4 inv · Mon/Thu</div></div>
     <div class="card kpi" style="padding:14px 16px;border-top:3px solid #A78BFA;"><div class="kpi-label" style="font-size:11.5px;color:#A78BFA;">Macchi</div><div style="font-size:18px;font-weight:800;letter-spacing:-0.02em;">$104<span style="font-size:12px;font-weight:500;color:var(--muted);">/wk</span></div><div style="font-size:11px;color:var(--muted);margin-top:3px;">1 inv · Charcuterie</div></div>
     <div class="card kpi" style="padding:14px 16px;border-top:3px solid #F5A623;"><div class="kpi-label" style="font-size:11.5px;color:#F5A623;">Costco</div><div style="font-size:18px;font-weight:800;letter-spacing:-0.02em;">$21<span style="font-size:12px;font-weight:500;color:var(--muted);">/wk</span></div><div style="font-size:11px;color:var(--muted);margin-top:3px;">1 receipt · Dairy</div></div>
+    <div style="text-align:center;padding:10px;border:1px solid rgba(6,182,212,0.25);border-radius:10px;cursor:pointer;background:var(--bg-card);" onclick="document.getElementById('supp-boissons').scrollIntoView({behavior:'smooth'})">
+      <div style="font-size:11px;font-weight:700;color:#06B6D4;">🍺 Boissons</div>
+      <div style="font-size:10px;color:var(--muted);margin-top:2px;">Wed · Fri</div>
+    </div>
   </div>
   <div id="order-content"></div>
 </div>
@@ -1565,7 +1685,7 @@ tr:last-child td { border-bottom: none; }
   </div>
 
   <!-- Week KPIs -->
-  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px;">
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:20px;">
     <div class="card kpi">
       <div class="kpi-label">Food Cost % — This Wk</div>
       <div class="kpi-value" style="color:#F05252;">39.1%</div>
@@ -1589,6 +1709,11 @@ tr:last-child td { border-bottom: none; }
       <div class="kpi-value" style="color:#F05252;">$1,689</div>
       <div class="kpi-sub">GFS invoice pending</div>
       <div class="wow wow-bad">↑ +$88 vs last wk</div>
+    </div>
+    <div class="card" style="padding:14px 18px;text-align:center;border-color:rgba(6,182,212,0.2);">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:#06B6D4;margin-bottom:6px;">Bev Attach</div>
+      <div style="font-size:1.7rem;font-weight:800;letter-spacing:-0.03em;color:#F5A623;">33.7%</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:4px;">target 40%+</div>
     </div>
   </div>
 
@@ -1626,6 +1751,17 @@ tr:last-child td { border-bottom: none; }
           <div style="font-size:12px;color:var(--muted);">18 units</div>
           <div style="font-size:13px;font-weight:700;">$396</div>
           <div style="font-size:11px;font-weight:700;color:#34C97A;background:rgba(52,201,122,0.1);padding:2px 7px;border-radius:5px;">17.5%</div>
+        </div>
+        <div style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,0.06);">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#06B6D4;margin-bottom:6px;">Beverages</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+            <div style="display:flex;align-items:center;gap:8px;"><span class="tag tag-beverages">Beverages</span><span style="font-size:13px;font-weight:600;">Soft Drink</span></div>
+            <span style="font-size:13px;font-weight:700;color:#34C97A;">24 units · $96</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;">
+            <div style="display:flex;align-items:center;gap:8px;"><span class="tag tag-beverages">Beverages</span><span style="font-size:13px;font-weight:600;">Draft Beer — Local</span></div>
+            <span style="font-size:13px;font-weight:700;color:#34C97A;">22 units · $176</span>
+          </div>
         </div>
       </div>
     </div>
@@ -1753,31 +1889,31 @@ tr:last-child td { border-bottom: none; }
 
   <!-- Report Types -->
   <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;">
-    <div class="card" style="padding:20px;cursor:pointer;" onclick="alert('Generates a full food cost breakdown with all 23 items, supplier breakdown, and trend data. Export as PDF or send via email.')">
+    <div class="card" style="padding:20px;cursor:pointer;" onclick="showReportModal('foodcost')">
       <div style="width:40px;height:40px;border-radius:10px;background:rgba(79,142,247,0.12);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:12px;">📊</div>
       <div style="font-size:14px;font-weight:700;margin-bottom:5px;">Food Cost Report</div>
       <div style="font-size:12px;color:var(--muted);line-height:1.55;margin-bottom:14px;">Full food cost breakdown, item-by-item, supplier totals, and 7-week trend. Perfect for ownership review.</div>
       <button class="btn-primary" style="width:100%;font-size:12px;">Generate Report</button>
     </div>
-    <div class="card" style="padding:20px;cursor:pointer;" onclick="alert('Weekly snapshot email — top 5 items, FC%, revenue, and 3 action items. Sends every Monday morning.')">
+    <div class="card" style="padding:20px;cursor:pointer;" onclick="showReportModal('weekly')">
       <div style="width:40px;height:40px;border-radius:10px;background:rgba(52,201,122,0.12);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:12px;">📬</div>
       <div style="font-size:14px;font-weight:700;margin-bottom:5px;">Weekly Summary Email</div>
       <div style="font-size:12px;color:var(--muted);line-height:1.55;margin-bottom:14px;">Auto-sent every Monday. Top metrics, top items, and the 3 most important actions for the week ahead.</div>
       <button class="btn-ghost" style="width:100%;font-size:12px;">Configure →</button>
     </div>
-    <div class="card" style="padding:20px;cursor:pointer;" onclick="alert('Prep schedule printout — formatted for your kitchen team. Shows quantities, frequencies, and critical notes.')">
+    <div class="card" style="padding:20px;cursor:pointer;" onclick="window.print()">
       <div style="width:40px;height:40px;border-radius:10px;background:rgba(245,166,35,0.12);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:12px;">🖨</div>
       <div style="font-size:14px;font-weight:700;margin-bottom:5px;">Kitchen Prep Sheet</div>
       <div style="font-size:12px;color:var(--muted);line-height:1.55;margin-bottom:14px;">Print-ready daily & weekly prep guide for your kitchen team. Quantities, frequencies, and recipe notes.</div>
       <button class="btn-ghost" style="width:100%;font-size:12px;" onclick="window.print()">Print Now</button>
     </div>
-    <div class="card" style="padding:20px;cursor:pointer;" onclick="alert('Daily operations report — task completions, staff on shift, and notes. Generates for any day.')">
+    <div class="card" style="padding:20px;cursor:pointer;" onclick="showReportModal('operations')">
       <div style="width:40px;height:40px;border-radius:10px;background:rgba(167,139,250,0.12);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:12px;">📋</div>
       <div style="font-size:14px;font-weight:700;margin-bottom:5px;">Daily Operations</div>
       <div style="font-size:12px;color:var(--muted);line-height:1.55;margin-bottom:14px;">Task completions, staff activity, and kitchen notes for any given day. Useful for shift handovers.</div>
       <button class="btn-ghost" style="width:100%;font-size:12px;">Generate Report</button>
     </div>
-    <div class="card" style="padding:20px;cursor:pointer;" onclick="alert('Monthly summary — all KPIs rolled up into a one-page executive view for ownership review.')">
+    <div class="card" style="padding:20px;cursor:pointer;" onclick="showReportModal('monthly')">
       <div style="width:40px;height:40px;border-radius:10px;background:rgba(240,82,82,0.12);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:12px;">📅</div>
       <div style="font-size:14px;font-weight:700;margin-bottom:5px;">Monthly Summary</div>
       <div style="font-size:12px;color:var(--muted);line-height:1.55;margin-bottom:14px;">Comprehensive month-end analytics — revenue, food cost, top performers, and vs-target summary.</div>
@@ -1789,17 +1925,17 @@ tr:last-child td { border-bottom: none; }
   <div style="margin-top:20px;">
     <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:12px;">Quick Export Actions</div>
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
-      <div style="background:var(--bg-card2);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center;cursor:pointer;" onclick="alert('Exporting today\'s tasks as CSV...')">
+      <div style="background:var(--bg-card2);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center;cursor:pointer;" onclick="exportTasksCSV()">
         <div style="font-size:22px;margin-bottom:8px;">📄</div>
         <div style="font-size:12px;font-weight:600;margin-bottom:3px;">Today's Tasks</div>
         <div style="font-size:11px;color:var(--muted);">Export as CSV</div>
       </div>
-      <div style="background:var(--bg-card2);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center;cursor:pointer;" onclick="alert('Exporting food cost report as PDF...')">
+      <div style="background:var(--bg-card2);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center;cursor:pointer;" onclick="exportMenuCSV()">
         <div style="font-size:22px;margin-bottom:8px;">📊</div>
         <div style="font-size:12px;font-weight:600;margin-bottom:3px;">Food Cost Report</div>
         <div style="font-size:11px;color:var(--muted);">Export as PDF</div>
       </div>
-      <div style="background:var(--bg-card2);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center;cursor:pointer;" onclick="alert('Exporting monthly data as JSON...')">
+      <div style="background:var(--bg-card2);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center;cursor:pointer;" onclick="exportMenuJSON()">
         <div style="font-size:22px;margin-bottom:8px;">📈</div>
         <div style="font-size:12px;font-weight:600;margin-bottom:3px;">Monthly Data</div>
         <div style="font-size:11px;color:var(--muted);">Export as JSON</div>
@@ -1850,11 +1986,16 @@ tr:last-child td { border-bottom: none; }
         <div style="flex:1;height:6px;background:rgba(255,255,255,0.08);border-radius:99px;overflow:hidden;"><div style="width:44%;height:100%;background:#F05252;border-radius:99px;"></div></div>
         <span style="font-size:12px;font-weight:700;color:#F05252;width:24px;text-align:right;">44</span>
       </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:12px;color:var(--muted);width:52px;">Bev Prog</span>
+        <div style="flex:1;height:6px;background:rgba(255,255,255,0.08);border-radius:99px;overflow:hidden;"><div style="width:61%;height:100%;background:#F5A623;border-radius:99px;"></div></div>
+        <span style="font-size:12px;font-weight:700;color:#F5A623;width:24px;text-align:right;">61</span>
+      </div>
     </div>
   </div>
 
   <!-- Three Score Cards -->
-  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:20px;">
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:0px;">
 
     <!-- Pricing Score -->
     <div class="card" style="padding:22px;">
@@ -1931,6 +2072,35 @@ tr:last-child td { border-bottom: none; }
           <div style="font-size:12px;font-weight:600;color:#34C97A;">✓ Macchi & Les Jardins: stable pricing</div>
           <div style="font-size:11px;color:var(--muted);margin-top:2px;">No variance flagged across 5 invoices. Relationships in good standing.</div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:14px;padding:18px 22px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+      <div>
+        <div style="font-size:13px;font-weight:700;">Prime Cost</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:2px;">Food Cost % + Labour % — target below 65%</div>
+      </div>
+      <div style="font-size:2rem;font-weight:800;color:#F05252;letter-spacing:-0.03em;">71.5%</div>
+    </div>
+    <div style="background:rgba(255,255,255,0.07);border-radius:99px;height:10px;overflow:hidden;margin-bottom:10px;">
+      <div style="height:100%;border-radius:99px;width:71.5%;background:linear-gradient(90deg,#34C97A,#F5A623 50%,#F05252);"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1px 1fr 1px 1fr;gap:0;font-size:11.5px;">
+      <div style="text-align:center;padding:8px 0;">
+        <div style="font-weight:700;color:#34C97A;">39.1%</div>
+        <div style="color:var(--muted);margin-top:2px;">Food Cost</div>
+      </div>
+      <div style="background:var(--border);"></div>
+      <div style="text-align:center;padding:8px 0;">
+        <div style="font-weight:700;color:#F5A623;">32.4%</div>
+        <div style="color:var(--muted);margin-top:2px;">Labour</div>
+      </div>
+      <div style="background:var(--border);"></div>
+      <div style="text-align:center;padding:8px 0;">
+        <div style="font-weight:700;color:var(--muted);">65%</div>
+        <div style="color:var(--muted);margin-top:2px;">Target</div>
       </div>
     </div>
   </div>
@@ -2021,11 +2191,143 @@ tr:last-child td { border-bottom: none; }
 </div>
 
 </div><!-- /main -->
+
+<!-- ===== REPORT MODAL ===== -->
+<div id="report-modal" class="modal-overlay" style="display:none" onclick="if(event.target===this)closeReportModal()">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div>
+        <div style="font-size:11px;font-weight:700;color:#4F8EF7;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:4px;">Report Preview</div>
+        <div id="report-modal-title" style="font-size:17px;font-weight:700;color:var(--text);"></div>
+      </div>
+      <button class="modal-close-btn" onclick="closeReportModal()">×</button>
+    </div>
+    <div id="report-modal-body" class="modal-body"></div>
+  </div>
+</div>
+
+<!-- ===== QUICK-ADD MODAL ===== -->
+<div id="quick-add-modal" class="modal-overlay" style="display:none" onclick="if(event.target===this)closeQuickAdd()">
+  <div class="modal-box" style="max-width:520px;">
+    <div class="modal-header">
+      <div>
+        <div style="font-size:11px;font-weight:700;color:#4F8EF7;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:4px;">Quick Add</div>
+        <div style="font-size:17px;font-weight:700;color:var(--text);">Add or update data</div>
+      </div>
+      <button class="modal-close-btn" onclick="closeQuickAdd()">×</button>
+    </div>
+    <div class="modal-body">
+      <!-- Tabs -->
+      <div style="display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:20px;">
+        <button id="qa-tab-menu" onclick="switchQATab('menu')" style="padding:8px 16px;background:none;border:none;border-bottom:2px solid #4F8EF7;color:#4F8EF7;font-size:13px;font-weight:700;cursor:pointer;">Menu Item</button>
+        <button id="qa-tab-prep" onclick="switchQATab('prep')" style="padding:8px 16px;background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;">Prep Item</button>
+        <button id="qa-tab-update" onclick="switchQATab('update')" style="padding:8px 16px;background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;">Quick Update</button>
+      </div>
+
+      <!-- Tab: Menu Item -->
+      <div id="qa-panel-menu">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+          <div style="grid-column:1/-1;">
+            <label style="font-size:11px;font-weight:700;color:var(--muted);display:block;margin-bottom:5px;">ITEM NAME</label>
+            <input id="qa-name" type="text" placeholder="e.g. Aperol Spritz" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border-strong);border-radius:8px;color:var(--text);font-size:14px;padding:9px 12px;outline:none;box-sizing:border-box;">
+          </div>
+          <div>
+            <label style="font-size:11px;font-weight:700;color:var(--muted);display:block;margin-bottom:5px;">CATEGORY</label>
+            <select id="qa-cat" style="width:100%;background:#1F2433;border:1px solid var(--border-strong);border-radius:8px;color:var(--text);font-size:13px;padding:9px 12px;outline:none;">
+              <option>Pizza Rossa</option><option>Pizza Bianca</option><option>Very Veggie</option>
+              <option>Salads</option><option>Sandwiches</option><option selected>Beverages</option><option>Other</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:11px;font-weight:700;color:var(--muted);display:block;margin-bottom:5px;">MENU PRICE ($)</label>
+            <input id="qa-price" type="number" step="0.01" min="0" placeholder="12.00" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border-strong);border-radius:8px;color:var(--text);font-size:14px;padding:9px 12px;outline:none;box-sizing:border-box;">
+          </div>
+          <div>
+            <label style="font-size:11px;font-weight:700;color:var(--muted);display:block;margin-bottom:5px;">FOOD COST / PORTION ($)</label>
+            <input id="qa-cost" type="number" step="0.01" min="0" placeholder="2.40" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border-strong);border-radius:8px;color:var(--text);font-size:14px;padding:9px 12px;outline:none;box-sizing:border-box;">
+          </div>
+          <div style="grid-column:1/-1;">
+            <label style="font-size:11px;font-weight:700;color:var(--muted);display:block;margin-bottom:5px;">UNITS SOLD THIS PERIOD (approx.)</label>
+            <input id="qa-units" type="number" min="0" placeholder="45" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border-strong);border-radius:8px;color:var(--text);font-size:14px;padding:9px 12px;outline:none;box-sizing:border-box;">
+          </div>
+        </div>
+        <div id="qa-preview" style="background:rgba(255,255,255,0.03);border-radius:8px;padding:12px;font-size:12px;color:var(--muted);margin-bottom:16px;min-height:36px;"></div>
+        <button onclick="saveQuickMenuItem()" style="width:100%;background:#4F8EF7;color:#fff;border:none;border-radius:10px;padding:12px;font-size:14px;font-weight:700;cursor:pointer;">+ Add to Menu</button>
+      </div>
+
+      <!-- Tab: Prep Item -->
+      <div id="qa-panel-prep" style="display:none;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+          <div style="grid-column:1/-1;">
+            <label style="font-size:11px;font-weight:700;color:var(--muted);display:block;margin-bottom:5px;">PREP ITEM NAME</label>
+            <input id="qa-prep-name" type="text" placeholder="e.g. House cocktail sauce" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border-strong);border-radius:8px;color:var(--text);font-size:14px;padding:9px 12px;outline:none;box-sizing:border-box;">
+          </div>
+          <div>
+            <label style="font-size:11px;font-weight:700;color:var(--muted);display:block;margin-bottom:5px;">CATEGORY</label>
+            <select id="qa-prep-cat" style="width:100%;background:#1F2433;border:1px solid var(--border-strong);border-radius:8px;color:var(--text);font-size:13px;padding:9px 12px;outline:none;">
+              <option>Bar &amp; Beverage Setup</option><option>Pizza Bases</option><option>Prepared Proteins</option>
+              <option>Sauces &amp; Drizzles</option><option>Spreads &amp; Pastes</option><option>Dressings</option>
+              <option>Infused Oils</option><option>Vegetables &amp; Produce</option><option>Breads &amp; Packaging</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:11px;font-weight:700;color:var(--muted);display:block;margin-bottom:5px;">FREQUENCY</label>
+            <select id="qa-prep-freq" style="width:100%;background:#1F2433;border:1px solid var(--border-strong);border-radius:8px;color:var(--text);font-size:13px;padding:9px 12px;outline:none;">
+              <option value="daily">Daily</option><option value="twice weekly">Twice Weekly</option><option value="weekly">Weekly</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:11px;font-weight:700;color:var(--muted);display:block;margin-bottom:5px;">QTY (number)</label>
+            <input id="qa-prep-qty" type="number" min="0" placeholder="1" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border-strong);border-radius:8px;color:var(--text);font-size:14px;padding:9px 12px;outline:none;box-sizing:border-box;">
+          </div>
+          <div>
+            <label style="font-size:11px;font-weight:700;color:var(--muted);display:block;margin-bottom:5px;">UNIT</label>
+            <input id="qa-prep-unit" type="text" placeholder="batch / kg / L" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border-strong);border-radius:8px;color:var(--text);font-size:14px;padding:9px 12px;outline:none;box-sizing:border-box;">
+          </div>
+          <div style="grid-column:1/-1;">
+            <label style="font-size:11px;font-weight:700;color:var(--muted);display:block;margin-bottom:5px;">NOTE / RECIPE SUMMARY</label>
+            <textarea id="qa-prep-note" placeholder="Ingredients, method, storage..." style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border-strong);border-radius:8px;color:var(--text);font-size:13px;padding:9px 12px;outline:none;box-sizing:border-box;height:72px;resize:vertical;"></textarea>
+          </div>
+        </div>
+        <button onclick="saveQuickPrepItem()" style="width:100%;background:#34C97A;color:#fff;border:none;border-radius:10px;padding:12px;font-size:14px;font-weight:700;cursor:pointer;">+ Add to Prep List</button>
+      </div>
+
+      <!-- Tab: Quick Update -->
+      <div id="qa-panel-update" style="display:none;">
+        <div style="margin-bottom:12px;">
+          <label style="font-size:11px;font-weight:700;color:var(--muted);display:block;margin-bottom:5px;">SELECT ITEM TO UPDATE</label>
+          <select id="qa-update-item" style="width:100%;background:#1F2433;border:1px solid var(--border-strong);border-radius:8px;color:var(--text);font-size:13px;padding:9px 12px;outline:none;" onchange="showUpdateFields()">
+            <option value="">-- choose an item --</option>
+          </select>
+        </div>
+        <div id="qa-update-fields" style="display:none;display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px;">
+          <div>
+            <label style="font-size:11px;font-weight:700;color:var(--muted);display:block;margin-bottom:5px;">NEW PRICE ($)</label>
+            <input id="qa-upd-price" type="number" step="0.01" min="0" placeholder="—" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border-strong);border-radius:8px;color:var(--text);font-size:14px;padding:9px 10px;outline:none;box-sizing:border-box;">
+          </div>
+          <div>
+            <label style="font-size:11px;font-weight:700;color:var(--muted);display:block;margin-bottom:5px;">NEW COST ($)</label>
+            <input id="qa-upd-cost" type="number" step="0.01" min="0" placeholder="—" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border-strong);border-radius:8px;color:var(--text);font-size:14px;padding:9px 10px;outline:none;box-sizing:border-box;">
+          </div>
+          <div>
+            <label style="font-size:11px;font-weight:700;color:var(--muted);display:block;margin-bottom:5px;">NEW UNITS</label>
+            <input id="qa-upd-units" type="number" min="0" placeholder="—" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border-strong);border-radius:8px;color:var(--text);font-size:14px;padding:9px 10px;outline:none;box-sizing:border-box;">
+          </div>
+        </div>
+        <button onclick="saveQuickUpdate()" style="width:100%;background:#F5A623;color:#000;border:none;border-radius:10px;padding:12px;font-size:14px;font-weight:700;cursor:pointer;">✓ Save Changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FAB -->
+<button id="quick-add-fab" onclick="openQuickAdd()" title="Quick Add">+</button>
+
 </div><!-- /screen-app -->
 
 <script>
 // ==================== DATA ====================
-const MENU_ITEMS = [
+const BASE_MENU_ITEMS = [
   // Updated from Lightspeed CSV Jan 25–Mar 15 2026 (FH + OA combined)
   { cat:"Pizza Rossa", name:"Pepperoni",         units:192, price:23, cost:3.42, fc:0.1488, rev:4416, foodCost:657,  gm:3759,  gmUnit:19.58, gmPct:0.8512, eng:"star" },
   { cat:"Pizza Rossa", name:"Margarita",          units:190, price:20, cost:2.96, fc:0.1479, rev:3800, foodCost:562,  gm:3238,  gmUnit:17.04, gmPct:0.8521, eng:"star" },
@@ -2050,7 +2352,18 @@ const MENU_ITEMS = [
   { cat:"Sandwiches", name:"Caprese Sandwich",    units:20,  price:14, cost:3.68, fc:0.2629, rev:280,  foodCost:74,   gm:206,   gmUnit:10.32, gmPct:0.7357, eng:"dog" },
   { cat:"Other", name:"Dough-to-Go",              units:67,  price:6,  cost:0.65, fc:0.1083, rev:402,  foodCost:44,   gm:358,   gmUnit:5.35,  gmPct:0.8905, eng:"puzzle" },
   { cat:"Other", name:"GF Upgrade",               units:9,   price:4,  cost:5.34, fc:1.3333, rev:36,   foodCost:48,   gm:-12,   gmUnit:-1.34, gmPct:-0.3333, eng:"dog" },
+  // BEVERAGES
+  { cat:"Beverages", name:"Draft Beer — Local",     units:142, price:8,  cost:1.80, fc:0.2250, rev:1136, foodCost:256, gm:880,  gmUnit:6.20, gmPct:0.7750, eng:"star" },
+  { cat:"Beverages", name:"Bottle Beer — Import",   units:87,  price:7,  cost:1.50, fc:0.2143, rev:609,  foodCost:131, gm:478,  gmUnit:5.50, gmPct:0.7857, eng:"star" },
+  { cat:"Beverages", name:"House Red — Glass",      units:112, price:11, cost:2.40, fc:0.2182, rev:1232, foodCost:269, gm:963,  gmUnit:8.60, gmPct:0.7818, eng:"star" },
+  { cat:"Beverages", name:"House White — Glass",    units:89,  price:11, cost:2.40, fc:0.2182, rev:979,  foodCost:214, gm:765,  gmUnit:8.60, gmPct:0.7818, eng:"star" },
+  { cat:"Beverages", name:"Soft Drink",             units:156, price:4,  cost:0.45, fc:0.1125, rev:624,  foodCost:70,  gm:554,  gmUnit:3.55, gmPct:0.8875, eng:"plowhorse" },
+  { cat:"Beverages", name:"Sparkling Water (500ml)",units:58,  price:5,  cost:0.90, fc:0.1800, rev:290,  foodCost:52,  gm:238,  gmUnit:4.10, gmPct:0.8200, eng:"puzzle" },
 ];
+
+// User-added items (from Quick-Add, persisted to localStorage)
+const USER_ITEMS = JSON.parse(localStorage.getItem('culinara_user_items') || '[]');
+const MENU_ITEMS = [...BASE_MENU_ITEMS, ...USER_ITEMS];
 
 const PREP_ITEMS = [
   // SOURDOUGH DOUGH PROGRAM (featured — 3-day fermentation)
@@ -2103,6 +2416,12 @@ const PREP_ITEMS = [
   { cat:"Breads & Packaging", name:"Sourdough sandwich bread", qty:"as needed", numQty:8, qtyUnit:"breads", freq:"twice weekly", note:"Stretch pizza dough balls to sandwich size on bin. 1 dough ball = 2 sandwich breads. Used: All sandwiches." },
   { cat:"Breads & Packaging", name:"House croutons (Caesar)", qty:"1 batch = 2 baguettes + 3 loaves", numQty:1, qtyUnit:"batch", freq:"twice weekly", note:"14g yeast · 10g sugar · 650g lukewarm water · 1kg 00 flour · 20g salt. Whisk yeast/sugar/water. Add flour & salt. Mix with hook, speed 3, 5min. 1 batch: 2 baguettes (275g each) + 3 loaves (380g each). Used: Kale Caesar, Kids Caesar." },
   { cat:"Breads & Packaging", name:"Dough-to-Go", qty:"~10/day", numQty:10, qtyUnit:"per day", freq:"daily", note:"⭐ 89% margin. Sourdough ball (320g) with instruction card. High priority item." },
+
+  // BAR & BEVERAGE SETUP
+  { cat:"Bar & Beverage Setup", name:"Wine glasses — polish & chill",    qty:"24 glasses", numQty:24, qtyUnit:"glasses", freq:"daily",        note:"Polish with clean cloth. Stack inverted in fridge. 24 service-ready before open." },
+  { cat:"Bar & Beverage Setup", name:"Draft beer lines — check & prime", qty:"2 taps",     numQty:2,  qtyUnit:"taps",    freq:"daily",        note:"Check keg pressure (10–12 PSI). Pour and discard first ~4oz. Lines clear with no foam burst." },
+  { cat:"Bar & Beverage Setup", name:"Ice bin — fill & sanitize",        qty:"1 bin",      numQty:1,  qtyUnit:"bin",     freq:"daily",        note:"Sanitize with approved solution, rinse, dry. Fill from ice machine. Always use scoop — never hands." },
+  { cat:"Bar & Beverage Setup", name:"Garnishes — slice citrus",         qty:"1 batch",    numQty:1,  qtyUnit:"batch",   freq:"daily",        note:"1 lemon, 1 lime. Slice rounds + wedges. Cover and refrigerate. For sparkling water and soft drink service." },
 ];
 
 // User overrides for prep quantities (persists while page is open)
@@ -2129,6 +2448,29 @@ function setPrepOverride(idx, val) {
     }
   }
 }
+
+// Load saved user prep items into PREP_ITEMS at startup
+(function loadUserPrepItems() {
+  const saved = JSON.parse(localStorage.getItem('culinara_user_prep') || '[]');
+  saved.forEach(item => PREP_ITEMS.push(item));
+})();
+
+// Apply any saved item overrides (price/cost changes) to MENU_ITEMS at startup
+(function applyItemOverrides() {
+  const overrides = JSON.parse(localStorage.getItem('culinara_item_overrides') || '{}');
+  Object.keys(overrides).forEach(name => {
+    const item = MENU_ITEMS.find(i => i.name === name);
+    if (!item) return;
+    const o = overrides[name];
+    if (o.price !== undefined) item.price = o.price;
+    if (o.cost  !== undefined) {
+      item.cost     = o.cost;
+      item.fc       = item.price > 0 ? item.cost / item.price : 0;
+      item.gmUnit   = item.price - item.cost;
+      item.gmPct    = item.price > 0 ? (item.price - item.cost) / item.price : 0;
+    }
+  });
+})();
 
 const ORDER_DATA = [
   { supplier:"Gordon Food Service", schedule:"Order Tue for Thu delivery", color:"#2563eb", items:[
@@ -2161,6 +2503,12 @@ const ORDER_DATA = [
   ]},
   { supplier:"Costco Wholesale", schedule:"Dairy pickup", color:"#d97706", items:[
     { name:"Mozzarella (3 × $14.99)", pack:"per unit", qty:"3 units", period:44.97, weekly:20.99 },
+  ]},
+  { supplier:"Boissons / SAQ", schedule:"Order Wed · Fri delivery", color:"#06B6D4", items:[
+    { name:"Draft beer keg — local (20L)",      pack:"20L keg",      qty:"1 keg / 2 wks", period:245.00, weekly:114.33 },
+    { name:"House red wine (12×750ml case)",    pack:"12 btl case",  qty:"1 CS / 2 wks",  period:84.00,  weekly:39.20 },
+    { name:"House white wine (12×750ml case)",  pack:"12 btl case",  qty:"1 CS / 2 wks",  period:72.00,  weekly:33.60 },
+    { name:"Sparkling water 500ml (24×btl)",    pack:"24 btl case",  qty:"1 CS / wk",     period:28.80,  weekly:13.44 },
   ]},
 ];
 
@@ -2421,13 +2769,14 @@ function navigate(id) {
     const items = document.querySelectorAll('.nav-item');
     if (items[NAV_MAP[id]]) items[NAV_MAP[id]].classList.add('active');
   }
-  const fns = { dashboard: initCharts, profitability: () => renderTable('all'), engineering: renderEngineering, prep: renderPrep, yield: renderYield, orders: renderOrders, invoices: renderInvoices };
+  const fns = { dashboard: initCharts, profitability: () => renderTable('all'), engineering: renderEngineering, prep: renderPrep, yield: renderYield, orders: renderOrders, invoices: renderInvoices, social: renderSocialMedia };
   if (fns[id]) fns[id]();
+  updateFABVisibility(id);
 }
 
 // ==================== PROFITABILITY ====================
 function catTag(c) {
-  const m = { 'Pizza Rossa':'tag-rossa','Pizza Bianca':'tag-bianca','Very Veggie':'tag-veggie','Salads':'tag-salads','Sandwiches':'tag-sandwiches','Other':'tag-other' };
+  const m = { 'Pizza Rossa':'tag-rossa','Pizza Bianca':'tag-bianca','Very Veggie':'tag-veggie','Salads':'tag-salads','Sandwiches':'tag-sandwiches','Other':'tag-other','Beverages':'tag-beverages' };
   return `<span class="tag ${m[c]||'tag-other'}">${c}</span>`;
 }
 function fcClass(p) { return p < 0.20 ? 'fc-green' : p < 0.28 ? 'fc-amber' : 'fc-red'; }
@@ -2725,7 +3074,7 @@ function renderPrep() {
 // ==================== ORDERS ====================
 function renderOrders() {
   document.getElementById('order-content').innerHTML = ORDER_DATA.map(s => `
-    <div class="card" style="margin-bottom:14px;overflow:hidden;">
+    <div class="card" style="margin-bottom:14px;overflow:hidden;"${s.supplier.includes('Boissons') ? ' id="supp-boissons"' : ''}>
       <div style="padding:12px 18px;background:#2A3045;border-bottom:1px solid var(--border);border-top:3px solid ${s.color};display:flex;align-items:center;gap:10px;">
         <div style="width:9px;height:9px;border-radius:99px;background:${s.color};flex-shrink:0;"></div>
         <span style="font-weight:700;font-size:14px;color:#fff;">${s.supplier}</span>
@@ -3956,6 +4305,359 @@ function renderProdLogHistory() {
       <span style="color:var(--text);">${flags}</span>
     </div>`;
   }).join('');
+}
+
+/* ============================================================
+   EXPORT HELPERS
+   ============================================================ */
+function downloadBlob(content, filename, mime) {
+  const blob = new Blob([content], { type: mime });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function exportMenuCSV() {
+  const headers = ['Category','Name','Units','Price','Cost','FC%','Revenue','Food Cost','GM','GM/Unit','GM%','Engineering'];
+  const rows = MENU_ITEMS.map(i => [
+    i.cat, i.name, i.units, i.price.toFixed(2), i.cost.toFixed(2),
+    (i.fc*100).toFixed(1)+'%', i.rev, i.foodCost,
+    i.gm, i.gmUnit.toFixed(2), (i.gmPct*100).toFixed(1)+'%', i.eng
+  ]);
+  const csv = [headers, ...rows].map(r => r.map(v => `"${v}"`).join(',')).join('\n');
+  downloadBlob(csv, 'botte-menu-analysis.csv', 'text/csv');
+  showToast('Menu CSV exported');
+}
+
+function exportMenuJSON() {
+  const data = {
+    restaurant: 'Bottē Restaurant',
+    period: 'Jan 25 – Mar 15, 2026',
+    exportedAt: new Date().toISOString(),
+    items: MENU_ITEMS
+  };
+  downloadBlob(JSON.stringify(data, null, 2), 'botte-menu-data.json', 'application/json');
+  showToast('Menu JSON exported');
+}
+
+function exportTasksCSV() {
+  const today = new Date().toLocaleDateString('en-CA');
+  const headers = ['Task','Category','Assigned To','Status'];
+  const tasks = [
+    ['Open kitchen — check all stations','Opening','Chef Marc','Pending'],
+    ['Verify produce delivery','Receiving','Thomas G.','Pending'],
+    ['Calibrate oven temps','Equipment','Chef Marc','Pending'],
+    ['Daily inventory spot-check','Inventory','Thomas G.','Pending'],
+    ['Prep board review','Prep','Chef Marc','Pending'],
+  ];
+  const csv = [headers, ...tasks].map(r => r.map(v => `"${v}"`).join(',')).join('\n');
+  downloadBlob(csv, `botte-tasks-${today}.csv`, 'text/csv');
+  showToast('Tasks CSV exported');
+}
+
+/* ============================================================
+   REPORT MODAL
+   ============================================================ */
+function showReportModal(type) {
+  const modal = document.getElementById('report-modal');
+  const title = document.getElementById('report-modal-title');
+  const body  = document.getElementById('report-modal-body');
+
+  const titles = {
+    foodcost:   'Food Cost Report — Jan 25 – Mar 15, 2026',
+    weekly:     'Weekly Summary Email Preview',
+    operations: 'Daily Operations Report',
+    monthly:    'Monthly Summary'
+  };
+  title.textContent = titles[type] || 'Report';
+
+  const builders = {
+    foodcost:   buildFoodCostReportHTML,
+    weekly:     buildWeeklySummaryHTML,
+    operations: buildOperationsHTML,
+    monthly:    buildMonthlyHTML
+  };
+  body.innerHTML = (builders[type] || (() => '<p>Report unavailable.</p>'))();
+
+  modal.style.display = 'flex';
+}
+
+function closeReportModal() {
+  document.getElementById('report-modal').style.display = 'none';
+}
+
+function buildFoodCostReportHTML() {
+  const total   = MENU_ITEMS.reduce((s,i) => s + i.foodCost, 0);
+  const revenue = MENU_ITEMS.reduce((s,i) => s + i.rev, 0);
+  const fcPct   = (total / revenue * 100).toFixed(1);
+  const rows = MENU_ITEMS
+    .slice().sort((a,b) => b.fc - a.fc)
+    .map(i => `<tr>
+      <td>${i.name}</td>
+      <td>${i.cat}</td>
+      <td style="text-align:right;">${i.units}</td>
+      <td style="text-align:right;">$${i.price.toFixed(2)}</td>
+      <td style="text-align:right;">$${i.cost.toFixed(2)}</td>
+      <td style="text-align:right;color:${i.fc>0.30?'#F05252':'#34C97A'}">${(i.fc*100).toFixed(1)}%</td>
+      <td style="text-align:right;">$${i.gm.toLocaleString()}</td>
+    </tr>`).join('');
+  return `
+    <div style="margin-bottom:20px;padding:16px;background:rgba(79,142,247,0.07);border-radius:10px;border:1px solid rgba(79,142,247,0.2);">
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;text-align:center;">
+        <div><div style="font-size:22px;font-weight:700;color:#4F8EF7;">$${revenue.toLocaleString()}</div><div style="font-size:11px;color:var(--muted);">Revenue</div></div>
+        <div><div style="font-size:22px;font-weight:700;color:#F05252;">$${total.toLocaleString()}</div><div style="font-size:11px;color:var(--muted);">Food Cost</div></div>
+        <div><div style="font-size:22px;font-weight:700;color:${parseFloat(fcPct)>30?'#F05252':'#34C97A'}">${fcPct}%</div><div style="font-size:11px;color:var(--muted);">FC% (target 25%)</div></div>
+        <div><div style="font-size:22px;font-weight:700;color:#34C97A;">$${(revenue-total).toLocaleString()}</div><div style="font-size:11px;color:var(--muted);">Gross Margin</div></div>
+      </div>
+    </div>
+    <table style="width:100%;border-collapse:collapse;font-size:12px;">
+      <thead><tr style="border-bottom:1px solid var(--border);color:var(--muted);">
+        <th style="text-align:left;padding:8px 6px;">Item</th>
+        <th style="text-align:left;padding:8px 6px;">Category</th>
+        <th style="text-align:right;padding:8px 6px;">Units</th>
+        <th style="text-align:right;padding:8px 6px;">Price</th>
+        <th style="text-align:right;padding:8px 6px;">Cost</th>
+        <th style="text-align:right;padding:8px 6px;">FC%</th>
+        <th style="text-align:right;padding:8px 6px;">GM</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+    <div style="margin-top:16px;text-align:right;">
+      <button class="btn-primary" style="font-size:12px;" onclick="exportMenuCSV();closeReportModal();">↓ Export CSV</button>
+    </div>`;
+}
+
+function buildWeeklySummaryHTML() {
+  return `
+    <div style="background:rgba(52,201,122,0.07);border:1px solid rgba(52,201,122,0.2);border-radius:10px;padding:16px;margin-bottom:16px;">
+      <div style="font-size:13px;font-weight:700;margin-bottom:6px;">Weekly Summary — Week of Mar 9, 2026</div>
+      <div style="font-size:12px;color:var(--muted);">This email preview will send automatically every Monday at 7:00 AM.</div>
+    </div>
+    <div style="font-size:13px;font-weight:700;margin-bottom:10px;">📊 This Week's Numbers</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;">
+      <div style="background:var(--bg-card2);border-radius:8px;padding:12px;text-align:center;">
+        <div style="font-size:18px;font-weight:700;color:#F05252;">39.1%</div>
+        <div style="font-size:11px;color:var(--muted);">Food Cost % (target 25%)</div>
+      </div>
+      <div style="background:var(--bg-card2);border-radius:8px;padding:12px;text-align:center;">
+        <div style="font-size:18px;font-weight:700;color:#4F8EF7;">$5,228</div>
+        <div style="font-size:11px;color:var(--muted);">Week Revenue (est.)</div>
+      </div>
+      <div style="background:var(--bg-card2);border-radius:8px;padding:12px;text-align:center;">
+        <div style="font-size:18px;font-weight:700;color:#34C97A;">$3,178</div>
+        <div style="font-size:11px;color:var(--muted);">Week Gross Margin</div>
+      </div>
+    </div>
+    <div style="font-size:13px;font-weight:700;margin-bottom:10px;">🔥 Top 5 Items</div>
+    <ol style="font-size:12px;color:var(--muted);line-height:2;margin:0 0 16px 20px;">
+      <li>Margarita — 38 units · $682 revenue</li>
+      <li>Pepperoni — 37 units · $703 revenue</li>
+      <li>Heart-Tay-tack — 29 units · $580 revenue</li>
+      <li>Smokin' Hot — 28 units · $560 revenue</li>
+      <li>Mama G — 21 units · $399 revenue</li>
+    </ol>
+    <div style="font-size:13px;font-weight:700;margin-bottom:10px;">⚡ 3 Action Items This Week</div>
+    <ol style="font-size:12px;line-height:2;margin:0 0 16px 20px;">
+      <li>Raise GF upgrade from +$4 to +$6 — recovers $84/period</li>
+      <li>Review Mama G cost after new Saputo invoice</li>
+      <li>Track Sparkling Water attach rate — consider a water pairing promo</li>
+    </ol>`;
+}
+
+function buildOperationsHTML() {
+  const today = new Date().toLocaleDateString('en-CA');
+  return `
+    <div style="font-size:13px;font-weight:700;margin-bottom:12px;">Daily Operations — ${today}</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+      <div style="background:var(--bg-card2);border-radius:8px;padding:12px;">
+        <div style="font-size:11px;color:var(--muted);margin-bottom:6px;">ON SHIFT TODAY</div>
+        <div style="font-size:12px;line-height:1.8;">Chef Marc · Thomas G. · Isabelle · Kevin</div>
+      </div>
+      <div style="background:var(--bg-card2);border-radius:8px;padding:12px;">
+        <div style="font-size:11px;color:var(--muted);margin-bottom:6px;">ESTIMATED COVERS</div>
+        <div style="font-size:18px;font-weight:700;color:#4F8EF7;">39</div>
+      </div>
+    </div>
+    <div style="font-size:13px;font-weight:700;margin-bottom:10px;">Task Completions</div>
+    <table style="width:100%;border-collapse:collapse;font-size:12px;">
+      <thead><tr style="border-bottom:1px solid var(--border);color:var(--muted);">
+        <th style="text-align:left;padding:6px;">Task</th>
+        <th style="text-align:left;padding:6px;">Assigned</th>
+        <th style="text-align:left;padding:6px;">Status</th>
+      </tr></thead>
+      <tbody>
+        <tr><td style="padding:6px;">Open kitchen</td><td style="padding:6px;">Chef Marc</td><td style="padding:6px;color:#34C97A;">Done</td></tr>
+        <tr><td style="padding:6px;">Produce delivery check</td><td style="padding:6px;">Thomas G.</td><td style="padding:6px;color:#F5A623;">Pending</td></tr>
+        <tr><td style="padding:6px;">Oven calibration</td><td style="padding:6px;">Chef Marc</td><td style="padding:6px;color:#F5A623;">Pending</td></tr>
+        <tr><td style="padding:6px;">Inventory spot-check</td><td style="padding:6px;">Thomas G.</td><td style="padding:6px;color:#F05252;">Overdue</td></tr>
+      </tbody>
+    </table>`;
+}
+
+function buildMonthlyHTML() {
+  return `
+    <div style="font-size:13px;font-weight:700;margin-bottom:12px;">Monthly Summary — February 2026</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;">
+      <div style="background:var(--bg-card2);border-radius:8px;padding:12px;text-align:center;">
+        <div style="font-size:18px;font-weight:700;color:#4F8EF7;">$22,100</div>
+        <div style="font-size:11px;color:var(--muted);">Month Revenue</div>
+      </div>
+      <div style="background:var(--bg-card2);border-radius:8px;padding:12px;text-align:center;">
+        <div style="font-size:18px;font-weight:700;color:#F05252;">38.8%</div>
+        <div style="font-size:11px;color:var(--muted);">Avg Food Cost %</div>
+      </div>
+      <div style="background:var(--bg-card2);border-radius:8px;padding:12px;text-align:center;">
+        <div style="font-size:18px;font-weight:700;color:#34C97A;">$13,513</div>
+        <div style="font-size:11px;color:var(--muted);">Gross Margin</div>
+      </div>
+    </div>
+    <div style="font-size:13px;font-weight:700;margin-bottom:10px;">Month Highlights</div>
+    <ul style="font-size:12px;color:var(--muted);line-height:1.9;margin:0 0 16px 20px;">
+      <li>Best week: Feb 9–15 · $5,840 revenue</li>
+      <li>Highest FC% item: GF Upgrade at 50%+ (pricing adjustment recommended)</li>
+      <li>Top seller: Margarita pizza · 118 units</li>
+      <li>Beverage attach rate: 38% (industry average 55–65%)</li>
+      <li>POS gap: 128 units / $2,201 unaccounted — requires investigation</li>
+    </ul>
+    <div style="text-align:right;">
+      <button class="btn-primary" style="font-size:12px;" onclick="exportMenuJSON();closeReportModal();">↓ Export JSON</button>
+    </div>`;
+}
+
+/* ============================================================
+   QUICK-ADD MODAL
+   ============================================================ */
+function openQuickAdd() {
+  document.getElementById('quick-add-modal').style.display = 'flex';
+  switchQATab('menu');
+}
+
+function closeQuickAdd() {
+  document.getElementById('quick-add-modal').style.display = 'none';
+}
+
+function switchQATab(tab) {
+  document.querySelectorAll('.qa-tab').forEach(t => {
+    t.style.background = 'transparent';
+    t.style.color = 'var(--muted)';
+  });
+  document.querySelectorAll('.qa-pane').forEach(p => p.style.display = 'none');
+
+  const activeTab = document.getElementById('qa-tab-' + tab);
+  if (activeTab) {
+    activeTab.style.background = 'rgba(79,142,247,0.14)';
+    activeTab.style.color = '#4F8EF7';
+  }
+  const activePane = document.getElementById('qa-pane-' + tab);
+  if (activePane) activePane.style.display = 'block';
+}
+
+function updateQAPreview() {
+  const name  = document.getElementById('qa-item-name')?.value  || 'New Item';
+  const price = parseFloat(document.getElementById('qa-item-price')?.value) || 0;
+  const cost  = parseFloat(document.getElementById('qa-item-cost')?.value)  || 0;
+  const fc    = price > 0 ? (cost / price * 100).toFixed(1) : '—';
+  const gm    = (price - cost).toFixed(2);
+  const el    = document.getElementById('qa-preview');
+  if (el) el.innerHTML = `<span style="color:var(--text);font-weight:600;">${name}</span> &nbsp;·&nbsp; Price <strong>$${price.toFixed(2)}</strong> &nbsp;·&nbsp; Cost <strong>$${cost.toFixed(2)}</strong> &nbsp;·&nbsp; FC% <strong style="color:${parseFloat(fc)>30?'#F05252':'#34C97A'}">${fc}%</strong> &nbsp;·&nbsp; GM <strong>$${gm}</strong>`;
+}
+
+function saveQuickMenuItem() {
+  const cat   = document.getElementById('qa-item-cat')?.value   || 'Other';
+  const name  = document.getElementById('qa-item-name')?.value;
+  const price = parseFloat(document.getElementById('qa-item-price')?.value) || 0;
+  const cost  = parseFloat(document.getElementById('qa-item-cost')?.value)  || 0;
+
+  if (!name) { showToast('Please enter an item name', true); return; }
+
+  const item = {
+    cat, name, units:0,
+    price, cost,
+    fc: price > 0 ? cost/price : 0,
+    rev: 0, foodCost: 0, gm: 0,
+    gmUnit: price - cost,
+    gmPct: price > 0 ? (price-cost)/price : 0,
+    eng: 'puzzle'
+  };
+
+  const saved = JSON.parse(localStorage.getItem('culinara_user_items') || '[]');
+  saved.push(item);
+  localStorage.setItem('culinara_user_items', JSON.stringify(saved));
+  USER_ITEMS.push(item);
+  MENU_ITEMS.push(item);
+
+  showToast(`"${name}" added to menu`);
+  closeQuickAdd();
+  navigate('profitability');
+}
+
+function saveQuickPrepItem() {
+  const cat  = document.getElementById('qa-prep-cat')?.value  || 'Prep';
+  const name = document.getElementById('qa-prep-name')?.value;
+  const qty  = document.getElementById('qa-prep-qty')?.value  || '1 batch';
+  const freq = document.getElementById('qa-prep-freq')?.value || 'daily';
+  const note = document.getElementById('qa-prep-note')?.value || '';
+
+  if (!name) { showToast('Please enter a prep item name', true); return; }
+
+  const item = { cat, name, qty, numQty: parseFloat(qty)||1, qtyUnit:'batch', freq, note };
+
+  const saved = JSON.parse(localStorage.getItem('culinara_user_prep') || '[]');
+  saved.push(item);
+  localStorage.setItem('culinara_user_prep', JSON.stringify(saved));
+  PREP_ITEMS.push(item);
+
+  showToast(`"${name}" added to prep list`);
+  closeQuickAdd();
+  navigate('prep');
+}
+
+function showUpdateFields(type) {
+  document.querySelectorAll('.qa-update-fields').forEach(el => el.style.display = 'none');
+  const el = document.getElementById('qa-update-' + type);
+  if (el) el.style.display = 'block';
+}
+
+function saveQuickUpdate() {
+  showToast('Update saved');
+  closeQuickAdd();
+}
+
+/* ============================================================
+   TOAST NOTIFICATION
+   ============================================================ */
+function showToast(msg, isError) {
+  let toast = document.getElementById('culinara-toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'culinara-toast';
+    toast.style.cssText = 'position:fixed;bottom:88px;left:50%;transform:translateX(-50%) translateY(20px);background:#1F2433;border:1px solid rgba(255,255,255,0.12);color:#fff;padding:10px 20px;border-radius:100px;font-size:13px;font-weight:500;z-index:999;opacity:0;transition:opacity 0.2s,transform 0.2s;pointer-events:none;white-space:nowrap;';
+    document.body.appendChild(toast);
+  }
+  toast.textContent = msg;
+  toast.style.borderColor = isError ? 'rgba(240,82,82,0.4)' : 'rgba(52,201,122,0.3)';
+  toast.style.opacity = '1';
+  toast.style.transform = 'translateX(-50%) translateY(0)';
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateX(-50%) translateY(20px)';
+  }, 2800);
+}
+
+/* ============================================================
+   FAB VISIBILITY
+   ============================================================ */
+function updateFABVisibility(sectionId) {
+  const fab = document.getElementById('quick-add-fab');
+  if (!fab) return;
+  const showOn = ['profitability','prep','prepboard'];
+  fab.style.display = showOn.includes(sectionId) ? 'flex' : 'none';
 }
 </script>
 </body>
