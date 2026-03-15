@@ -2052,10 +2052,12 @@ const MENU_ITEMS = [
 ];
 
 const PREP_ITEMS = [
-  // DOUGHS & BASES
-  { cat:"Doughs & Bases", name:"Sourdough pizza dough (72hr ferment)", qty:"~78 balls/sac", freq:"daily", note:"Organic 00 flour · Water · Salt · Sourdough starter. 320g per ball. 72hr cold ferment — plan 3 days ahead." },
-  { cat:"Doughs & Bases", name:"Pizza tomato sauce base", qty:"~1 batch", freq:"twice weekly", note:"6 cans Farinex pelées · ½ cup salt · ⅛ cup pepper · 2 cups oil. Food mill → follow video. Store: basement dry stock; once made, refrigerate." },
-  { cat:"Doughs & Bases", name:"Gluten-free Neapolitan crust", qty:"par stock", freq:"as needed", note:"⚠ Comes frozen from GFS. Keep par stock in freezer. Always have some ready for service. +$4 surcharge (currently losing $1.34/sale — raise to +$6)." },
+  // SOURDOUGH DOUGH PROGRAM (featured — 3-day fermentation)
+  { cat:"Sourdough Dough Program", name:"Sourdough pizza dough", qty:"~78 balls/sac", freq:"daily", note:"Organic 00 flour · Water · Salt · Sourdough starter. 320g per ball. 72hr cold ferment — plan 3 days ahead." },
+
+  // PIZZA BASES
+  { cat:"Pizza Bases", name:"Pizza tomato sauce base", qty:"~1 batch", freq:"twice weekly", note:"6 cans Farinex pelées · ½ cup salt · ⅛ cup pepper · 2 cups oil. Food mill → follow video. Store: basement dry stock; once made, refrigerate." },
+  { cat:"Pizza Bases", name:"Gluten-free Neapolitan crust", qty:"par stock", freq:"as needed", note:"⚠ Comes frozen from GFS. Keep par stock in freezer. Always have some ready for service. +$4 surcharge (currently losing $1.34/sale — raise to +$6)." },
 
   // PREPARED PROTEINS
   { cat:"Prepared Proteins", name:"House-smoked bacon (48hr brine + smoke)", qty:"~7 KG case", freq:"twice weekly", note:"⚠ PLAN 2 DAYS AHEAD. Brine: 5.5L water · 275g salt · 183g brown sugar · 11 garlic cloves (smashed) · 7 bay leaves · 1 tbsp + 2 tsp black peppercorns · cider vinegar. Heat until dissolved, add herbs, cool fully. Submerge pork belly, fully covered. Brine 48hr walk-in. Smoke on oven smoking setting. Used: Brooklyn Pineapple, Heart-Tay-tack, Kale Caesar, Chicken Club." },
@@ -2564,8 +2566,104 @@ function freqClass(f) { return f==='daily'?'freq-daily':f==='twice'?'freq-twice'
 function freqLabel(f) { return f==='daily'?'Daily':f==='twice'?'2× per week':'Weekly'; }
 function renderPrep() {
   const cats = [...new Set(PREP_ITEMS.map(i=>i.cat))];
-  document.getElementById('prep-content').innerHTML = cats.map(cat => {
-    const items = PREP_ITEMS.filter(i=>i.cat===cat);
+  const doughItem = PREP_ITEMS.find(i => i.cat === 'Sourdough Dough Program');
+  const otherCats = cats.filter(c => c !== 'Sourdough Dough Program');
+  let html = '';
+
+  // ── Sourdough Dough Program — featured full-width card ──────────────────────
+  if (doughItem) {
+    html += `
+    <div style="margin-bottom:28px;">
+      <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:#F5A623;margin-bottom:12px;">🫓 Sourdough Dough Program</div>
+      <div class="card" style="border-color:rgba(245,166,35,0.3);padding:20px;">
+
+        <!-- Header row -->
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:12px;">
+          <div>
+            <div style="font-size:15px;font-weight:700;">Sourdough Pizza Dough — 72hr Cold Ferment</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:3px;">Organic 00 flour · Water · Salt · Sourdough starter · 320g per ball</div>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <div style="background:rgba(245,166,35,0.12);border:1px solid rgba(245,166,35,0.25);border-radius:8px;padding:8px 14px;text-align:center;">
+              <div style="font-size:18px;font-weight:800;color:#F5A623;line-height:1;">~78</div>
+              <div style="font-size:10px;color:var(--muted);margin-top:2px;">balls/sac</div>
+            </div>
+            <div style="background:rgba(245,166,35,0.12);border:1px solid rgba(245,166,35,0.25);border-radius:8px;padding:8px 14px;text-align:center;">
+              <div style="font-size:18px;font-weight:800;color:#F5A623;line-height:1;">72h</div>
+              <div style="font-size:10px;color:var(--muted);margin-top:2px;">cold ferment</div>
+            </div>
+            <div style="background:rgba(245,166,35,0.12);border:1px solid rgba(245,166,35,0.25);border-radius:8px;padding:8px 14px;text-align:center;">
+              <div style="font-size:18px;font-weight:800;color:#F5A623;line-height:1;">Daily</div>
+              <div style="font-size:10px;color:var(--muted);margin-top:2px;">frequency</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3-Day Timeline -->
+        <div style="display:grid;grid-template-columns:1fr 28px 1fr 28px 1fr;align-items:start;gap:0;margin-bottom:16px;">
+
+          <!-- Day 1 -->
+          <div style="background:rgba(245,166,35,0.08);border:1px solid rgba(245,166,35,0.25);border-radius:10px;padding:14px 16px;">
+            <div style="display:flex;align-items:center;gap:7px;margin-bottom:10px;">
+              <div style="width:24px;height:24px;background:#F5A623;border-radius:99px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#000;flex-shrink:0;">1</div>
+              <div style="font-size:12px;font-weight:800;color:#F5A623;text-transform:uppercase;letter-spacing:0.05em;">Mix Day</div>
+            </div>
+            <div style="font-size:12px;color:var(--text);line-height:1.75;">
+              • Feed sourdough starter (4hr before mixing)<br>
+              • Mix: 00 flour + water + salt + active starter<br>
+              • Bulk ferment at room temp 2–3hr<br>
+              • Divide into 320g balls, lightly oil, cover<br>
+              • <strong style="color:#F5A623;">→ Into walk-in fridge</strong>
+            </div>
+          </div>
+
+          <!-- Arrow 1 -->
+          <div style="display:flex;align-items:center;justify-content:center;padding-top:28px;color:var(--muted);font-size:16px;">→</div>
+
+          <!-- Day 2 -->
+          <div style="background:rgba(79,142,247,0.07);border:1px solid rgba(79,142,247,0.2);border-radius:10px;padding:14px 16px;">
+            <div style="display:flex;align-items:center;gap:7px;margin-bottom:10px;">
+              <div style="width:24px;height:24px;background:#4F8EF7;border-radius:99px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff;flex-shrink:0;">2</div>
+              <div style="font-size:12px;font-weight:800;color:#4F8EF7;text-transform:uppercase;letter-spacing:0.05em;">Cold Proof</div>
+            </div>
+            <div style="font-size:12px;color:var(--text);line-height:1.75;">
+              • Balls resting in walk-in<br>
+              • Cold retard slows fermentation<br>
+              • Develops complex flavour &amp; structure<br>
+              • <span style="color:var(--muted);">No action needed — trust the process</span>
+            </div>
+          </div>
+
+          <!-- Arrow 2 -->
+          <div style="display:flex;align-items:center;justify-content:center;padding-top:28px;color:var(--muted);font-size:16px;">→</div>
+
+          <!-- Day 3 -->
+          <div style="background:rgba(52,201,122,0.08);border:1px solid rgba(52,201,122,0.25);border-radius:10px;padding:14px 16px;">
+            <div style="display:flex;align-items:center;gap:7px;margin-bottom:10px;">
+              <div style="width:24px;height:24px;background:#34C97A;border-radius:99px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff;flex-shrink:0;">3</div>
+              <div style="font-size:12px;font-weight:800;color:#34C97A;text-transform:uppercase;letter-spacing:0.05em;">Service Day</div>
+            </div>
+            <div style="font-size:12px;color:var(--text);line-height:1.75;">
+              • Pull balls 2–3hr before service<br>
+              • Temper at room temp<br>
+              • Hand-stretch to order<br>
+              • ⭐ Dough-to-Go: pre-bag 320g balls
+            </div>
+          </div>
+        </div>
+
+        <!-- Planning tip -->
+        <div style="background:rgba(255,255,255,0.04);border-left:3px solid #F5A623;border-radius:0 8px 8px 0;padding:11px 14px;font-size:12px;color:var(--muted);line-height:1.6;">
+          ⏱ <strong style="color:var(--text);">Plan ahead —</strong> Friday service needs dough mixed on <strong style="color:#F5A623;">Tuesday</strong>. Run daily batches to keep a rolling 3-day stock. &nbsp;·&nbsp; 1 sac (25kg 00 flour) → ~78 balls → 78 pizzas.
+        </div>
+
+      </div>
+    </div>`;
+  }
+
+  // ── All other prep categories ────────────────────────────────────────────────
+  html += otherCats.map(cat => {
+    const items = PREP_ITEMS.filter(i => i.cat === cat);
     return `<div style="margin-bottom:22px;">
       <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:10px;">${cat}</div>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px;">
@@ -2580,6 +2678,8 @@ function renderPrep() {
       </div>
     </div>`;
   }).join('');
+
+  document.getElementById('prep-content').innerHTML = html;
 }
 
 // ==================== ORDERS ====================
