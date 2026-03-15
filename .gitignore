@@ -1,0 +1,22 @@
+# Private data files
+*.xlsx
+*.xls
+*.docx
+*.doc
+*.pdf
+
+# Dev server
+serve.py
+
+# macOS
+.DS_Store
+.DS_Store?
+._*
+
+# Claude internal
+.claude/
+
+# Node (for future)
+node_modules/
+.env
+.env.local
