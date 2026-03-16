@@ -343,41 +343,45 @@ tr:last-child td { border-bottom: none; }
   </div>
 
   <div style="padding:8px 0;flex:1;overflow-y:auto;">
-    <div class="nav-label">Overview</div>
+    <div class="nav-label" id="nav-lbl-overview">Overview</div>
     <div class="nav-item" onclick="navigate('insights')">
-      <span class="nav-icon">✦</span>Insights
+      <span class="nav-icon">✦</span><span data-i18n="nav_insights">Insights</span>
       <span style="margin-left:auto;background:rgba(79,142,247,0.25);color:#4F8EF7;font-size:9px;font-weight:800;padding:1px 6px;border-radius:99px;letter-spacing:0.03em;">AI</span>
     </div>
-    <div class="nav-item" onclick="navigate('dashboard')"><span class="nav-icon">▦</span>Dashboard</div>
-    <div class="nav-item" onclick="navigate('snapshot')"><span class="nav-icon">◉</span>Weekly Snapshot</div>
-    <div class="nav-label" style="margin-top:6px;">Analysis</div>
-    <div class="nav-item" onclick="navigate('profitability')"><span class="nav-icon">◎</span>Food Cost</div>
-    <div class="nav-item" onclick="navigate('engineering')"><span class="nav-icon">◈</span>Menu Analysis</div>
-    <div class="nav-item" onclick="navigate('efficiency')"><span class="nav-icon">◇</span>Efficiency</div>
-    <div class="nav-label" style="margin-top:6px;">Operations</div>
-    <div class="nav-item" onclick="navigate('prep')"><span class="nav-icon">⊞</span>Prep &amp; Recipes</div>
+    <div class="nav-item" onclick="navigate('ask')"><span class="nav-icon">💬</span><span data-i18n="nav_ask">Ask AI</span></div>
+    <div class="nav-item" onclick="navigate('dashboard')"><span class="nav-icon">▦</span><span data-i18n="nav_dashboard">Dashboard</span></div>
+    <div class="nav-item" onclick="navigate('snapshot')"><span class="nav-icon">◉</span><span data-i18n="nav_snapshot">Weekly Snapshot</span></div>
+    <div class="nav-label" id="nav-lbl-analysis" style="margin-top:6px;">Analysis</div>
+    <div class="nav-item" onclick="navigate('profitability')"><span class="nav-icon">◎</span><span data-i18n="nav_foodcost">Food Cost</span></div>
+    <div class="nav-item" onclick="navigate('engineering')"><span class="nav-icon">◈</span><span data-i18n="nav_menuanalysis">Menu Analysis</span></div>
+    <div class="nav-item" onclick="navigate('efficiency')"><span class="nav-icon">◇</span><span data-i18n="nav_efficiency">Efficiency</span></div>
+    <div class="nav-label" id="nav-lbl-operations" style="margin-top:6px;">Operations</div>
+    <div class="nav-item" onclick="navigate('prep')"><span class="nav-icon">⊞</span><span data-i18n="nav_prep">Prep &amp; Recipes</span></div>
     <div class="nav-item" onclick="navigate('prepboard')">
-      <span class="nav-icon">▣</span>Prep Board
+      <span class="nav-icon">▣</span><span data-i18n="nav_prepboard">Prep Board</span>
       <span style="margin-left:auto;background:rgba(52,201,122,0.2);color:#34C97A;font-size:9px;font-weight:800;padding:1px 6px;border-radius:99px;letter-spacing:0.03em;animation:blink 2s infinite;">LIVE</span>
     </div>
-    <div class="nav-item" onclick="navigate('yield')"><span class="nav-icon">⚖</span>Yield Control</div>
-    <div class="nav-item" onclick="navigate('inventory')"><span class="nav-icon">◫</span>Inventory</div>
-    <div class="nav-item" onclick="navigate('orders')"><span class="nav-icon">◻</span>Order Guide</div>
-    <div class="nav-item" onclick="navigate('staff')"><span class="nav-icon">◯</span>Staff &amp; Tasks</div>
+    <div class="nav-item" onclick="navigate('yield')"><span class="nav-icon">⚖</span><span data-i18n="nav_yield">Yield Control</span></div>
+    <div class="nav-item" onclick="navigate('inventory')"><span class="nav-icon">◫</span><span data-i18n="nav_inventory">Inventory</span></div>
+    <div class="nav-item" onclick="navigate('orders')"><span class="nav-icon">◻</span><span data-i18n="nav_orders">Order Guide</span></div>
+    <div class="nav-item" onclick="navigate('staff')"><span class="nav-icon">◯</span><span data-i18n="nav_staff">Staff &amp; Tasks</span></div>
     <div class="nav-item" onclick="navigate('invoices')">
-      <span class="nav-icon">◱</span>Invoices
+      <span class="nav-icon">◱</span><span data-i18n="nav_invoices">Invoices</span>
       <span style="margin-left:auto;background:rgba(240,82,82,0.25);color:#F05252;font-size:10px;font-weight:700;padding:1px 6px;border-radius:99px;">3</span>
     </div>
-    <div class="nav-item" onclick="navigate('reports')"><span class="nav-icon">◰</span>Reports</div>
-    <div class="nav-item" onclick="navigate('social')"><span class="nav-icon">✦</span>Social Media</div>
-    <div class="nav-label" style="margin-top:6px;">Settings</div>
-    <div class="nav-item" onclick="navigate('settings')"><span class="nav-icon">◧</span>Integrations</div>
+    <div class="nav-item" onclick="navigate('reports')"><span class="nav-icon">◰</span><span data-i18n="nav_reports">Reports</span></div>
+    <div class="nav-item" onclick="navigate('social')"><span class="nav-icon">✦</span><span data-i18n="nav_social">Social Media</span></div>
+    <div class="nav-label" id="nav-lbl-settings" style="margin-top:6px;">Settings</div>
+    <div class="nav-item" onclick="navigate('settings')"><span class="nav-icon">◧</span><span data-i18n="nav_settings">Integrations</span></div>
   </div>
 
   <div style="padding:12px 14px;border-top:1px solid rgba(255,255,255,0.04);">
     <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;">
       <div class="live-dot"></div>
       <div style="color:#30D158;font-size:11px;font-weight:600;">Live sync active</div>
+    </div>
+    <div style="padding:0 0 8px 0;">
+      <button id="lang-toggle-btn" onclick="toggleLang()" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:var(--muted);font-size:11.5px;font-weight:700;padding:7px;border-radius:8px;cursor:pointer;letter-spacing:0.08em;transition:all 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">FR</button>
     </div>
     <div style="display:flex;align-items:center;gap:9px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:9px;padding:10px 11px;cursor:pointer;">
       <div class="user-avatar" id="sidebar-user-avatar">TG</div>
@@ -574,6 +578,17 @@ tr:last-child td { border-bottom: none; }
     </div>
 
   </div>
+</div>
+
+<!-- ===== SECTION: ASK AI ===== -->
+<div id="section-ask" class="section" style="padding:28px 32px;">
+  <div class="section-header">
+    <div>
+      <h2 class="section-title" id="ask-section-title">Ask AI</h2>
+      <div class="section-subtitle" id="ask-section-sub">Ask anything about Bottē's performance</div>
+    </div>
+  </div>
+  <div id="ask-content"></div>
 </div>
 
 <!-- ===== SECTION: DASHBOARD ===== -->
@@ -1391,6 +1406,16 @@ tr:last-child td { border-bottom: none; }
     <div><div class="section-title">Invoice Inbox</div><div style="margin-top:5px;"><code style="font-family:monospace;font-size:12px;background:rgba(10,132,255,0.12);color:#3D9BFF;padding:3px 10px;border-radius:6px;">invoices@botte.culinara.os</code></div></div>
     <button class="btn-primary" onclick="alert('Upload a PDF invoice — AI extracts all line items, matches to QuickBooks, and flags variances.')">+ Upload Invoice</button>
   </div>
+  <details style="margin-bottom:18px;background:rgba(6,182,212,0.05);border:1px solid rgba(6,182,212,0.2);border-radius:12px;padding:0;overflow:hidden;">
+    <summary style="padding:13px 18px;cursor:pointer;font-size:13px;font-weight:700;color:#06B6D4;list-style:none;display:flex;align-items:center;gap:8px;">🇫🇷 French → English Invoice Translator <span style="font-size:11px;font-weight:500;color:var(--muted);margin-left:auto;">click to expand</span></summary>
+    <div style="padding:0 18px 16px;" id="fr-en-translator-body">
+      <div style="font-size:12px;color:var(--muted);margin-bottom:14px;">Quebec supplier invoices arrive in French. Reference this dictionary when reviewing deliveries or entering invoice data.</div>
+      <div id="fr-en-search-row" style="margin-bottom:12px;display:flex;gap:10px;">
+        <input id="fr-en-search" type="text" placeholder="Search term (e.g. farine, caisse, tomates...)" oninput="filterFREN(this.value)" style="flex:1;background:rgba(255,255,255,0.05);border:1px solid var(--border-strong);border-radius:8px;color:var(--text);font-size:13px;padding:8px 12px;outline:none;">
+      </div>
+      <div id="fr-en-terms-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:0;"></div>
+    </div>
+  </details>
   <div style="display:grid;grid-template-columns:3fr 2fr;gap:16px;">
     <div class="card" style="overflow:hidden;">
       <div style="padding:12px 18px;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.02);">
@@ -2758,7 +2783,7 @@ function loadRestaurantData(id) {
 }
 
 // ==================== NAVIGATION ====================
-const NAV_MAP = { insights:0, dashboard:1, snapshot:2, profitability:3, engineering:4, efficiency:5, prep:6, prepboard:7, yield:8, inventory:9, orders:10, staff:11, invoices:12, reports:13, social:14, settings:15 };
+const NAV_MAP = { insights:0, ask:1, dashboard:2, snapshot:3, profitability:4, engineering:5, efficiency:6, prep:7, prepboard:8, yield:9, inventory:10, orders:11, staff:12, invoices:13, reports:14, social:15, settings:16 };
 
 function navigate(id) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -2769,7 +2794,7 @@ function navigate(id) {
     const items = document.querySelectorAll('.nav-item');
     if (items[NAV_MAP[id]]) items[NAV_MAP[id]].classList.add('active');
   }
-  const fns = { dashboard: initCharts, profitability: () => renderTable('all'), engineering: renderEngineering, prep: renderPrep, yield: renderYield, orders: renderOrders, invoices: renderInvoices, social: renderSocialMedia };
+  const fns = { dashboard: initCharts, profitability: () => renderTable('all'), engineering: renderEngineering, prep: renderPrep, yield: renderYield, orders: renderOrders, invoices: () => { renderInvoices(); renderFRENTranslator(); }, social: renderSocialMedia, ask: renderAsk };
   if (fns[id]) fns[id]();
   updateFABVisibility(id);
 }
@@ -4659,6 +4684,440 @@ function updateFABVisibility(sectionId) {
   const showOn = ['profitability','prep','prepboard'];
   fab.style.display = showOn.includes(sectionId) ? 'flex' : 'none';
 }
+
+// ==================== BILINGUAL / LANG ====================
+let LANG = localStorage.getItem('culinara_lang') || 'en';
+
+const T = {
+  en: {
+    // Nav
+    nav_insights:'Insights', nav_dashboard:'Dashboard', nav_snapshot:'Weekly Snapshot',
+    nav_foodcost:'Food Cost', nav_menuanalysis:'Menu Analysis', nav_efficiency:'Efficiency',
+    nav_prep:'Prep & Recipes', nav_prepboard:'Prep Board', nav_yield:'Yield Control',
+    nav_inventory:'Inventory', nav_orders:'Order Guide', nav_staff:'Staff & Tasks',
+    nav_invoices:'Invoices', nav_reports:'Reports', nav_social:'Social Media',
+    nav_settings:'Integrations', nav_ask:'Ask AI',
+    nav_label_overview:'Overview', nav_label_analysis:'Analysis',
+    nav_label_operations:'Operations', nav_label_settings:'Settings',
+    // Section headers
+    sec_insights:'Intelligence Overview', sec_dashboard:'Dashboard',
+    sec_foodcost:'Food Cost', sec_menuanalysis:'Menu Analysis',
+    sec_efficiency:'Efficiency', sec_prep:'Prep & Recipes',
+    sec_orders:'Order Guide', sec_invoices:'Invoices', sec_reports:'Reports',
+    // Common
+    btn_add:'+ Add Item', btn_save:'Save', btn_cancel:'Cancel',
+    btn_export:'Export', btn_print:'Print', btn_sync:'Sync Now',
+    label_units:'Units', label_price:'Price', label_cost:'Cost',
+    label_revenue:'Revenue', label_fc:'Food Cost %', label_gm:'Gross Margin',
+    label_covers:'Covers Today', label_projected:'Projected',
+    // Invoice translator labels
+    inv_translator_title:'French → English Ingredient Translator',
+    inv_translator_desc:'Quebec supplier invoices arrive in French. Common terms:',
+  },
+  fr: {
+    // Nav
+    nav_insights:'Aperçus', nav_dashboard:'Tableau de bord', nav_snapshot:'Bilan hebdo',
+    nav_foodcost:'Coût des aliments', nav_menuanalysis:'Analyse du menu', nav_efficiency:'Efficacité',
+    nav_prep:'Préparations', nav_prepboard:'Tableau de prépa', nav_yield:'Contrôle des pertes',
+    nav_inventory:'Inventaire', nav_orders:'Guide de commande', nav_staff:'Personnel & tâches',
+    nav_invoices:'Factures', nav_reports:'Rapports', nav_social:'Médias sociaux',
+    nav_settings:'Intégrations', nav_ask:'Assistant IA',
+    nav_label_overview:'Vue d\'ensemble', nav_label_analysis:'Analyse',
+    nav_label_operations:'Opérations', nav_label_settings:'Paramètres',
+    // Section headers
+    sec_insights:'Vue d\'ensemble', sec_dashboard:'Tableau de bord',
+    sec_foodcost:'Coût des aliments', sec_menuanalysis:'Analyse du menu',
+    sec_efficiency:'Efficacité', sec_prep:'Préparations',
+    sec_orders:'Guide de commande', sec_invoices:'Factures', sec_reports:'Rapports',
+    // Common
+    btn_add:'+ Ajouter', btn_save:'Sauvegarder', btn_cancel:'Annuler',
+    btn_export:'Exporter', btn_print:'Imprimer', btn_sync:'Synchroniser',
+    label_units:'Unités', label_price:'Prix', label_cost:'Coût',
+    label_revenue:'Revenus', label_fc:'Coût des aliments %', label_gm:'Marge brute',
+    label_covers:'Couverts aujourd\'hui', label_projected:'Projeté',
+    // Invoice translator labels
+    inv_translator_title:'Traducteur factures : Français → Anglais',
+    inv_translator_desc:'Les factures des fournisseurs du Québec arrivent en français. Termes courants :',
+  }
+};
+
+function t(key) { return (T[LANG] && T[LANG][key]) || (T['en'] && T['en'][key]) || key; }
+
+// French food / invoice terminology dictionary (for translation reference)
+const FR_EN_TERMS = [
+  // Produce / Légumes
+  { fr:'Caisse', en:'Case/Box', category:'Quantities' },
+  { fr:'Boîte', en:'Box', category:'Quantities' },
+  { fr:'Sac', en:'Bag/Sack', category:'Quantities' },
+  { fr:'Litre / L', en:'Litre', category:'Quantities' },
+  { fr:'Kilogramme / kg', en:'Kilogram', category:'Quantities' },
+  { fr:'Unité / UN', en:'Unit / Each', category:'Quantities' },
+  { fr:'Douzaine', en:'Dozen', category:'Quantities' },
+  // Proteins
+  { fr:'Poitrine de porc', en:'Pork belly', category:'Proteins' },
+  { fr:'Poitrine de poulet', en:'Chicken breast', category:'Proteins' },
+  { fr:'Prosciutto', en:'Prosciutto (same)', category:'Proteins' },
+  { fr:'Saucisse', en:'Sausage', category:'Proteins' },
+  { fr:'Spianata piccante', en:'Spicy salami', category:'Proteins' },
+  { fr:'Veau', en:'Veal', category:'Proteins' },
+  { fr:'Boeuf', en:'Beef', category:'Proteins' },
+  // Dairy / Fromage
+  { fr:'Fior di latte', en:'Fresh mozzarella', category:'Dairy' },
+  { fr:'Fromage de chèvre', en:'Goat cheese', category:'Dairy' },
+  { fr:'Ricotta', en:'Ricotta (same)', category:'Dairy' },
+  { fr:'Gorgonzola', en:'Gorgonzola (same)', category:'Dairy' },
+  { fr:'Parmesan / Grana Padano', en:'Parmesan', category:'Dairy' },
+  { fr:'Mozzarella râpée', en:'Shredded mozzarella', category:'Dairy' },
+  { fr:'Mascarpone', en:'Mascarpone (same)', category:'Dairy' },
+  { fr:'Crème', en:'Cream', category:'Dairy' },
+  // Dry / Pantry
+  { fr:'Farine', en:'Flour', category:'Dry Goods' },
+  { fr:'Farine Tipo 00 bio', en:'Organic 00 pizza flour', category:'Dry Goods' },
+  { fr:'Tomates pelées', en:'Crushed/peeled tomatoes', category:'Dry Goods' },
+  { fr:'Tomates italiennes pelées', en:'Italian peeled tomatoes', category:'Dry Goods' },
+  { fr:'Sel', en:'Salt', category:'Dry Goods' },
+  { fr:'Sel casher', en:'Kosher salt', category:'Dry Goods' },
+  { fr:'Huile d\'olive', en:'Olive oil', category:'Dry Goods' },
+  { fr:'Vinaigre de vin rouge', en:'Red wine vinegar', category:'Dry Goods' },
+  { fr:'Miel', en:'Honey', category:'Dry Goods' },
+  { fr:'Tahini', en:'Tahini (same)', category:'Dry Goods' },
+  { fr:'Pois chiches', en:'Chickpeas', category:'Dry Goods' },
+  { fr:'Anchois', en:'Anchovies', category:'Dry Goods' },
+  { fr:'Câpres', en:'Capers', category:'Dry Goods' },
+  { fr:'Olives Kalamata', en:'Kalamata olives', category:'Dry Goods' },
+  // Produce
+  { fr:'Basilic', en:'Basil', category:'Produce' },
+  { fr:'Kale / Chou frisé', en:'Kale', category:'Produce' },
+  { fr:'Laitue romaine', en:'Romaine lettuce', category:'Produce' },
+  { fr:'Oignon rouge', en:'Red onion', category:'Produce' },
+  { fr:'Ananas', en:'Pineapple', category:'Produce' },
+  { fr:'Patate douce / Yam', en:'Sweet potato', category:'Produce' },
+  { fr:'Champignon shiitake', en:'Shiitake mushroom', category:'Produce' },
+  { fr:'Champignon portobello', en:'Portobello mushroom', category:'Produce' },
+  { fr:'Champignon bouton', en:'Button mushroom', category:'Produce' },
+  { fr:'Champignon pleurotte', en:'Oyster mushroom', category:'Produce' },
+  { fr:'Tomate medley', en:'Medley tomatoes', category:'Produce' },
+  { fr:'Citron', en:'Lemon', category:'Produce' },
+  { fr:'Concombre', en:'Cucumber', category:'Produce' },
+  { fr:'Ail', en:'Garlic', category:'Produce' },
+  { fr:'Figue', en:'Fig', category:'Produce' },
+  // Invoice terms
+  { fr:'Facture', en:'Invoice', category:'Invoice Terms' },
+  { fr:'Bon de livraison', en:'Delivery note', category:'Invoice Terms' },
+  { fr:'Prix unitaire', en:'Unit price', category:'Invoice Terms' },
+  { fr:'Quantité', en:'Quantity', category:'Invoice Terms' },
+  { fr:'Montant', en:'Amount', category:'Invoice Terms' },
+  { fr:'Sous-total', en:'Subtotal', category:'Invoice Terms' },
+  { fr:'TPS', en:'GST (federal tax)', category:'Invoice Terms' },
+  { fr:'TVQ', en:'QST (Quebec sales tax)', category:'Invoice Terms' },
+  { fr:'Total TTC', en:'Total incl. tax', category:'Invoice Terms' },
+  { fr:'Livraison', en:'Delivery', category:'Invoice Terms' },
+  { fr:'Commande', en:'Order', category:'Invoice Terms' },
+  { fr:'Date de livraison', en:'Delivery date', category:'Invoice Terms' },
+  { fr:'Numéro de facture', en:'Invoice number', category:'Invoice Terms' },
+  { fr:'Crédit', en:'Credit', category:'Invoice Terms' },
+  { fr:'Retour', en:'Return', category:'Invoice Terms' },
+];
+
+function toggleLang() {
+  LANG = LANG === 'en' ? 'fr' : 'en';
+  localStorage.setItem('culinara_lang', LANG);
+  applyLang();
+}
+
+function applyLang() {
+  // Update toggle button
+  const btn = document.getElementById('lang-toggle-btn');
+  if (btn) { btn.textContent = LANG === 'en' ? 'FR' : 'EN'; btn.title = LANG === 'en' ? 'Switch to French' : 'Passer en anglais'; }
+  // Update nav labels
+  const navMap = {
+    'nav-lbl-overview': 'nav_label_overview', 'nav-lbl-analysis':'nav_label_analysis',
+    'nav-lbl-operations':'nav_label_operations', 'nav-lbl-settings':'nav_label_settings',
+  };
+  Object.entries(navMap).forEach(([id,key]) => { const el=document.getElementById(id); if(el) el.textContent=t(key); });
+  // Update nav items text via data-i18n
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    el.textContent = t(el.getAttribute('data-i18n'));
+  });
+  // Re-render the ask section if active (so suggested questions update)
+  if (document.getElementById('section-ask') && document.getElementById('section-ask').style.display !== 'none') {
+    renderAsk();
+  }
+}
+
+// ==================== ASK AI ====================
+const ASK_HISTORY = [];
+
+const ASK_QUESTIONS = {
+  en: [
+    "Why is my food cost so high?",
+    "What are my best selling items?",
+    "Which items are losing money?",
+    "How are my beverages doing?",
+    "What should I prep today?",
+    "Which invoices need attention?",
+    "What are my star menu items?",
+    "How's my prime cost?",
+    "What's my drink attach rate?",
+    "Which items should I consider cutting?",
+    "How much did I spend on suppliers?",
+    "What's my most profitable item?",
+  ],
+  fr: [
+    "Pourquoi mon coût des aliments est-il si élevé?",
+    "Quels sont mes articles les plus vendus?",
+    "Quels articles me font perdre de l'argent?",
+    "Comment vont mes boissons?",
+    "Qu'est-ce que je dois préparer aujourd'hui?",
+    "Quelles factures nécessitent une attention?",
+    "Quels sont mes articles étoiles?",
+    "Comment est mon coût prime?",
+    "Quel est mon taux d'attachement boissons?",
+    "Quels articles devrais-je envisager de retirer?",
+    "Combien ai-je dépensé chez les fournisseurs?",
+    "Quel est mon article le plus rentable?",
+  ]
+};
+
+function renderAsk() {
+  const suggested = (ASK_QUESTIONS[LANG] || ASK_QUESTIONS.en);
+  const historyHTML = ASK_HISTORY.map(h => `
+    <div style="margin-bottom:18px;">
+      <div style="display:flex;justify-content:flex-end;margin-bottom:8px;">
+        <div style="background:rgba(79,142,247,0.15);border:1px solid rgba(79,142,247,0.25);border-radius:14px 14px 4px 14px;padding:10px 16px;max-width:80%;font-size:13.5px;color:var(--text);">${h.q}</div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:flex-start;">
+        <div style="width:28px;height:28px;background:rgba(79,142,247,0.15);border-radius:99px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;">✦</div>
+        <div style="background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:4px 14px 14px 14px;padding:12px 16px;flex:1;font-size:13px;color:var(--text);line-height:1.65;">${h.a}</div>
+      </div>
+    </div>`).join('');
+
+  const suggestedHTML = suggested.map(q =>
+    `<button onclick="askQuestion(${JSON.stringify(q)})" style="background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:20px;color:var(--muted);font-size:12px;padding:7px 14px;cursor:pointer;white-space:nowrap;transition:all 0.15s;" onmouseover="this.style.background='rgba(79,142,247,0.1)';this.style.color='#4F8EF7';this.style.borderColor='rgba(79,142,247,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.05)';this.style.color='var(--muted)';this.style.borderColor='var(--border)'">${q}</button>`
+  ).join('');
+
+  document.getElementById('ask-content').innerHTML = `
+    <div style="max-width:760px;">
+
+      <!-- Chat history -->
+      <div id="ask-history" style="min-height:${ASK_HISTORY.length ? '0' : '180px'};margin-bottom:20px;">
+        ${ASK_HISTORY.length ? historyHTML : `
+          <div style="text-align:center;padding:48px 20px 32px;">
+            <div style="font-size:36px;margin-bottom:12px;">✦</div>
+            <div style="font-size:17px;font-weight:700;margin-bottom:6px;">${LANG==='fr'?"Posez une question sur Bottē":"Ask anything about Bottē"}</div>
+            <div style="font-size:13px;color:var(--muted);">${LANG==='fr'?"Coût des aliments, ventes, préparations, fournisseurs...":"Food cost, sales, prep, suppliers — powered by your real data."}</div>
+          </div>`}
+      </div>
+
+      <!-- Suggested questions -->
+      <div style="margin-bottom:20px;">
+        <div style="font-size:10.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;">${LANG==='fr'?"Questions fréquentes":"Suggested questions"}</div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">${suggestedHTML}</div>
+      </div>
+
+      <!-- Input -->
+      <div style="display:flex;gap:10px;align-items:flex-end;">
+        <div style="flex:1;background:rgba(255,255,255,0.05);border:1px solid var(--border-strong);border-radius:14px;padding:12px 16px;display:flex;align-items:center;gap:10px;transition:border-color 0.15s;" onfocus-within="this.style.borderColor='rgba(79,142,247,0.5)'">
+          <input id="ask-input" type="text" placeholder="${LANG==='fr'?"Posez votre question...":"Ask a question..."}"
+            style="flex:1;background:none;border:none;color:var(--text);font-size:14px;outline:none;"
+            onkeydown="if(event.key==='Enter')submitAsk()"
+          >
+        </div>
+        <button onclick="submitAsk()" style="background:#4F8EF7;color:#fff;border:none;border-radius:12px;padding:13px 20px;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap;box-shadow:0 4px 14px rgba(79,142,247,0.35);">${LANG==='fr'?"Envoyer":"Send →"}</button>
+      </div>
+
+      <!-- FR/EN note -->
+      <div style="font-size:11px;color:var(--text-3);margin-top:10px;text-align:center;">
+        ${LANG==='fr'?"Posez votre question en français ou en anglais — les deux fonctionnent.":"Ask in French or English — both work."}
+      </div>
+
+    </div>`;
+}
+
+function askQuestion(q) {
+  const input = document.getElementById('ask-input');
+  if (input) input.value = q;
+  submitAsk();
+}
+
+function submitAsk() {
+  const input = document.getElementById('ask-input');
+  if (!input) return;
+  const q = input.value.trim();
+  if (!q) return;
+  input.value = '';
+  const answer = generateAnswer(q);
+  ASK_HISTORY.push({ q, a: answer });
+  renderAsk();
+  // Scroll to bottom of history
+  setTimeout(() => {
+    const hist = document.getElementById('ask-history');
+    if (hist) hist.scrollTop = hist.scrollHeight;
+  }, 50);
+}
+
+function generateAnswer(q) {
+  const ql = q.toLowerCase()
+    .replace(/é|è|ê/g,'e').replace(/à|â/g,'a').replace(/ô/g,'o')
+    .replace(/û|ù/g,'u').replace(/î|ï/g,'i').replace(/ç/g,'c');
+
+  // ── FOOD COST ────────────────────────────────────────────────────────────────
+  if (/food cost|cout|co.t.*(aliment|food)|why.*high|pourquoi.*eleve|fc.*high|high.*fc/.test(ql)) {
+    const highFC = [...MENU_ITEMS].filter(i=>i.fc>=0.28).sort((a,b)=>b.fc-a.fc);
+    const topNames = highFC.slice(0,4).map(i=>`<strong>${i.name}</strong> (${(i.fc*100).toFixed(0)}%)`).join(', ');
+    const totalRev = MENU_ITEMS.reduce((s,i)=>s+i.rev,0);
+    const totalFC  = MENU_ITEMS.reduce((s,i)=>s+i.foodCost,0);
+    const fcPct    = (totalFC/totalRev*100).toFixed(1);
+    return LANG==='fr'
+      ? `Votre coût des aliments global est de <strong style="color:#F05252;">${fcPct}%</strong> — contre une cible de 25%. L'écart vous coûte ~<strong>$5,094</strong> sur cette période.<br><br>Les articles les plus problématiques : ${topNames}.<br><br>Le plus urgent : <strong>GF Upgrade</strong> perd <strong>$1,34/vente</strong> — augmentez à +$6 de surcharge immédiatement. Cela seul vous rapporterait +$84. Le second problème : 128 unités non enregistrées dans le POS représentent $2,201 potentiellement perdus.`
+      : `Your overall food & bev cost is <strong style="color:#F05252;">${fcPct}%</strong> vs the 25% target. That gap is costing you ~<strong>$5,094</strong> this period.<br><br>Biggest offenders: ${topNames}.<br><br>Most urgent fix: <strong>GF Upgrade</strong> is losing <strong>$1.34/sale</strong> — raise to +$6 surcharge immediately for an instant +$84. Second issue: 128 unaccounted POS units could represent $2,201 in lost tracking.`;
+  }
+
+  // ── BEST SELLERS ─────────────────────────────────────────────────────────────
+  if (/best sell|meilleur.*vente|top.*item|plus vendu|most.*sold|top.*sell/.test(ql)) {
+    const top5 = [...MENU_ITEMS].sort((a,b)=>b.units-a.units).slice(0,5);
+    const rows = top5.map((i,n)=>`<strong>${n+1}. ${i.name}</strong> — ${i.units} ${LANG==='fr'?'unités':'units'} · $${i.rev.toLocaleString()} ${LANG==='fr'?'revenus':'rev'} · ${(i.gmPct*100).toFixed(0)}% GM`).join('<br>');
+    return LANG==='fr'
+      ? `Vos 5 articles les plus vendus (Jan 25 – Mar 15) :<br><br>${rows}<br><br>La <strong>Margarita</strong> et le <strong>Pepperoni</strong> dominent le volume — deux étoiles solides avec >85% de marge brute.`
+      : `Your top 5 by units sold (Jan 25 – Mar 15):<br><br>${rows}<br><br><strong>Margarita</strong> and <strong>Pepperoni</strong> lead volume — both solid stars with >85% GM.`;
+  }
+
+  // ── LOSING MONEY / DOGS ──────────────────────────────────────────────────────
+  if (/los.*money|perd.*argent|dog|negative|negatif|losing|unprofitable|non.rentable/.test(ql)) {
+    const dogs = MENU_ITEMS.filter(i=>i.eng==='dog'||i.gm<0);
+    const rows = dogs.map(i=>`<strong>${i.name}</strong> — GM $${i.gmUnit.toFixed(2)}/unit · FC ${(i.fc*100).toFixed(0)}%`).join('<br>');
+    return LANG==='fr'
+      ? `Articles dans la zone "chien" (faible volume + faible marge) :<br><br>${rows}<br><br>Priorité absolue : <strong>GF Upgrade</strong> a un GM négatif de <strong>-$1,34/vente</strong>. Augmentez le surcharge GF à +$6 dès maintenant.`
+      : `Items in the "dog" quadrant (low volume + low margin):<br><br>${rows}<br><br>Priority: <strong>GF Upgrade</strong> has a <strong>negative GM of -$1.34/unit</strong>. Raise the GF surcharge to +$6 immediately.`;
+  }
+
+  // ── BEVERAGES ────────────────────────────────────────────────────────────────
+  if (/beverage|boisson|drink|alcool|alcohol|wine|vin|beer|biere|attach/.test(ql)) {
+    const bevs = MENU_ITEMS.filter(i=>i.cat==='Beverages');
+    const bevRev = bevs.reduce((s,i)=>s+i.rev,0);
+    const bevUnits = bevs.reduce((s,i)=>s+i.units,0);
+    const topBev = [...bevs].sort((a,b)=>b.rev-a.rev)[0];
+    return LANG==='fr'
+      ? `Vos boissons représentent <strong>${bevUnits} unités</strong> et <strong>$${bevRev.toLocaleString()}</strong> de revenus — coût 20,4%, bien en dessous de la nourriture (39,1%).<br><br>Meilleur article : <strong>${topBev.name}</strong> avec $${topBev.rev} de revenus.<br><br>⚠️ Taux d'attachement boissons : <strong>33,7%</strong> (référence industrie : 40%+). Combler cet écart = +<strong>$486</strong> de marge brute sans coût supplémentaire. Suggérez activement les boissons à la table.`
+      : `Beverages are pulling <strong>${bevUnits} units</strong> and <strong>$${bevRev.toLocaleString()}</strong> in revenue — at a healthy 20.4% cost vs 39.1% for food.<br><br>Top performer: <strong>${topBev.name}</strong> at $${topBev.rev} revenue.<br><br>⚠️ Drink attach rate: <strong>33.7%</strong> vs 40%+ industry benchmark. Closing that gap = +<strong>$486</strong> GM with zero added cost. Train servers to suggest drinks at every table.`;
+  }
+
+  // ── PREP TODAY ───────────────────────────────────────────────────────────────
+  if (/prep.*today|today.*prep|prepare|preparer|quoi.*prep|what.*prep/.test(ql)) {
+    const dailyItems = PREP_ITEMS.filter(i=>i.freq==='daily');
+    const twiceItems = PREP_ITEMS.filter(i=>i.freq==='twice weekly');
+    const dayOfWeek = new Date().getDay(); // 0=Sun, 1=Mon...
+    const isTwiceDay = [1,3,5].includes(dayOfWeek); // Mon, Wed, Fri
+    const dayName = LANG==='fr' ? ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'][dayOfWeek] : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][dayOfWeek];
+    const dailyList = dailyItems.map(i=>`• <strong>${i.name}</strong> — ${i.numQty} ${i.qtyUnit}`).join('<br>');
+    const twiceList = isTwiceDay ? '<br><br><strong>' + (LANG==='fr'?'Aussi aujourd\'hui (2×/semaine) :':'Also today (2× per week):') + '</strong><br>' + twiceItems.slice(0,4).map(i=>`• ${i.name}`).join('<br>') + (twiceItems.length>4 ? `<br>• +${twiceItems.length-4} more...` : '') : '';
+    return LANG==='fr'
+      ? `<strong>${dayName}</strong> — voici les préparations du jour :<br><br>${dailyList}${twiceList}<br><br>N'oubliez pas : la pâte sourdough doit être mélangée <strong>3 jours avant</strong> le service. Si vous servez samedi, mélangez <strong>aujourd'hui</strong>.`
+      : `<strong>${dayName}</strong> — here's your prep for today:<br><br>${dailyList}${twiceList}<br><br>Reminder: sourdough dough needs to be mixed <strong>3 days ahead</strong> of service. If serving Saturday, mix <strong>today</strong>.`;
+  }
+
+  // ── INVOICES ─────────────────────────────────────────────────────────────────
+  if (/invoice|facture|review|verif|pending|attention/.test(ql)) {
+    const reviewInvoices = INVOICES.filter(i=>i.status==='review'||i.status==='pending');
+    const rows = reviewInvoices.map(i=>`• <strong>${i.supplier}</strong> #${i.id} — <strong>$${i.amount.toFixed(2)}</strong> · ${i.date}`).join('<br>');
+    const total = reviewInvoices.reduce((s,i)=>s+i.amount,0);
+    return LANG==='fr'
+      ? `${reviewInvoices.length} facture(s) nécessitent votre attention — <strong>$${total.toFixed(2)} au total</strong> :<br><br>${rows}<br><br>Vérifiez les quantités livrées vs facturées, surtout pour <strong>Farinex</strong> (15 caisses facturées, 12 reçues).`
+      : `${reviewInvoices.length} invoice(s) need your attention — <strong>$${total.toFixed(2)} total</strong>:<br><br>${rows}<br><br>Cross-check delivered vs invoiced quantities, especially <strong>Farinex</strong> (15 cases billed, 12 received).`;
+  }
+
+  // ── STAR ITEMS ───────────────────────────────────────────────────────────────
+  if (/star|etoile|best.*item|top.*perform|stars/.test(ql)) {
+    const stars = MENU_ITEMS.filter(i=>i.eng==='star').sort((a,b)=>b.rev-a.rev);
+    const rows = stars.map(i=>`<strong>${i.name}</strong> — ${i.units} units · $${i.rev.toLocaleString()} · ${(i.gmPct*100).toFixed(0)}% GM`).join('<br>');
+    return LANG==='fr'
+      ? `Vos <strong>${stars.length} articles étoiles</strong> (volume élevé + marge élevée) :<br><br>${rows}<br><br>Ces articles font tourner votre restaurant. Gardez-les en stock, entraînez votre personnel à les promouvoir, et ne baissez jamais leur prix.`
+      : `Your <strong>${stars.length} star items</strong> (high volume + high margin):<br><br>${rows}<br><br>These are your business drivers. Keep them stocked, train staff to recommend them, and never cut their price.`;
+  }
+
+  // ── PRIME COST ───────────────────────────────────────────────────────────────
+  if (/prime cost|cout prime|labour|labor|travail|71|payroll/.test(ql)) {
+    return LANG==='fr'
+      ? `Votre coût prime est de <strong style="color:#F05252;">71,5%</strong> (coût aliments 39,1% + main-d'oeuvre 32,4%).<br><br>La cible industrie est <strong>&lt;65%</strong>. Vous êtes à <strong>6,5 points au-dessus</strong> — ce qui représente ~$2,362 de trop sur cette période.<br><br>Pour améliorer :<br>• Réduire le coût des aliments → corriger le GF Upgrade, vérifier les prix des fournisseurs<br>• Optimiser les horaires → aligner les heures de travail avec les couverts<br>• Augmenter les revenus → pousser les boissons (attach rate 33,7% vs 40% cible)`
+      : `Your prime cost is <strong style="color:#F05252;">71.5%</strong> (food 39.1% + labour 32.4%).<br><br>Industry target is <strong>&lt;65%</strong> — you're <strong>6.5 points over</strong>, costing ~$2,362 extra this period.<br><br>To improve:<br>• Lower food cost → fix GF Upgrade surcharge, renegotiate supplier prices<br>• Optimise scheduling → align labour hours to cover counts<br>• Grow revenue → push beverages (33.7% attach vs 40% benchmark)`;
+  }
+
+  // ── PROFITABLE ITEM ──────────────────────────────────────────────────────────
+  if (/most.*profit|profitable|rentable|highest.*margin|best.*margin/.test(ql)) {
+    const byGM = [...MENU_ITEMS].sort((a,b)=>b.gmPct-a.gmPct).slice(0,3);
+    const byRevGM = [...MENU_ITEMS].sort((a,b)=>b.gm-a.gm)[0];
+    return LANG==='fr'
+      ? `Par marge brute % :<br><strong>1. ${byGM[0].name}</strong> — ${(byGM[0].gmPct*100).toFixed(1)}% GM<br><strong>2. ${byGM[1].name}</strong> — ${(byGM[1].gmPct*100).toFixed(1)}% GM<br><strong>3. ${byGM[2].name}</strong> — ${(byGM[2].gmPct*100).toFixed(1)}% GM<br><br>Par profit brut total : <strong>${byRevGM.name}</strong> génère <strong>$${byRevGM.gm.toLocaleString()}</strong> de marge brute sur la période.`
+      : `By gross margin %:<br><strong>1. ${byGM[0].name}</strong> — ${(byGM[0].gmPct*100).toFixed(1)}% GM<br><strong>2. ${byGM[1].name}</strong> — ${(byGM[1].gmPct*100).toFixed(1)}% GM<br><strong>3. ${byGM[2].name}</strong> — ${(byGM[2].gmPct*100).toFixed(1)}% GM<br><br>By total gross profit: <strong>${byRevGM.name}</strong> generates <strong>$${byRevGM.gm.toLocaleString()}</strong> gross profit this period.`;
+  }
+
+  // ── SUPPLIER SPEND ───────────────────────────────────────────────────────────
+  if (/supplier|fournisseur|spend|depens|how much.*spend|combien.*depens/.test(ql)) {
+    const totalFC = MENU_ITEMS.reduce((s,i)=>s+i.foodCost,0);
+    return LANG==='fr'
+      ? `Dépenses fournisseurs estimées sur la période (Jan 25 – Mar 15) :<br><br><strong>Gordon Food Service</strong> — ~$1,067/sem · Mozzarella, poulet, romaine<br><strong>Farinex</strong> — ~$509/sem · Farine 00, tomates pelées<br><strong>Les Jardins Quatre Saisons</strong> — ~$243/sem · Basilic, kale, légumes frais<br><strong>Distributions Macchi</strong> — ~$104/sem · Prosciutto, spianata<br><strong>Boissons / SAQ</strong> — ~$113/sem · Bière pression, vins<br><br>Total coût des aliments et boissons : <strong>$${totalFC.toLocaleString()}</strong> sur 49 jours.`
+      : `Estimated supplier spend for the period (Jan 25 – Mar 15):<br><br><strong>Gordon Food Service</strong> — ~$1,067/wk · Mozzarella, chicken, romaine<br><strong>Farinex</strong> — ~$509/wk · 00 flour, peeled tomatoes<br><strong>Les Jardins Quatre Saisons</strong> — ~$243/wk · Basil, kale, fresh produce<br><strong>Distributions Macchi</strong> — ~$104/wk · Prosciutto, spianata<br><strong>Boissons / SAQ</strong> — ~$113/wk · Draft beer, wines<br><br>Total food & bev cost tracked: <strong>$${totalFC.toLocaleString()}</strong> over 49 days.`;
+  }
+
+  // ── ITEMS TO CUT / DOGS ──────────────────────────────────────────────────────
+  if (/cut|retire|remove|enlever|supprimer|discontinue|should.*cut|consider.*cut/.test(ql)) {
+    const lowPerf = MENU_ITEMS.filter(i=>i.eng==='dog'&&i.fc>0.25).sort((a,b)=>b.fc-a.fc);
+    const rows = lowPerf.map(i=>`• <strong>${i.name}</strong> — FC ${(i.fc*100).toFixed(0)}% · only ${i.units} units`).join('<br>');
+    return LANG==='fr'
+      ? `Articles à examiner pour retrait ou reformulation :<br><br>${rows||'Aucun article clairement à retirer pour l\'instant.'}<br><br>Avant de retirer un article, vérifiez s'il complète des commandes de table ou a une valeur de réputation. Le <strong>GF Upgrade</strong> ne devrait pas être retiré — corrigez simplement le prix.`
+      : `Items to consider removing or reformulating:<br><br>${rows||'No clear cut candidates right now.'}<br><br>Before cutting an item, check if it completes table orders or has reputational value. <strong>GF Upgrade</strong> shouldn't be cut — just fix the price.`;
+  }
+
+  // ── TRANSLATE / FR TERMS ─────────────────────────────────────────────────────
+  if (/translat|traduire|traduct|french|francais|français|qu.*est.*ce.*que|what.*mean|signif/.test(ql)) {
+    const word = ql.replace(/.*translat[ei]|.*traduire|.*traduct|.*what.*mean|.*qu.*est.*ce.*que/,'').replace(/[^a-z\s]/g,'').trim().split(' ').filter(Boolean)[0];
+    if (word) {
+      const match = FR_EN_TERMS.find(t => t.fr.toLowerCase().includes(word) || t.en.toLowerCase().includes(word));
+      if (match) return `<strong>${match.fr}</strong> = <strong>${match.en}</strong> (${match.category})`;
+    }
+    return LANG==='fr'
+      ? `Consultez le traducteur de termes dans la section <strong>Factures</strong> → onglet "Traducteur FR→EN" pour un dictionnaire complet des termes des factures québécoises.`
+      : `Check the <strong>Invoices</strong> section → "FR→EN Translator" tab for a full dictionary of Quebec supplier invoice terms.`;
+  }
+
+  // ── FALLBACK ─────────────────────────────────────────────────────────────────
+  const suggestions = (ASK_QUESTIONS[LANG]||ASK_QUESTIONS.en).slice(0,4).map(q=>`• ${q}`).join('<br>');
+  return LANG==='fr'
+    ? `Je n'ai pas trouvé de réponse précise pour cette question. Essayez une de ces formulations :<br><br>${suggestions}<br><br>Ou posez votre question différemment — je comprends le français et l'anglais.`
+    : `I didn't find a precise match for that question. Try asking one of these:<br><br>${suggestions}<br><br>Or rephrase — I understand both French and English.`;
+}
+
+function renderFRENTranslator() {
+  const grid = document.getElementById('fr-en-terms-grid');
+  if (!grid) return;
+  // Group by category
+  const cats = [...new Set(FR_EN_TERMS.map(t=>t.category))];
+  grid.innerHTML = cats.map(cat => {
+    const terms = FR_EN_TERMS.filter(t=>t.category===cat);
+    return `<div style="padding:10px 0 10px;border-right:1px solid rgba(255,255,255,0.04);padding-right:16px;margin-right:16px;">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#06B6D4;margin-bottom:8px;">${cat}</div>
+      ${terms.map(t=>`<div style="display:flex;justify-content:space-between;font-size:12.5px;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+        <span style="color:var(--text);font-weight:600;">${t.fr}</span>
+        <span style="color:var(--muted);margin-left:12px;text-align:right;">${t.en}</span>
+      </div>`).join('')}
+    </div>`;
+  }).join('');
+}
+
+function filterFREN(val) {
+  const v = val.toLowerCase();
+  const items = FR_EN_TERMS.filter(t=>!v||t.fr.toLowerCase().includes(v)||t.en.toLowerCase().includes(v));
+  const grid = document.getElementById('fr-en-terms-grid');
+  if (!grid) return;
+  if (!v) { renderFRENTranslator(); return; }
+  grid.innerHTML = `<div style="grid-column:1/-1;">${items.map(t=>`<div style="display:flex;justify-content:space-between;font-size:12.5px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05);">
+    <span style="color:var(--text);font-weight:600;">${t.fr}</span>
+    <span style="color:var(--muted);">${t.en} <span style="color:var(--text-3);font-size:10.5px;">(${t.category})</span></span>
+  </div>`).join('')}</div>`;
+}
+
+// Apply saved language preference on page load
+document.addEventListener('DOMContentLoaded', function() { applyLang(); });
 </script>
 </body>
 </html>
