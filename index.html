@@ -4925,6 +4925,12 @@ function initProdLog() {
 function renderProdLog() {
   const grid = document.getElementById('prod-log-grid');
   if (!grid) return;
+  if (ACTIVE_SLUG === 'arthurs') {
+    grid.innerHTML = `<div style="text-align:center;padding:30px 20px;color:var(--muted);font-size:13px;">
+      📋 Production log requires POS sales data — connect Cluster to unlock prep targets for Arthur's.
+    </div>`;
+    return;
+  }
   initProdLog();
 
   // Group by category
@@ -5051,6 +5057,10 @@ function toggleAddItemForm() {
 function renderItemSuggestions() {
   const box = document.getElementById('item-suggestions');
   if (!box) return;
+  if (ACTIVE_SLUG === 'arthurs') {
+    box.innerHTML = `<div style="font-size:11px;color:var(--muted);width:100%;">Quick-add from invoices: connect Cluster POS to unlock suggestions</div>`;
+    return;
+  }
   // Suggest YIELD_ITEMS that don't already have a matching PREP_RECIPES entry
   const existingNames = new Set(PREP_RECIPES.map(r => r.name.toLowerCase().split(/[—\-]/)[0].trim()));
   const suggestions = (typeof YIELD_ITEMS !== 'undefined' ? YIELD_ITEMS : [])
