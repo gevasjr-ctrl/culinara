@@ -269,17 +269,17 @@ tr:last-child td { border-bottom: none; }
       <div class="login-tagline">Restaurant Intelligence Platform</div>
     </div>
     <div class="login-card">
-      <h2>Welcome back</h2>
-      <p>Sign in to your restaurant intelligence dashboard</p>
-      <label class="login-label">Email address</label>
+      <h2 data-i18n="login_welcome">Welcome back</h2>
+      <p data-i18n="login_subtitle">Sign in to your restaurant intelligence dashboard</p>
+      <label class="login-label" data-i18n="login_email">Email address</label>
       <input type="email" class="login-input" id="login-email" placeholder="you@restaurant.com">
-      <label class="login-label">Password</label>
+      <label class="login-label" data-i18n="login_password">Password</label>
       <input type="password" class="login-input" id="login-password" placeholder="••••••••">
-      <div id="login-error" style="display:none;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.25);border-radius:9px;padding:10px 14px;font-size:13px;color:#f87171;margin-bottom:12px;">Incorrect email or password. Try the demo accounts below.</div>
-      <button class="btn-login" id="login-btn" onclick="doLogin()">Sign in →</button>
-      <div style="font-size:12px;color:rgba(255,255,255,0.4);text-align:center;margin-top:8px;">Sign in with your CulinaraOs account</div>
+      <div id="login-error" style="display:none;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.25);border-radius:9px;padding:10px 14px;font-size:13px;color:#f87171;margin-bottom:12px;" data-i18n="login_error">Incorrect email or password.</div>
+      <button class="btn-login" id="login-btn" onclick="doLogin()" data-i18n="login_btn">Sign in →</button>
+      <div style="font-size:12px;color:rgba(255,255,255,0.4);text-align:center;margin-top:8px;" data-i18n="login_with">Sign in with your CulinaraOs account</div>
     </div>
-    <div class="login-footer">Trusted by 12+ restaurants in Quebec</div>
+    <div class="login-footer" data-i18n="login_footer">Trusted by 12+ restaurants in Quebec</div>
   </div>
 </div>
 
@@ -299,7 +299,7 @@ tr:last-child td { border-bottom: none; }
   <div class="rest-wrap fade-up">
     <div class="rest-header">
       <h1 id="rest-greeting">Good morning, Thomas 👋</h1>
-      <p>Select a restaurant to open its dashboard</p>
+      <p data-i18n="select_subtitle">Select a restaurant to open its dashboard</p>
     </div>
     <div class="rest-grid" id="rest-grid"></div>
   </div>
@@ -580,7 +580,7 @@ tr:last-child td { border-bottom: none; }
 <div id="section-dashboard" class="section" style="padding-top:0;">
   <div class="topbar">
     <div>
-      <div style="font-size:15px;font-weight:700;letter-spacing:-0.02em;">Kitchen Intelligence Dashboard</div>
+      <div style="font-size:15px;font-weight:700;letter-spacing:-0.02em;" data-i18n="dash_title">Kitchen Intelligence Dashboard</div>
       <div id="dash-subtitle" style="font-size:12px;color:var(--muted);margin-top:1px;">Bottē Restaurant · Jan 25 – Mar 15, 2026</div>
     </div>
     <div style="display:flex;align-items:center;gap:10px;">
@@ -603,13 +603,13 @@ tr:last-child td { border-bottom: none; }
   <!-- Savings Banner -->
   <div id="savings-banner" class="savings-banner">
     <div>
-      <div style="font-size:13px;font-weight:600;color:#4F8EF7;margin-bottom:6px;letter-spacing:0.02em;">YOUR OPPORTUNITY THIS PERIOD</div>
+      <div style="font-size:13px;font-weight:600;color:#4F8EF7;margin-bottom:6px;letter-spacing:0.02em;"><span data-i18n="dash_opportunity">YOUR OPPORTUNITY THIS PERIOD</span></div>
       <div style="font-size:15px;font-weight:500;color:#AEAEB2;line-height:1.5;">If you hit the 25% food cost target, you keep an extra</div>
       <div class="value-number">$5,156</div>
       <div style="font-size:13px;color:#48484A;margin-top:6px;">across 49 days · $104/day left on the table</div>
     </div>
     <div style="text-align:right;">
-      <div style="font-size:12px;color:#4F8EF7;margin-bottom:8px;font-weight:600;">TOP FIXES TO CLOSE THE GAP</div>
+      <div style="font-size:12px;color:#4F8EF7;margin-bottom:8px;font-weight:600;"><span data-i18n="dash_top_fixes">TOP FIXES TO CLOSE THE GAP</span></div>
       <div style="display:flex;flex-direction:column;gap:6px;text-align:left;">
         <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:8px 12px;font-size:12.5px;color:#AEAEB2;">Fix GF Upgrade pricing → +$84 instantly</div>
         <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:8px 12px;font-size:12.5px;color:#AEAEB2;">Audit POS rings → recover $2,201 gap</div>
@@ -637,7 +637,7 @@ tr:last-child td { border-bottom: none; }
   <!-- KPIs with WoW -->
   <div class="kpi-grid">
     <div class="card kpi">
-      <div id="kpi-fc-label" class="kpi-label">Food Cost %</div>
+      <div id="kpi-fc-label" class="kpi-label" data-i18n="kpi_food_cost">Food Cost %</div>
       <div id="kpi-fc-val" class="kpi-value" style="color:#dc2626;">39.1%</div>
       <div id="kpi-fc-prog" style="margin-top:10px;"><div class="prog"><div class="prog-fill" style="width:78.2%;background:#ef4444;"></div></div><div style="display:flex;justify-content:space-between;margin-top:5px;font-size:11px;color:#94a3b8;"><span>0%</span><span>▲ 25% target</span><span>50%</span></div></div>
       <div id="kpi-fc-sub" style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
@@ -646,7 +646,7 @@ tr:last-child td { border-bottom: none; }
       </div>
     </div>
     <div class="card kpi">
-      <div id="kpi-bt-label" class="kpi-label">Behind Target</div>
+      <div id="kpi-bt-label" class="kpi-label" data-i18n="kpi_behind_target">Behind Target</div>
       <div id="kpi-bt-val" class="kpi-value" style="color:#dc2626;">$5,156</div>
       <div id="kpi-bt-sub-text" class="kpi-sub">Net food cost $11,832 · target was $9,032</div>
       <div id="kpi-bt-sub" style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
@@ -655,7 +655,7 @@ tr:last-child td { border-bottom: none; }
       </div>
     </div>
     <div class="card kpi">
-      <div id="kpi-rev-label" class="kpi-label">Period Revenue</div>
+      <div id="kpi-rev-label" class="kpi-label" data-i18n="kpi_period_revenue">Period Revenue</div>
       <div id="kpi-rev-val" class="kpi-value">$36,570</div>
       <div id="kpi-rev-sub-text" class="kpi-sub">1,895 units · ~38.7 covers/day</div>
       <div id="kpi-rev-sub" style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
@@ -664,7 +664,7 @@ tr:last-child td { border-bottom: none; }
       </div>
     </div>
     <div class="card kpi">
-      <div id="kpi-gp-label" class="kpi-label">Gross Profit</div>
+      <div id="kpi-gp-label" class="kpi-label" data-i18n="kpi_gross_profit">Gross Profit</div>
       <div id="kpi-gp-val" class="kpi-value">$21,150</div>
       <div id="kpi-gp-sub-text" class="kpi-sub">Before labour &amp; overhead</div>
       <div id="kpi-gp-sub" style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
@@ -735,7 +735,7 @@ tr:last-child td { border-bottom: none; }
       <div style="height:160px;"><canvas id="chartSupp"></canvas></div>
     </div>
     <div class="card" style="padding:20px;">
-      <div class="card-title" style="margin-bottom:4px;">Priority Actions This Week</div>
+      <div class="card-title" style="margin-bottom:4px;"><span data-i18n="priority_actions">Priority Actions This Week</span></div>
       <div class="card-sub" style="margin-bottom:14px;">Ranked by revenue impact</div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <div style="padding:11px 14px;border-radius:9px;background:rgba(255,69,58,0.08);border:1px solid rgba(255,69,58,0.18);display:flex;align-items:flex-start;gap:10px;">
@@ -788,19 +788,19 @@ tr:last-child td { border-bottom: none; }
   </div>
   <div class="card" style="overflow:hidden;margin-bottom:16px;">
     <table><thead><tr>
-      <th>Item</th><th>Category</th><th style="text-align:right;">Units</th><th style="text-align:right;">Price</th>
-      <th style="text-align:right;">Portion Cost</th><th style="text-align:right;">Food Cost %</th>
-      <th style="text-align:right;">Revenue</th><th style="text-align:right;">GM / Unit</th>
-      <th style="text-align:right;">Gross Margin</th><th>Status</th>
+      <th data-i18n="fc_col_item">Item</th><th data-i18n="fc_col_cat">Category</th><th style="text-align:right;" data-i18n="fc_col_units">Units</th><th style="text-align:right;" data-i18n="fc_col_price">Price</th>
+      <th style="text-align:right;" data-i18n="fc_col_portion">Portion Cost</th><th style="text-align:right;" data-i18n="fc_col_fc">Food Cost %</th>
+      <th style="text-align:right;" data-i18n="fc_col_rev">Revenue</th><th style="text-align:right;" data-i18n="fc_col_gm_unit">GM / Unit</th>
+      <th style="text-align:right;" data-i18n="fc_col_gm">Gross Margin</th><th data-i18n="fc_col_status">Status</th>
     </tr></thead>
     <tbody id="profitTbody"></tbody></table>
   </div>
   <div class="card" style="padding:16px 20px;">
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center;">
-      <div><div style="font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;">Total Revenue</div><div style="font-size:22px;font-weight:800;margin-top:4px;letter-spacing:-0.02em;">$36,570</div></div>
-      <div><div style="font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;">Net Food Cost</div><div style="font-size:22px;font-weight:800;margin-top:4px;color:#FF453A;letter-spacing:-0.02em;">$11,832</div></div>
-      <div><div style="font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;">Gross Margin</div><div style="font-size:22px;font-weight:800;margin-top:4px;color:#30D158;letter-spacing:-0.02em;">$21,150</div></div>
-      <div><div style="font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;">Blended FC%</div><div style="font-size:22px;font-weight:800;margin-top:4px;color:#FF453A;letter-spacing:-0.02em;">39.1%</div></div>
+      <div><div style="font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;" data-i18n="fc_total_rev">Total Revenue</div><div style="font-size:22px;font-weight:800;margin-top:4px;letter-spacing:-0.02em;">$36,570</div></div>
+      <div><div style="font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;" data-i18n="fc_net_cost">Net Food Cost</div><div style="font-size:22px;font-weight:800;margin-top:4px;color:#FF453A;letter-spacing:-0.02em;">$11,832</div></div>
+      <div><div style="font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;" data-i18n="fc_gross_margin">Gross Margin</div><div style="font-size:22px;font-weight:800;margin-top:4px;color:#30D158;letter-spacing:-0.02em;">$21,150</div></div>
+      <div><div style="font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;" data-i18n="fc_blended">Blended FC%</div><div style="font-size:22px;font-weight:800;margin-top:4px;color:#FF453A;letter-spacing:-0.02em;">39.1%</div></div>
     </div>
   </div>
 </div>
@@ -912,7 +912,7 @@ tr:last-child td { border-bottom: none; }
     <div>
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
         <div style="width:8px;height:8px;border-radius:99px;background:#F05252;"></div>
-        <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--muted);">To Do</span>
+        <span id="pb-lbl-todo" style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--muted);" data-i18n="prepboard_todo">To Do</span>
         <span id="pb-todo-count" style="font-size:10px;background:rgba(240,82,82,0.15);color:#F05252;padding:1px 6px;border-radius:99px;font-weight:700;">0</span>
       </div>
       <div id="col-todo" style="display:flex;flex-direction:column;gap:10px;min-height:80px;"></div>
@@ -922,7 +922,7 @@ tr:last-child td { border-bottom: none; }
     <div>
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
         <div style="width:8px;height:8px;border-radius:99px;background:#F5A623;"></div>
-        <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--muted);">In Prep</span>
+        <span id="pb-lbl-inprog" style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--muted);" data-i18n="prepboard_inprog">In Progress</span>
         <span id="pb-inprog-count" style="font-size:10px;background:rgba(245,166,35,0.15);color:#F5A623;padding:1px 6px;border-radius:99px;font-weight:700;">0</span>
       </div>
       <div id="col-inprog" style="display:flex;flex-direction:column;gap:10px;min-height:80px;"></div>
@@ -932,7 +932,7 @@ tr:last-child td { border-bottom: none; }
     <div>
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
         <div style="width:8px;height:8px;border-radius:99px;background:#34C97A;"></div>
-        <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--muted);">Done</span>
+        <span id="pb-lbl-done" style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--muted);" data-i18n="prepboard_done">Done</span>
         <span id="pb-done-count" style="font-size:10px;background:rgba(52,201,122,0.15);color:#34C97A;padding:1px 6px;border-radius:99px;font-weight:700;">0</span>
       </div>
       <div id="col-done" style="display:flex;flex-direction:column;gap:10px;min-height:80px;"></div>
@@ -2808,13 +2808,13 @@ function loadRestaurantData(id) {
     if (alertStrip)  alertStrip.style.display = '';
     if (profBanner)  profBanner.style.display = 'none';
     // Labels + values
-    setEl('kpi-fc-label','textContent','Food Cost %');
+    setEl('kpi-fc-label','textContent',t('kpi_food_cost'));
     setEl('kpi-fc-val','innerHTML','<span style="color:#dc2626;">39.1%</span>');
-    setEl('kpi-bt-label','textContent','Behind Target');
+    setEl('kpi-bt-label','textContent',t('kpi_behind_target'));
     setEl('kpi-bt-val','innerHTML','<span style="color:#dc2626;">$5,156</span>');
-    setEl('kpi-rev-label','textContent','Period Revenue');
+    setEl('kpi-rev-label','textContent',t('kpi_period_revenue'));
     setEl('kpi-rev-val','innerHTML','$36,570');
-    setEl('kpi-gp-label','textContent','Gross Profit');
+    setEl('kpi-gp-label','textContent',t('kpi_gross_profit'));
     setEl('kpi-gp-val','innerHTML','$21,150');
     // Sub text
     setEl('kpi-bt-sub-text','textContent','Net food cost $11,832 · target was $9,032');
@@ -2832,13 +2832,13 @@ function loadRestaurantData(id) {
     if (alertStrip)  alertStrip.style.display = 'none';
     if (profBanner)  profBanner.style.display = 'none';
     // Blank KPIs
-    setEl('kpi-fc-label','textContent','Food Cost %');
+    setEl('kpi-fc-label','textContent',t('kpi_food_cost'));
     setEl('kpi-fc-val','innerHTML','<span style="color:var(--muted);">—</span>');
-    setEl('kpi-bt-label','textContent','Behind Target');
+    setEl('kpi-bt-label','textContent',t('kpi_behind_target'));
     setEl('kpi-bt-val','innerHTML','<span style="color:var(--muted);">—</span>');
-    setEl('kpi-rev-label','textContent','Period Revenue');
+    setEl('kpi-rev-label','textContent',t('kpi_period_revenue'));
     setEl('kpi-rev-val','innerHTML','<span style="color:var(--muted);">—</span>');
-    setEl('kpi-gp-label','textContent','Gross Profit');
+    setEl('kpi-gp-label','textContent',t('kpi_gross_profit'));
     setEl('kpi-gp-val','innerHTML','<span style="color:var(--muted);">—</span>');
     setEl('kpi-bt-sub-text','textContent','No data yet');
     setEl('kpi-rev-sub-text','textContent','No data yet');
@@ -3198,14 +3198,14 @@ function renderOrders() {
         <span style="margin-left:auto;font-size:13px;font-weight:700;color:${s.color};">$${s.items.reduce((a,b)=>a+b.weekly,0).toFixed(0)}/wk</span>
       </div>
       <div style="overflow-x:auto;">
-      <table style="min-width:420px;"><thead><tr><th>Ingredient</th><th>Pack</th><th>Period Qty</th><th style="text-align:right;">Weekly Est.</th></tr></thead>
+      <table style="min-width:420px;"><thead><tr><th>${t('orders_col_ingredient')}</th><th>${t('orders_col_pack')}</th><th>${t('orders_col_period')}</th><th style="text-align:right;">${t('orders_col_weekly')}</th></tr></thead>
       <tbody>${s.items.map(i=>`<tr>
         <td style="font-weight:500;">${i.name}</td>
         <td style="color:var(--muted);font-size:12px;">${i.pack}</td>
         <td style="color:var(--muted);font-size:12px;">${i.qty}</td>
         <td style="text-align:right;font-weight:700;color:#4F8EF7;">$${i.weekly.toFixed(2)}</td>
       </tr>`).join('')}
-      <tr style="background:rgba(255,255,255,0.04);"><td colspan="3" style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);">Subtotal</td>
+      <tr style="background:rgba(255,255,255,0.04);"><td colspan="3" style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);">${t('orders_subtotal')}</td>
       <td style="text-align:right;font-weight:800;color:#4F8EF7;">$${s.items.reduce((a,b)=>a+b.weekly,0).toFixed(2)}/wk</td></tr>
       </tbody></table>
       </div>
@@ -3215,7 +3215,7 @@ function renderOrders() {
 // ==================== INVOICES ====================
 function renderInvoices() {
   const s = { review:'s-review', pending:'s-pending', matched:'s-matched' };
-  const l = { review:'⚠ Review', pending:'⏳ Pending', matched:'✓ Matched QBO' };
+  const l = { review:t('inv_status_review'), pending:t('inv_status_pending'), matched:t('inv_status_matched') };
   document.getElementById('invoice-list').innerHTML = INVOICES.map(inv=>`
     <div class="inv-row" onclick="alert('Live version: view parsed line items, matched QBO bill, and approval workflow.')">
       <div style="font-family:monospace;font-size:12px;font-weight:700;color:#2563eb;min-width:72px;">${inv.id}</div>
@@ -4884,6 +4884,58 @@ const T = {
     msg_loading: 'Loading\u2026',
     msg_saved: 'Saved',
     msg_error: 'Error',
+    // Login
+    login_welcome:'Welcome back', login_subtitle:'Sign in to your restaurant intelligence dashboard',
+    login_email:'Email address', login_password:'Password',
+    login_btn:'Sign in \u2192', login_with:'Sign in with your CulinaraOs account',
+    login_footer:'Trusted by 12+ restaurants in Quebec', login_error:'Incorrect email or password.',
+    // Selector
+    select_subtitle:'Select a restaurant to open its dashboard',
+    // Dashboard
+    dash_title:'Kitchen Intelligence Dashboard', dash_sync:'\u21bb Sync Now',
+    dash_opportunity:'<span data-i18n="dash_opportunity">YOUR OPPORTUNITY THIS PERIOD</span>', dash_top_fixes:'<span data-i18n="dash_top_fixes">TOP FIXES TO CLOSE THE GAP</span>',
+    kpi_food_cost:'Food Cost %', kpi_behind_target:'Behind Target',
+    kpi_period_revenue:'Period Revenue', kpi_gross_profit:'Gross Profit',
+    kpi_bev_cost:'Bev Cost %', kpi_attach_rate:'Drink Attach Rate', kpi_prime_cost:'Prime Cost',
+    chart_fc_trend:'Food Cost Trend \u2014 7 Weeks', chart_fc_vs_target:'Food Cost vs Target',
+    chart_top10:'Top 10 Items by Revenue', chart_supplier:'Supplier Spend Breakdown',
+    priority_actions:'<span data-i18n="priority_actions">Priority Actions This Week</span>', priority_sub:'Ranked by revenue impact',
+    // Food Cost
+    fc_title:'Food Cost by Item', fc_filter_all:'All items',
+    fc_col_item:'Item', fc_col_cat:'Category', fc_col_units:'Units', fc_col_price:'Price',
+    fc_col_portion:'Portion Cost', fc_col_fc:'Food Cost %', fc_col_rev:'Revenue',
+    fc_col_gm_unit:'GM / Unit', fc_col_gm:'Gross Margin', fc_col_status:'Status',
+    fc_total_rev:'Total Revenue', fc_net_cost:'Net Food Cost',
+    fc_gross_margin:'Gross Margin', fc_blended:'Blended FC%',
+    // Menu Analysis
+    eng_stars:'\u2b50 Stars \u2014 High Volume \u00b7 High Margin',
+    eng_gems:'\ud83d\udc8e Hidden Gems \u2014 Low Volume \u00b7 High Margin',
+    eng_workhorses:'\u2699 Workhorses \u2014 High Volume \u00b7 Lower Margin',
+    eng_underperformers:'\ud83d\udcc9 Underperformers \u2014 Low Volume \u00b7 Low Margin',
+    eng_chart_title:'Volume vs Contribution Margin', eng_chart_sub:'Bubble size = period revenue',
+    // Prep Board
+    prepboard_live:'LIVE', prepboard_reset:'\u21ba Reset', prepboard_kitchen_mode:'\u26f6 Kitchen Mode',
+    prepboard_sub:'Sales-driven prep tasks \u00b7 updating as covers come in',
+    prepboard_todo:'To Do', prepboard_inprog:'In Progress', prepboard_done:'Done',
+    // Orders
+    orders_col_ingredient:'Ingredient', orders_col_pack:'Pack',
+    orders_col_period:'Period Qty', orders_col_weekly:'Weekly Est.',
+    orders_subtotal:'Subtotal',
+    // Invoices
+    inv_inbox_title:'Invoice Inbox', inv_how_flow:'How invoices flow',
+    inv_status_review:'\u26a0 Review', inv_status_pending:'\u23f3 Pending', inv_status_matched:'\u2713 Matched QBO',
+    inv_step1:'Supplier emails PDF to your inbox', inv_step2:'AI extracts every line item',
+    inv_step3:'Dashboard updates in real time', inv_step4:'Auto-pushed to QuickBooks as Bills',
+    // Settings
+    settings_inbox_addr:'Inbox address', settings_ai_extraction:'AI line-item extraction',
+    settings_authorize:'Authorize CulinaraOs to read your sales data',
+    settings_what_access:'What CulinaraOs will access',
+    // Efficiency
+    eff_pricing:'Pricing', eff_prep:'Prep Efficiency', eff_sourcing:'Sourcing',
+    // Yield
+    yield_ingredient:'Ingredient', yield_pack:'Pack Size', yield_portion:'Portion',
+    yield_yield:'Yield %', yield_cost_kg:'Cost/kg', yield_cost_portion:'Cost/Portion',
+    yield_covers:'Expected covers tonight',
   },
   fr: {
     // Nav
@@ -4968,6 +5020,58 @@ const T = {
     msg_loading: 'Chargement\u2026',
     msg_saved: 'Enregistr\u00e9',
     msg_error: 'Erreur',
+    // Login
+    login_welcome:'Bon retour', login_subtitle:'Connectez-vous \u00e0 votre tableau de bord',
+    login_email:'Adresse courriel', login_password:'Mot de passe',
+    login_btn:'Se connecter \u2192', login_with:'Connectez-vous avec votre compte CulinaraOs',
+    login_footer:'Utilis\u00e9 par 12+ restaurants au Qu\u00e9bec', login_error:'Courriel ou mot de passe incorrect.',
+    // Selector
+    select_subtitle:'S\u00e9lectionnez un restaurant pour ouvrir son tableau de bord',
+    // Dashboard
+    dash_title:'Tableau de Bord Cuisine', dash_sync:'\u21bb Synchroniser',
+    dash_opportunity:'VOTRE OPPORTUNIT\u00c9 CETTE P\u00c9RIODE', dash_top_fixes:'CORRECTIONS PRIORITAIRES',
+    kpi_food_cost:'Co\u00fbt Mati\u00e8re %', kpi_behind_target:'Sous la Cible',
+    kpi_period_revenue:'Revenus de la P\u00e9riode', kpi_gross_profit:'Profit Brut',
+    kpi_bev_cost:'Co\u00fbt Boissons %', kpi_attach_rate:'Taux Boissons', kpi_prime_cost:'Co\u00fbt Premier',
+    chart_fc_trend:'Tendance Co\u00fbt Mati\u00e8re \u2014 7 Semaines', chart_fc_vs_target:'Co\u00fbt Mati\u00e8re vs Cible',
+    chart_top10:'Top 10 Articles par Revenu', chart_supplier:'R\u00e9partition Achats Fournisseurs',
+    priority_actions:'Actions Prioritaires Cette Semaine', priority_sub:'Class\u00e9es par impact sur les revenus',
+    // Food Cost
+    fc_title:'Co\u00fbt Mati\u00e8re par Article', fc_filter_all:'Tous',
+    fc_col_item:'Article', fc_col_cat:'Cat\u00e9gorie', fc_col_units:'Unit\u00e9s', fc_col_price:'Prix',
+    fc_col_portion:'Co\u00fbt Portion', fc_col_fc:'Co\u00fbt Mati\u00e8re %', fc_col_rev:'Revenus',
+    fc_col_gm_unit:'MB / Unit\u00e9', fc_col_gm:'Marge Brute', fc_col_status:'Statut',
+    fc_total_rev:'Revenus Totaux', fc_net_cost:'Co\u00fbt Mati\u00e8re Net',
+    fc_gross_margin:'Marge Brute', fc_blended:'CM% Moyen',
+    // Menu Analysis
+    eng_stars:'\u2b50 \u00c9toiles \u2014 Volume \u00c9lev\u00e9 \u00b7 Marge \u00c9lev\u00e9e',
+    eng_gems:'\ud83d\udc8e Joyaux \u2014 Faible Volume \u00b7 Marge \u00c9lev\u00e9e',
+    eng_workhorses:'\u2699 Valeurs S\u00fbres \u2014 Volume \u00c9lev\u00e9 \u00b7 Marge Faible',
+    eng_underperformers:'\ud83d\udcc9 Sous-Performeurs \u2014 Faible Volume \u00b7 Marge Faible',
+    eng_chart_title:'Volume vs Marge sur Co\u00fbt', eng_chart_sub:'Taille bulle = revenus de la p\u00e9riode',
+    // Prep Board
+    prepboard_live:'EN DIRECT', prepboard_reset:'\u21ba R\u00e9initialiser', prepboard_kitchen_mode:'\u26f6 Mode Cuisine',
+    prepboard_sub:'T\u00e2ches de pr\u00e9p bas\u00e9es sur les ventes \u00b7 mise \u00e0 jour en temps r\u00e9el',
+    prepboard_todo:'\u00c0 Faire', prepboard_inprog:'En Cours', prepboard_done:'Termin\u00e9',
+    // Orders
+    orders_col_ingredient:'Ingr\u00e9dient', orders_col_pack:'Format',
+    orders_col_period:'Qté Période', orders_col_weekly:'Est. Hebdo',
+    orders_subtotal:'Sous-total',
+    // Invoices
+    inv_inbox_title:'Boîte de Réception Factures', inv_how_flow:'Flux des factures',
+    inv_status_review:'\u26a0 \u00c0 r\u00e9viser', inv_status_pending:'\u23f3 En attente', inv_status_matched:'\u2713 Valid\u00e9 QBO',
+    inv_step1:'Le fournisseur envoie le PDF par courriel', inv_step2:'L\'IA extrait chaque ligne',
+    inv_step3:'Le tableau de bord se met \u00e0 jour', inv_step4:'Pouss\u00e9 automatiquement vers QBO',
+    // Settings
+    settings_inbox_addr:'Adresse de la bo\u00eete', settings_ai_extraction:'Extraction IA des lignes',
+    settings_authorize:'Autoriser CulinaraOs \u00e0 lire vos donn\u00e9es de ventes',
+    settings_what_access:'Ce \u00e0 quoi CulinaraOs aura acc\u00e8s',
+    // Efficiency
+    eff_pricing:'Tarification', eff_prep:'Efficacit\u00e9 Pr\u00e9p', eff_sourcing:'Approvisionnement',
+    // Yield
+    yield_ingredient:'Ingr\u00e9dient', yield_pack:'Format', yield_portion:'Portion',
+    yield_yield:'Rendement %', yield_cost_kg:'Co\u00fbt/kg', yield_cost_portion:'Co\u00fbt/Portion',
+    yield_covers:'Couverts pr\u00e9vus ce soir',
   }
 };
 
@@ -5151,13 +5255,27 @@ function applyLang() {
     'nav-lbl-operations':'nav_label_operations', 'nav-lbl-settings':'nav_label_settings',
   };
   Object.entries(navMap).forEach(([id,key]) => { const el=document.getElementById(id); if(el) el.textContent=t(key); });
-  // Update nav items text via data-i18n
+  // Update ALL data-i18n elements (login, dashboard, etc.)
   document.querySelectorAll('[data-i18n]').forEach(el => {
     el.textContent = t(el.getAttribute('data-i18n'));
   });
-  // Re-render the ask section if active (so suggested questions update)
-  if (document.getElementById('section-ask') && document.getElementById('section-ask').style.display !== 'none') {
-    renderAsk();
+  // Re-render current active section so dynamic content updates
+  const activeSection = document.querySelector('.section.active');
+  if (activeSection) {
+    const sectionId = activeSection.id.replace('section-', '');
+    const fns = {
+      dashboard: initCharts,
+      profitability: () => renderTable('all'),
+      engineering: renderEngineering,
+      prep: renderPrep,
+      prepboard: renderPrepBoard,
+      yield: renderYield,
+      orders: renderOrders,
+      invoices: () => { renderInvoices(); renderFRENTranslator(); },
+      social: renderSocialMedia,
+      ask: renderAsk,
+    };
+    if (fns[sectionId]) fns[sectionId]();
   }
 }
 
