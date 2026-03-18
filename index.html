@@ -1250,7 +1250,7 @@ tr:last-child td { border-bottom: none; }
   <div class="topbar">
     <div>
       <div style="font-size:15px;font-weight:700;letter-spacing:-0.02em;">Inventory</div>
-      <div style="font-size:12px;color:var(--muted);margin-top:1px;">Last full count: Mar 12, 2026 · 17 tracked items</div>
+      <div id="inv-subtitle" style="font-size:12px;color:var(--muted);margin-top:1px;">Last full count: Mar 12, 2026 · 17 tracked items</div>
     </div>
     <div style="display:flex;gap:8px;align-items:center;">
       <button class="btn-ghost" style="font-size:12.5px;" onclick="exportInventoryCSV()">↓ Export CSV</button>
@@ -1258,6 +1258,15 @@ tr:last-child td { border-bottom: none; }
       <button class="btn-primary" style="font-size:12.5px;" onclick="openAddInvItem()">+ Add Item</button>
     </div>
   </div>
+  <!-- Arthur's placeholder -->
+  <div id="inventory-arthurs-placeholder" style="display:none;text-align:center;padding:60px 20px;">
+    <div style="font-size:36px;margin-bottom:16px;">📦</div>
+    <div style="font-size:16px;font-weight:700;margin-bottom:8px;">No inventory data yet</div>
+    <div style="font-size:13px;color:var(--muted);max-width:400px;margin:0 auto;">Connect Piecemeal or import a count sheet to start tracking Arthur's inventory levels and par alerts.</div>
+  </div>
+
+  <!-- Bottē inventory content -->
+  <div id="inventory-botte-content">
   <div style="padding:20px 32px 28px;">
 
   <!-- KPI summary -->
@@ -1315,6 +1324,7 @@ tr:last-child td { border-bottom: none; }
   </div>
 
   </div><!-- /padding wrapper -->
+  </div><!-- /inventory-botte-content -->
 
   <!-- Import Modal -->
   <div id="inv-import-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(6px);z-index:9999;align-items:center;justify-content:center;">
@@ -3211,6 +3221,12 @@ function loadRestaurantData(id) {
     const socialArthurs2 = document.getElementById('social-arthurs-placeholder');
     if (socialBotte2) socialBotte2.style.display = '';
     if (socialArthurs2) socialArthurs2.style.display = 'none';
+    // Inventory section
+    setEl('inv-subtitle','textContent','Last full count: Mar 12, 2026 · 17 tracked items');
+    const invBotte2 = document.getElementById('inventory-botte-content');
+    const invArthurs2 = document.getElementById('inventory-arthurs-placeholder');
+    if (invBotte2) invBotte2.style.display = '';
+    if (invArthurs2) invArthurs2.style.display = 'none';
     // Labels + values
     setEl('kpi-fc-label','textContent',t('kpi_food_cost'));
     setEl('kpi-fc-val','innerHTML','<span style="color:#dc2626;">39.1%</span>');
@@ -3289,6 +3305,12 @@ function loadRestaurantData(id) {
     const socialArthurs = document.getElementById('social-arthurs-placeholder');
     if (socialBotte) socialBotte.style.display = 'none';
     if (socialArthurs) socialArthurs.style.display = '';
+    // Inventory section
+    setEl('inv-subtitle','textContent','Connect Piecemeal to start tracking inventory');
+    const invBotte = document.getElementById('inventory-botte-content');
+    const invArthurs = document.getElementById('inventory-arthurs-placeholder');
+    if (invBotte) invBotte.style.display = 'none';
+    if (invArthurs) invArthurs.style.display = '';
     // Blank KPIs
     setEl('kpi-fc-label','textContent',t('kpi_food_cost'));
     setEl('kpi-fc-val','innerHTML','<span style="color:var(--muted);">—</span>');
@@ -4325,6 +4347,7 @@ function invCatColor(cat) {
 function renderInventory() {
   const body = document.getElementById('inv-body');
   if (!body) return;
+  if (ACTIVE_SLUG === 'arthurs') { body.innerHTML = ''; return; }
   const items = invFilter === 'all' ? INVENTORY : INVENTORY.filter(i => i.cat === invFilter);
   body.innerHTML = items.map(item => {
     const st  = invStatus(item);
