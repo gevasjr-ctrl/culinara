@@ -904,6 +904,28 @@ tr:last-child td { border-bottom: none; }
     <button class="filter-btn" onclick="filterTable('Other',this)">Other</button>
     <button class="filter-btn" onclick="filterTable('Beverages',this)">🍺 Beverages</button>
   </div>
+  <!-- Arthur's filter row (shown instead of above when Arthur's is active) -->
+  <div class="filter-row" id="fc-filter-row-arthurs" style="display:none;">
+    <button class="filter-btn active" onclick="filterTableArthurs('all',this)">All items</button>
+    <button class="filter-btn" onclick="filterTableArthurs('Eggs & Plates',this)">Eggs & Plates</button>
+    <button class="filter-btn" onclick="filterTableArthurs('Pancakes',this)">Pancakes</button>
+    <button class="filter-btn" onclick="filterTableArthurs('Latkes',this)">Latkes</button>
+    <button class="filter-btn" onclick="filterTableArthurs('Sandwiches & Bagels',this)">Sandwiches & Bagels</button>
+    <button class="filter-btn" onclick="filterTableArthurs('Toast',this)">Toast</button>
+    <button class="filter-btn" onclick="filterTableArthurs('Salads',this)">Salads</button>
+    <button class="filter-btn" onclick="filterTableArthurs('Fish & Seafood',this)">Fish & Seafood</button>
+    <button class="filter-btn" onclick="filterTableArthurs('Sides',this)">Sides</button>
+    <button class="filter-btn" onclick="filterTableArthurs('Beverages',this)">☕ Beverages</button>
+    <button class="filter-btn" onclick="filterTableArthurs('Desserts',this)">Desserts</button>
+  </div>
+  <!-- Arthur's estimates banner — shown only when Arthur's is active -->
+  <div id="fc-estimates-banner" style="display:none;background:rgba(245,166,35,0.1);border:1px solid rgba(245,166,35,0.25);border-radius:10px;padding:12px 18px;margin-bottom:14px;display:none;align-items:center;gap:12px;">
+    <div style="font-size:20px;flex-shrink:0;">📋</div>
+    <div>
+      <div style="font-size:12.5px;font-weight:700;color:#F5A623;margin-bottom:3px;">Estimated costs — menu loaded from arthursmtl.com</div>
+      <div style="font-size:12px;color:#8B92A5;">Portion costs are benchmarks (industry avg for Jewish deli/brunch). Connect invoices at <strong style="color:#F5A623;">arthurs@culinaraos.com</strong> to track actuals automatically.</div>
+    </div>
+  </div>
   <div class="card" style="overflow:hidden;margin-bottom:16px;">
     <table><thead><tr>
       <th data-i18n="fc_col_item">Item</th><th data-i18n="fc_col_cat">Category</th><th style="text-align:right;" data-i18n="fc_col_units">Units</th><th style="text-align:right;" data-i18n="fc_col_price">Price</th>
@@ -1346,9 +1368,10 @@ tr:last-child td { border-bottom: none; }
 <!-- ===== SECTION: ORDER GUIDE ===== -->
 <div id="section-orders" class="section" style="padding:28px 32px;">
   <div class="section-header">
-    <div><div class="section-title" data-i18n="sec_orders_title">Order Guide</div><div class="section-sub" data-i18n="sec_orders_sub">6 suppliers · weekly estimated costs</div></div>
+    <div><div class="section-title" data-i18n="sec_orders_title">Order Guide</div><div id="orders-subtitle" class="section-sub" data-i18n="sec_orders_sub">6 suppliers · weekly estimated costs</div></div>
   </div>
-  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px;margin-bottom:20px;overflow-x:auto;padding-bottom:4px;">
+  <!-- Bottē supplier KPI summary (hidden for Arthur's) -->
+  <div id="orders-botte-kpis" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px;margin-bottom:20px;overflow-x:auto;padding-bottom:4px;">
     <div class="card kpi" style="padding:14px 16px;border-top:3px solid #4F8EF7;"><div class="kpi-label" style="font-size:11.5px;color:#4F8EF7;">Gordon FS</div><div style="font-size:18px;font-weight:800;letter-spacing:-0.02em;">$1,067<span style="font-size:12px;font-weight:500;color:var(--muted);">/wk</span></div><div style="font-size:11px;color:var(--muted);margin-top:3px;">3 inv · Tue→Thu</div></div>
     <div class="card kpi" style="padding:14px 16px;border-top:3px solid #F05252;"><div class="kpi-label" style="font-size:11.5px;color:#F05252;">Farinex</div><div style="font-size:18px;font-weight:800;letter-spacing:-0.02em;">$509<span style="font-size:12px;font-weight:500;color:var(--muted);">/wk</span></div><div style="font-size:11px;color:var(--muted);margin-top:3px;">2 inv · Flour &amp; tomato</div></div>
     <div class="card kpi" style="padding:14px 16px;border-top:3px solid #34C97A;"><div class="kpi-label" style="font-size:11.5px;color:#34C97A;">Les Jardins</div><div style="font-size:18px;font-weight:800;letter-spacing:-0.02em;">$243<span style="font-size:12px;font-weight:500;color:var(--muted);">/wk</span></div><div style="font-size:11px;color:var(--muted);margin-top:3px;">4 inv · Mon/Thu</div></div>
@@ -1359,6 +1382,8 @@ tr:last-child td { border-bottom: none; }
       <div style="font-size:10px;color:var(--muted);margin-top:2px;">Wed · Fri</div>
     </div>
   </div>
+  <!-- Arthur's supplier KPI summary — built dynamically by renderOrders() -->
+  <div id="orders-arthurs-kpis" style="display:none;"></div>
   <div id="order-content"></div>
 </div>
 
@@ -2506,6 +2531,104 @@ const BASE_MENU_ITEMS = [
 const USER_ITEMS = JSON.parse(localStorage.getItem('culinara_user_items') || '[]');
 const MENU_ITEMS = [...BASE_MENU_ITEMS, ...USER_ITEMS];
 
+// ==================== ARTHUR'S DATA ====================
+// Menu scraped from arthursmtl.com + third-party sources (Mar 2026)
+// Food costs are ESTIMATES based on industry benchmarks — actuals will
+// populate automatically once invoices are connected.
+const ARTHUR_MENU_ITEMS = [
+  // --- Eggs & Plates ---
+  { cat:"Eggs & Plates",      name:"Shakshuka",                         units:0, price:16, cost:4.00,  fc:0.2500, rev:0, foodCost:0, gm:0, gmUnit:12.00, gmPct:0.7500, eng:"star"      },
+  { cat:"Eggs & Plates",      name:"Eggs & Salami",                     units:0, price:16, cost:4.48,  fc:0.2800, rev:0, foodCost:0, gm:0, gmUnit:11.52, gmPct:0.7200, eng:"plowhorse" },
+  { cat:"Eggs & Plates",      name:"Soft Scrambled + Beef Bacon",       units:0, price:16, cost:4.48,  fc:0.2800, rev:0, foodCost:0, gm:0, gmUnit:11.52, gmPct:0.7200, eng:"plowhorse" },
+  // --- Pancakes ---
+  { cat:"Pancakes",           name:"Syrniki (Cottage Cheese Pancakes)", units:0, price:16, cost:3.84,  fc:0.2400, rev:0, foodCost:0, gm:0, gmUnit:12.16, gmPct:0.7600, eng:"star"      },
+  { cat:"Pancakes",           name:"Ricotta Pancakes",                  units:0, price:16, cost:3.52,  fc:0.2200, rev:0, foodCost:0, gm:0, gmUnit:12.48, gmPct:0.7800, eng:"star"      },
+  // --- Latkes ---
+  { cat:"Latkes",             name:"Latkes",                            units:0, price:10, cost:2.00,  fc:0.2000, rev:0, foodCost:0, gm:0, gmUnit:8.00,  gmPct:0.8000, eng:"star"      },
+  { cat:"Latkes",             name:"Latke Smorgasbord",                 units:0, price:18, cost:5.40,  fc:0.3000, rev:0, foodCost:0, gm:0, gmUnit:12.60, gmPct:0.7000, eng:"puzzle"    },
+  // --- Sandwiches & Bagels ---
+  { cat:"Sandwiches & Bagels",name:"McArthur Chicken Schnitzel",        units:0, price:20, cost:6.00,  fc:0.3000, rev:0, foodCost:0, gm:0, gmUnit:14.00, gmPct:0.7000, eng:"star"      },
+  { cat:"Sandwiches & Bagels",name:"Classic Salmon & Cream Cheese Bagel",units:0,price:16, cost:5.76, fc:0.3600, rev:0, foodCost:0, gm:0, gmUnit:10.24, gmPct:0.6400, eng:"plowhorse" },
+  { cat:"Sandwiches & Bagels",name:"Deluxe Breakfast Sandwich",         units:0, price:16, cost:4.48,  fc:0.2800, rev:0, foodCost:0, gm:0, gmUnit:11.52, gmPct:0.7200, eng:"plowhorse" },
+  { cat:"Sandwiches & Bagels",name:"Tuna Melt",                         units:0, price:16, cost:4.48,  fc:0.2800, rev:0, foodCost:0, gm:0, gmUnit:11.52, gmPct:0.7200, eng:"puzzle"    },
+  { cat:"Sandwiches & Bagels",name:"Salami Sandwich",                   units:0, price:12, cost:3.36,  fc:0.2800, rev:0, foodCost:0, gm:0, gmUnit:8.64,  gmPct:0.7200, eng:"dog"       },
+  // --- Toast ---
+  { cat:"Toast",              name:"Avocado Toast",                     units:0, price:17, cost:4.25,  fc:0.2500, rev:0, foodCost:0, gm:0, gmUnit:12.75, gmPct:0.7500, eng:"star"      },
+  { cat:"Toast",              name:"Moroccan Toast",                    units:0, price:20, cost:5.80,  fc:0.2900, rev:0, foodCost:0, gm:0, gmUnit:14.20, gmPct:0.7100, eng:"puzzle"    },
+  // --- Salads ---
+  { cat:"Salads",             name:"Greek Salad",                       units:0, price:20, cost:5.40,  fc:0.2700, rev:0, foodCost:0, gm:0, gmUnit:14.60, gmPct:0.7300, eng:"plowhorse" },
+  { cat:"Salads",             name:"Winter Salad",                      units:0, price:20, cost:5.20,  fc:0.2600, rev:0, foodCost:0, gm:0, gmUnit:14.80, gmPct:0.7400, eng:"puzzle"    },
+  { cat:"Salads",             name:"Sababa Mango Salad",                units:0, price:15, cost:3.75,  fc:0.2500, rev:0, foodCost:0, gm:0, gmUnit:11.25, gmPct:0.7500, eng:"puzzle"    },
+  // --- Fish & Seafood ---
+  { cat:"Fish & Seafood",     name:"Salmon Tower (for 2)",              units:0, price:35, cost:12.25, fc:0.3500, rev:0, foodCost:0, gm:0, gmUnit:22.75, gmPct:0.6500, eng:"star"      },
+  { cat:"Fish & Seafood",     name:"Gravlax",                           units:0, price:21, cost:7.98,  fc:0.3800, rev:0, foodCost:0, gm:0, gmUnit:13.02, gmPct:0.6200, eng:"puzzle"    },
+  { cat:"Fish & Seafood",     name:"Salmon Tartar",                     units:0, price:21, cost:7.98,  fc:0.3800, rev:0, foodCost:0, gm:0, gmUnit:13.02, gmPct:0.6200, eng:"puzzle"    },
+  // --- Sides ---
+  { cat:"Sides",              name:"Challah & Butter",                  units:0, price:4,  cost:0.72,  fc:0.1800, rev:0, foodCost:0, gm:0, gmUnit:3.28,  gmPct:0.8200, eng:"plowhorse" },
+  { cat:"Sides",              name:"Matzah Ball Soup",                  units:0, price:12, cost:2.76,  fc:0.2300, rev:0, foodCost:0, gm:0, gmUnit:9.24,  gmPct:0.7700, eng:"plowhorse" },
+  // --- Beverages ---
+  { cat:"Beverages",          name:"Coffee",                            units:0, price:4,  cost:0.60,  fc:0.1500, rev:0, foodCost:0, gm:0, gmUnit:3.40,  gmPct:0.8500, eng:"star"      },
+  { cat:"Beverages",          name:"Almond Coffee",                     units:0, price:6,  cost:1.02,  fc:0.1700, rev:0, foodCost:0, gm:0, gmUnit:4.98,  gmPct:0.8300, eng:"star"      },
+  { cat:"Beverages",          name:"Iced Coffee",                       units:0, price:6,  cost:0.90,  fc:0.1500, rev:0, foodCost:0, gm:0, gmUnit:5.10,  gmPct:0.8500, eng:"star"      },
+  { cat:"Beverages",          name:"Fresh Orange Juice",                units:0, price:7,  cost:1.40,  fc:0.2000, rev:0, foodCost:0, gm:0, gmUnit:5.60,  gmPct:0.8000, eng:"star"      },
+  // --- Desserts ---
+  { cat:"Desserts",           name:"Babka & Ice Cream",                 units:0, price:12, cost:2.76,  fc:0.2300, rev:0, foodCost:0, gm:0, gmUnit:9.24,  gmPct:0.7700, eng:"puzzle"    },
+];
+
+// Estimated avg FC% across Arthur's menu (for dashboard display)
+const ARTHUR_AVG_FC_EST = (ARTHUR_MENU_ITEMS.reduce((s,i)=>s+i.fc,0)/ARTHUR_MENU_ITEMS.length*100).toFixed(1);
+
+const ARTHUR_ORDER_DATA = [
+  { supplier:"GFS Canada", schedule:"Order Mon for Wed delivery", color:"#4F8EF7", items:[
+    { name:"Large eggs (Burnbrae Farms)",       pack:"15 doz case",    qty:"2 CS/wk est", period:0, weekly:48.00 },
+    { name:"Beef bacon (Montfort)",             pack:"2 KG pack",      qty:"2 CS/wk est", period:0, weekly:44.00 },
+    { name:"Chicken breast boneless (fresh)",   pack:"6 KG box",       qty:"2 CS/wk est", period:0, weekly:56.00 },
+    { name:"Salami",                            pack:"2 KG roll",      qty:"1 CS/wk est", period:0, weekly:26.00 },
+    { name:"Tuna (flaked, drained)",            pack:"12×170g cans",   qty:"1 CS/wk est", period:0, weekly:18.00 },
+  ]},
+  { supplier:"Hof Kelsten Bakery", schedule:"Order Thu for Fri–Sat delivery", color:"#F5A623", items:[
+    { name:"Challah loaf (sliced, ~800g)",      pack:"Per loaf",       qty:"30/wk est",   period:0, weekly:90.00 },
+    { name:"Challah rolls",                     pack:"Per roll",       qty:"60/wk est",   period:0, weekly:60.00 },
+    { name:"Babka (chocolate / cinnamon)",      pack:"Per loaf",       qty:"6/wk est",    period:0, weekly:48.00 },
+    { name:"Black Russian toast bread",         pack:"Per loaf",       qty:"10/wk est",   period:0, weekly:30.00 },
+  ]},
+  { supplier:"Fumoir Atkins", schedule:"Order Fri for Mon delivery", color:"#34C97A", items:[
+    { name:"Gravlax side (house-cured)",        pack:"1.5–2 KG side",  qty:"3/wk est",    period:0, weekly:165.00 },
+    { name:"Smoked salmon sliced",              pack:"400g pack",      qty:"6/wk est",    period:0, weekly:84.00 },
+  ]},
+  { supplier:"Sysco Montréal", schedule:"Order Wed for Fri delivery", color:"#A78BFA", items:[
+    { name:"Cream cheese (Philadelphia 2 KG)",  pack:"2 KG block",     qty:"4/wk est",    period:0, weekly:52.00 },
+    { name:"Cottage cheese 2% (2 KG tub)",      pack:"2 KG tub",       qty:"4/wk est",    period:0, weekly:32.00 },
+    { name:"Ricotta (Saputo 1 KG)",             pack:"1 KG tub",       qty:"4/wk est",    period:0, weekly:24.00 },
+    { name:"Sour cream (Liberté 3%, 4L)",       pack:"4 L bucket",     qty:"2/wk est",    period:0, weekly:18.00 },
+    { name:"Capers (Krinos 1L jar)",            pack:"1 L jar",        qty:"1/wk est",    period:0, weekly:8.50  },
+    { name:"Canned chickpeas",                  pack:"12×540ml CS",    qty:"1 CS/wk est", period:0, weekly:15.00 },
+    { name:"Tahini",                            pack:"500g jar",       qty:"2/wk est",    period:0, weekly:14.00 },
+    { name:"Russet potatoes",                   pack:"22.7 KG bag",    qty:"1/wk est",    period:0, weekly:19.00 },
+  ]},
+  { supplier:"Marché Jean-Talon Produce", schedule:"2× per week (Tue & Fri)", color:"#F05252", items:[
+    { name:"Avocados (Hass ripe)",              pack:"Case 48ct",      qty:"1/wk est",    period:0, weekly:42.00 },
+    { name:"Tomatoes (cluster)",                pack:"10 KG box",      qty:"1/wk est",    period:0, weekly:22.00 },
+    { name:"Fresh dill, chives, parsley",       pack:"Bunch each",     qty:"6 bunches est",period:0,weekly:18.00 },
+    { name:"Baby greens / micro (local)",       pack:"1 KG bag",       qty:"2/wk est",    period:0, weekly:24.00 },
+    { name:"Mango (Ataulfo, seasonal)",         pack:"Per kg",         qty:"3 KG/wk est", period:0, weekly:9.00  },
+    { name:"Lebanese cucumbers",               pack:"Bunch",          qty:"15/wk est",   period:0, weekly:9.00  },
+  ]},
+];
+
+const ARTHUR_YIELD_ITEMS = [
+  { cat:'Proteins',    emoji:'🥚', name:'Large eggs (Burnbrae)', pack:'15 doz case', packAmt:180, portionAmt:3, portionLabel:'3 eggs per dish', costBag:38.00, note:'Primary protein — track waste from cracks. Beat with fork, not whisk, for silky curds.', usedIn:'All egg dishes, Shakshuka, pancake batter' },
+  { cat:'Proteins',    emoji:'🍗', name:'Chicken breast (fresh, 6 KG box)', pack:'6 KG box', packAmt:6000, portionAmt:180, portionLabel:'180g per schnitzel (pounded thin)', costBag:56.00, note:'Pound to 1cm even thickness — consistency key for McArthur', usedIn:'McArthur Chicken Schnitzel' },
+  { cat:'Fish',        emoji:'🐟', name:'Gravlax / smoked salmon (Fumoir Atkins)', pack:'1.5–2 KG side', packAmt:1700, portionAmt:80, portionLabel:'80g per plate (weigh every order)', costBag:55.00, note:'HIGH COST — slice to order, weigh portions. Day 1–3 fresh, day 4+ tartare only.', usedIn:'Salmon Tower, Gravlax plate, Salmon Bagel' },
+  { cat:'Fish',        emoji:'🐠', name:'Fresh salmon for tartar (sushi-grade)', pack:'Per KG (order 3×/wk)', packAmt:1000, portionAmt:120, portionLabel:'120g per plate', costBag:32.00, note:'Use within 24h of delivery — inspect colour & smell on arrival', usedIn:'Salmon Tartar' },
+  { cat:'Dairy',       emoji:'🧀', name:'Cream cheese (Philadelphia 2 KG block)', pack:'2 KG block', packAmt:2000, portionAmt:50, portionLabel:'50g per portion (bagel / smoked salmon)', costBag:13.00, note:'Soften daily — over-spreading is the #1 cream cheese waste vector', usedIn:'Salmon bagel, Salmon Tower, spread' },
+  { cat:'Dairy',       emoji:'🥛', name:'Cottage cheese 2% (2 KG tub)', pack:'2 KG tub', packAmt:2000, portionAmt:200, portionLabel:'200g per syrniki batch (6 pancakes)', costBag:8.00, note:'Signature item base — drain excess whey before mixing or pancakes fall apart', usedIn:'Syrniki' },
+  { cat:'Dairy',       emoji:'🧀', name:'Ricotta (Saputo 1 KG tub)', pack:'1 KG tub', packAmt:1000, portionAmt:150, portionLabel:'150g per ricotta pancake batch', costBag:6.00, note:'Drain overnight if too wet — batter consistency controls texture', usedIn:'Ricotta Pancakes' },
+  { cat:'Baked Goods', emoji:'🍞', name:'Challah loaf (Hof Kelsten, ~800g)', pack:'Per loaf', packAmt:800, portionAmt:60, portionLabel:'60g (2 thick slices) per portion', costBag:3.00, note:'Order fresh daily — day-old → French toast only. Do NOT freeze. Central to multiple dishes.', usedIn:'Challah & Butter, Latke Smorgasbord, Moroccan Toast, Eggs & Salami' },
+  { cat:'Produce',     emoji:'🥑', name:'Avocados (Hass, case 48ct)', pack:'Case 48ct', packAmt:48, portionAmt:1, portionLabel:'½–¾ avocado per toast (weigh, not eyeball)', costBag:42.00, note:'Check daily ripeness — rotate front to back. Brown spots: trim and use same day.', usedIn:'Avocado Toast, garnish' },
+  { cat:'Produce',     emoji:'🥔', name:'Potatoes (russet, 22.7 KG bag)', pack:'22.7 KG bag', packAmt:22700, portionAmt:300, portionLabel:'300g peeled per latke portion (3 latkes)', costBag:19.00, note:'Grate fresh, squeeze dry in cloth — oxidize within 30 min. Par-cook at start of shift.', usedIn:'Latkes, Latke Smorgasbord, egg plates' },
+];
+
 const PREP_ITEMS = [
   // SOURDOUGH DOUGH PROGRAM (featured — 3-day fermentation)
   { cat:"Sourdough Dough Program", subcat:"Dough", name:"Sourdough pizza dough", qty:"~78 balls/sac", freq:"daily", note:"Organic 00 flour · Water · Salt · Sourdough starter. 320g per ball. 72hr cold ferment — plan 3 days ahead." },
@@ -2941,6 +3064,12 @@ function loadRestaurantData(id) {
     if (secKpi) secKpi.style.display = '';
     const fcSub = document.getElementById('fc-subtitle');
     if (fcSub) fcSub.textContent = 'Bottē Restaurant · Jan 25 – Mar 15, 2026';
+    const frBotte2  = document.getElementById('fc-filter-row');
+    const frArthur2 = document.getElementById('fc-filter-row-arthurs');
+    const estBan2   = document.getElementById('fc-estimates-banner');
+    if (frBotte2)  frBotte2.style.display  = '';
+    if (frArthur2) frArthur2.style.display = 'none';
+    if (estBan2)   estBan2.style.display   = 'none';
     const iSub = document.getElementById('insights-subtitle');
     if (iSub) iSub.textContent = 'Bottē Restaurant · Jan 25 – Mar 15, 2026';
     const iPlaceholder = document.getElementById('insights-arthurs-placeholder');
@@ -2978,7 +3107,13 @@ function loadRestaurantData(id) {
     const secKpi = document.getElementById('secondary-kpis');
     if (secKpi) secKpi.style.display = 'none';
     const fcSub = document.getElementById('fc-subtitle');
-    if (fcSub) fcSub.textContent = "Arthur's Nosh Bar · Saint-Henri — no data yet";
+    if (fcSub) fcSub.textContent = "Arthur's Nosh Bar · Saint-Henri — " + ARTHUR_MENU_ITEMS.length + " items · Est. avg " + ARTHUR_AVG_FC_EST + "% FC";
+    const frBotte  = document.getElementById('fc-filter-row');
+    const frArthur = document.getElementById('fc-filter-row-arthurs');
+    const estBan   = document.getElementById('fc-estimates-banner');
+    if (frBotte)  frBotte.style.display  = 'none';
+    if (frArthur) frArthur.style.display = '';
+    if (estBan)   estBan.style.display   = 'flex';
     const iSub = document.getElementById('insights-subtitle');
     if (iSub) iSub.textContent = "Arthur's Nosh Bar · no data yet";
     const iPlaceholder = document.getElementById('insights-arthurs-placeholder');
@@ -3049,14 +3184,37 @@ function engTag(e) {
   const m = { star:'<span class="tag eng-star">⭐ Star</span>', puzzle:'<span class="tag eng-puzzle">💎 Hidden Gem</span>', plowhorse:'<span class="tag eng-plowhorse">⚙ Workhorse</span>', dog:'<span class="tag eng-dog">📉 Underperformer</span>' };
   return m[e] || '';
 }
+function filterTableArthurs(cat, btn) {
+  document.querySelectorAll('#fc-filter-row-arthurs .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTable(cat);
+}
 function renderTable(filter) {
-  const filterRow = document.getElementById('fc-filter-row');
+  const filterRowBotte  = document.getElementById('fc-filter-row');
+  const filterRowArthur = document.getElementById('fc-filter-row-arthurs');
+  const estBanner       = document.getElementById('fc-estimates-banner');
   if (ACTIVE_SLUG === 'arthurs') {
-    if (filterRow) filterRow.style.display = 'none';
-    document.getElementById('profitTbody').innerHTML = `<tr><td colspan="10" style="text-align:center;padding:48px 20px;color:#4A5168;font-size:13px;">📋 No data yet — Arthur's menu will appear here once configured</td></tr>`;
+    if (filterRowBotte)  filterRowBotte.style.display  = 'none';
+    if (filterRowArthur) filterRowArthur.style.display = '';
+    if (estBanner)       estBanner.style.display       = 'flex';
+    const items = filter === 'all' ? ARTHUR_MENU_ITEMS : ARTHUR_MENU_ITEMS.filter(i => i.cat === filter);
+    document.getElementById('profitTbody').innerHTML = items.map(i => `<tr>
+      <td style="font-weight:600;">${i.name}</td>
+      <td>${catTag(i.cat)}</td>
+      <td style="text-align:right;color:#4A5168;font-size:12px;">—</td>
+      <td style="text-align:right;">$${i.price}</td>
+      <td style="text-align:right;">$${i.cost.toFixed(2)} <span style="font-size:10px;color:#4A5168;">est</span></td>
+      <td style="text-align:right;" class="${fcClass(i.fc)}">${(i.fc*100).toFixed(1)}% <span style="font-size:10px;color:#4A5168;">est</span></td>
+      <td style="text-align:right;color:#4A5168;font-size:12px;">—</td>
+      <td style="text-align:right;font-weight:700;">$${i.gmUnit.toFixed(2)}</td>
+      <td style="text-align:right;" class="${i.gmPct>0.78?'gm-green':i.gmPct>0.68?'gm-amber':'gm-red'}">${(i.gmPct*100).toFixed(1)}%</td>
+      <td>${engTag(i.eng)}</td>
+    </tr>`).join('');
     return;
   }
-  if (filterRow) filterRow.style.display = '';
+  if (filterRowBotte)  filterRowBotte.style.display  = '';
+  if (filterRowArthur) filterRowArthur.style.display = 'none';
+  if (estBanner)       estBanner.style.display       = 'none';
   const items = filter === 'all' ? MENU_ITEMS : MENU_ITEMS.filter(i => i.cat === filter);
   document.getElementById('profitTbody').innerHTML = items.map(i => `<tr>
     <td style="font-weight:600;">${i.name}</td>
@@ -3079,11 +3237,31 @@ function filterTable(cat, btn) {
 
 // ==================== MENU ENGINEERING ====================
 function renderEngineering() {
+  const items = ACTIVE_SLUG === 'arthurs' ? ARTHUR_MENU_ITEMS : MENU_ITEMS;
   if (ACTIVE_SLUG === 'arthurs') {
+    // Show estimated quadrant with a note
     ['star','puzzle','plowhorse','dog'].forEach(eng => {
       const el = document.getElementById(eng + '-list');
-      if (el) el.innerHTML = `<div style="text-align:center;padding:30px;color:#4A5168;font-size:13px;">📋 No data yet — configure Arthur's menu to see this section</div>`;
+      if (!el) return;
+      const group = items.filter(i => i.eng === eng);
+      el.innerHTML = (group.length === 0)
+        ? `<div style="text-align:center;padding:20px;color:#4A5168;font-size:12px;">No items</div>`
+        : group.map(i => `
+            <div class="quad-item">
+              <span style="font-weight:500;">${i.name}</span>
+              <span style="font-size:12px;color:var(--muted);">$${i.price} · est ${(i.fc*100).toFixed(0)}% FC</span>
+            </div>`).join('');
     });
+    // Show estimated note on chart (no bubble chart without real units data)
+    const chartCanvas = document.getElementById('chartEng');
+    if (chartCanvas) {
+      const ctx = chartCanvas.getContext('2d');
+      ctx.clearRect(0,0,chartCanvas.width,chartCanvas.height);
+      ctx.fillStyle = '#4A5168';
+      ctx.font = '13px Inter, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('Bubble chart requires sales data — connect POS to enable.', chartCanvas.width/2, chartCanvas.height/2);
+    }
     return;
   }
   ['star','puzzle','plowhorse','dog'].forEach(eng => {
@@ -3147,7 +3325,28 @@ const YIELD_ITEMS = [
 function renderYield() {
   if (ACTIVE_SLUG === 'arthurs') {
     const tbody = document.getElementById('yield-tbody');
-    if (tbody) tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:40px;color:#4A5168;font-size:13px;">📋 No data yet — configure Arthur's menu to see this section</td></tr>`;
+    if (!tbody) return;
+    const yItems = ARTHUR_YIELD_ITEMS;
+    let html = '';
+    let lastCat = '';
+    yItems.forEach(item => {
+      if (item.cat !== lastCat) {
+        lastCat = item.cat;
+        html += `<tr style="background:#1A1F2E;"><td colspan="7" style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#4F8EF7;padding:8px 14px;">${item.cat}</td></tr>`;
+      }
+      const portionsPerPack = Math.floor(item.packAmt / item.portionAmt);
+      const costPerPortion  = (item.costBag / portionsPerPack).toFixed(2);
+      html += `<tr>
+        <td style="font-weight:600;">${item.emoji} ${item.name}</td>
+        <td style="color:var(--muted);font-size:12px;">${item.pack}</td>
+        <td style="text-align:right;font-weight:700;color:#4F8EF7;">$${item.costBag.toFixed(2)}</td>
+        <td style="text-align:right;font-size:12px;">${item.portionLabel}</td>
+        <td style="text-align:right;font-weight:700;color:#34C97A;">$${costPerPortion}</td>
+        <td style="text-align:right;font-size:12px;color:var(--muted);">${portionsPerPack} portions</td>
+        <td style="font-size:11.5px;color:#8B92A5;max-width:220px;">${item.note}</td>
+      </tr>`;
+    });
+    tbody.innerHTML = html;
     return;
   }
   const tbody = document.getElementById('yield-tbody');
@@ -3385,10 +3584,53 @@ function toggleSubcat(id) {
 
 // ==================== ORDERS ====================
 function renderOrders() {
+  const bottekpis   = document.getElementById('orders-botte-kpis');
+  const arthurskpis = document.getElementById('orders-arthurs-kpis');
+  const orderSub    = document.getElementById('orders-subtitle');
   if (ACTIVE_SLUG === 'arthurs') {
-    document.getElementById('order-content').innerHTML = `<div style="text-align:center;padding:60px 40px;color:#4A5168;font-size:13px;">📋 No data yet — configure Arthur's menu to see this section</div>`;
+    if (bottekpis)   bottekpis.style.display   = 'none';
+    if (arthurskpis) arthurskpis.style.display = '';
+    if (orderSub) orderSub.textContent = ARTHUR_ORDER_DATA.length + ' suppliers · estimated weekly costs';
+    // Render Arthur's supplier KPI summary grid
+    if (arthurskpis) arthurskpis.innerHTML = `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px;margin-bottom:20px;">` +
+      ARTHUR_ORDER_DATA.map(s => `
+        <div class="card kpi" style="padding:14px 16px;border-top:3px solid ${s.color};">
+          <div class="kpi-label" style="font-size:11.5px;color:${s.color};">${s.supplier.split(' ')[0]}</div>
+          <div style="font-size:18px;font-weight:800;letter-spacing:-0.02em;">~$${s.items.reduce((a,b)=>a+b.weekly,0).toFixed(0)}<span style="font-size:12px;font-weight:500;color:var(--muted);">/wk</span></div>
+          <div style="font-size:11px;color:var(--muted);margin-top:3px;">est · ${s.schedule.split(' ')[0]}</div>
+        </div>`).join('') + `</div>`;
+    document.getElementById('order-content').innerHTML =
+      `<div style="background:rgba(245,166,35,0.08);border:1px solid rgba(245,166,35,0.22);border-radius:10px;padding:12px 18px;margin-bottom:18px;display:flex;align-items:center;gap:12px;">
+        <div style="font-size:18px;">📦</div>
+        <div style="font-size:12px;color:#8B92A5;"><strong style="color:#F5A623;">Estimated order guide</strong> — quantities are weekly benchmarks for a ~50-cover brunch service. Update as actuals become available.</div>
+      </div>` +
+      ARTHUR_ORDER_DATA.map(s => `
+        <div class="card" style="margin-bottom:14px;overflow:hidden;">
+          <div style="padding:12px 18px;background:#2A3045;border-bottom:1px solid var(--border);border-top:3px solid ${s.color};display:flex;align-items:center;gap:10px;">
+            <div style="width:9px;height:9px;border-radius:99px;background:${s.color};flex-shrink:0;"></div>
+            <span style="font-weight:700;font-size:14px;color:#fff;">${s.supplier}</span>
+            <span style="font-size:12px;color:#8B92A5;">${s.schedule}</span>
+            <span style="margin-left:auto;font-size:13px;font-weight:700;color:${s.color};">~$${s.items.reduce((a,b)=>a+b.weekly,0).toFixed(0)}/wk est</span>
+          </div>
+          <div style="overflow-x:auto;">
+          <table style="min-width:420px;"><thead><tr><th>Ingredient</th><th>Pack</th><th>Qty (est)</th><th style="text-align:right;">Weekly est</th></tr></thead>
+          <tbody>${s.items.map(i=>`<tr>
+            <td style="font-weight:500;">${i.name}</td>
+            <td style="color:var(--muted);font-size:12px;">${i.pack}</td>
+            <td style="color:var(--muted);font-size:12px;">${i.qty}</td>
+            <td style="text-align:right;font-weight:700;color:#F5A623;">~$${i.weekly.toFixed(2)}</td>
+          </tr>`).join('')}
+          <tr style="background:rgba(255,255,255,0.04);"><td colspan="3" style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);">Subtotal</td>
+          <td style="text-align:right;font-weight:800;color:#F5A623;">~$${s.items.reduce((a,b)=>a+b.weekly,0).toFixed(2)}/wk</td></tr>
+          </tbody></table>
+          </div>
+        </div>`).join('');
     return;
   }
+  // Bottē branch — restore KPI grids & subtitle
+  if (bottekpis)   bottekpis.style.display   = '';
+  if (arthurskpis) arthurskpis.style.display = 'none';
+  if (orderSub) orderSub.setAttribute('data-i18n','sec_orders_sub');
   document.getElementById('order-content').innerHTML = ORDER_DATA.map(s => `
     <div class="card" style="margin-bottom:14px;overflow:hidden;"${s.supplier.includes('Boissons') ? ' id="supp-boissons"' : ''}>
       <div style="padding:12px 18px;background:#2A3045;border-bottom:1px solid var(--border);border-top:3px solid ${s.color};display:flex;align-items:center;gap:10px;">
