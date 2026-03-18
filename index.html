@@ -314,7 +314,7 @@ tr:last-child td { border-bottom: none; }
     <div style="display:flex;align-items:center;gap:9px;margin-bottom:12px;">
       <div style="flex:1;">
         <div style="font-size:15px;font-weight:700;letter-spacing:-0.03em;font-family:'Space Grotesk',sans-serif;background:linear-gradient(90deg,#fff 0%,rgba(255,255,255,0.65) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">CulinaraOs</div>
-        <div style="color:#3A3A3C;font-size:9.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-top:1px;">Kitchen Intelligence</div>
+        <div style="color:#3A3A3C;font-size:9.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-top:1px;"><span data-i18n="sidebar_kitchen_intel">Kitchen Intelligence</span></div>
       </div>
       <div style="background:rgba(99,102,241,0.18);color:#a5b4fc;padding:2px 7px;border-radius:5px;font-size:9.5px;font-weight:800;letter-spacing:0.04em;">PRO</div>
     </div>
@@ -363,7 +363,7 @@ tr:last-child td { border-bottom: none; }
   <div style="padding:12px 14px;border-top:1px solid rgba(255,255,255,0.04);">
     <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;">
       <div class="live-dot"></div>
-      <div style="color:#30D158;font-size:11px;font-weight:600;">Live sync active</div>
+      <div style="color:#30D158;font-size:11px;font-weight:600;"><span data-i18n="sidebar_live_sync">Live sync active</span></div>
     </div>
     <div style="padding:0 0 8px 0;">
       <button id="lang-toggle-btn" onclick="toggleLang()" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:var(--muted);font-size:11.5px;font-weight:700;padding:7px;border-radius:8px;cursor:pointer;letter-spacing:0.08em;transition:all 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">FR</button>
@@ -597,7 +597,7 @@ tr:last-child td { border-bottom: none; }
       <div style="font-size:13px;font-weight:700;color:#a78bfa;margin-bottom:4px;">Proforma Mode — Year 1 Projections</div>
       <div style="font-size:12px;color:#8B92A5;line-height:1.5;">Viewing <strong style="color:#c4b5fd;">Arthur's Old Port</strong> Year 1 targets from the financial proforma (2021). Revenue target: <strong style="color:#c4b5fd;">$5,000,000</strong> · Break-even: <strong style="color:#c4b5fd;">$2,554,207</strong> · EBITDA: <strong style="color:#c4b5fd;">$464,620 (9.29%)</strong> · Net profit: <strong style="color:#c4b5fd;">$284,503 (5.69%)</strong></div>
     </div>
-    <button onclick="showScreen('restaurants')" style="flex-shrink:0;background:rgba(167,139,250,0.15);color:#a78bfa;border:1px solid rgba(167,139,250,0.3);border-radius:8px;padding:7px 16px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;font-family:inherit;">↩ Switch Restaurant</button>
+    <button onclick="showScreen('restaurants')" style="flex-shrink:0;background:rgba(167,139,250,0.15);color:#a78bfa;border:1px solid rgba(167,139,250,0.3);border-radius:8px;padding:7px 16px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;font-family:inherit;"><span data-i18n="btn_switch_rest">↩ Switch Restaurant</span></button>
   </div>
 
   <!-- Savings Banner -->
@@ -677,17 +677,17 @@ tr:last-child td { border-bottom: none; }
   <!-- Beverage + Prime Cost KPIs -->
   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px;">
     <div class="card" style="padding:16px 20px;border-color:rgba(6,182,212,0.2);">
-      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:#06B6D4;margin-bottom:6px;">Bev Cost %</div>
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:#06B6D4;margin-bottom:6px;"><span data-i18n="kpi_bev_cost">Bev Cost %</span></div>
       <div style="font-size:2rem;font-weight:800;letter-spacing:-0.03em;color:#06B6D4;line-height:1;">20.4%</div>
       <div style="font-size:11px;color:var(--muted);margin-top:5px;">$992 on $4,870 bev rev · healthy</div>
     </div>
     <div class="card" style="padding:16px 20px;border-color:rgba(245,166,35,0.2);">
-      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:#F5A623;margin-bottom:6px;">Drink Attach Rate</div>
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:#F5A623;margin-bottom:6px;"><span data-i18n="kpi_attach_rate">Drink Attach Rate</span></div>
       <div style="font-size:2rem;font-weight:800;letter-spacing:-0.03em;color:#F5A623;line-height:1;">33.7%</div>
       <div style="font-size:11px;color:var(--muted);margin-top:5px;">644 drinks / 1,911 covers · benchmark 40%+</div>
     </div>
     <div class="card" style="padding:16px 20px;border-color:rgba(240,82,82,0.2);">
-      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:#F05252;margin-bottom:6px;">Prime Cost</div>
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:#F05252;margin-bottom:6px;"><span data-i18n="kpi_prime_cost">Prime Cost</span></div>
       <div style="font-size:2rem;font-weight:800;letter-spacing:-0.03em;color:#F05252;line-height:1;">71.5%</div>
       <div style="font-size:11px;color:var(--muted);margin-top:5px;">Food 39.1% + Labour 32.4% · target &lt;65%</div>
     </div>
@@ -698,7 +698,7 @@ tr:last-child td { border-bottom: none; }
     <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;">
       <div>
         <div class="card-title">Food Cost Trend — 7 Weeks</div>
-        <div class="card-sub">Weekly food cost % vs 25% target</div>
+        <div class="card-sub"><span data-i18n="dash_fc_trend_sub">Weekly food cost % vs 25% target</span></div>
       </div>
       <div style="display:flex;gap:14px;align-items:center;">
         <div style="display:flex;align-items:center;gap:5px;font-size:11.5px;color:var(--muted);"><div style="width:14px;height:3px;background:#FF453A;border-radius:2px;"></div>Food Cost %</div>
@@ -712,7 +712,7 @@ tr:last-child td { border-bottom: none; }
   <div class="chart-grid">
     <div class="card" style="padding:20px;">
       <div class="card-title">Food Cost vs Target</div>
-      <div class="card-sub">Current period breakdown</div>
+      <div class="card-sub"><span data-i18n="dash_fc_vs_sub">Current period breakdown</span></div>
       <div style="position:relative;height:170px;margin-top:14px;"><canvas id="chartFC"></canvas></div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;margin-top:14px;border-top:1px solid rgba(255,255,255,0.06);padding-top:12px;">
         <div style="text-align:center;"><div style="font-size:11px;color:var(--muted);">Purchases</div><div style="font-weight:700;font-size:14px;margin-top:2px;">$12,169</div></div>
@@ -722,7 +722,7 @@ tr:last-child td { border-bottom: none; }
     </div>
     <div class="card" style="padding:20px;">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;">
-        <div><div class="card-title">Top 10 Items by Revenue</div><div class="card-sub">Revenue vs food cost this period</div></div>
+        <div><div class="card-title">Top 10 Items by Revenue</div><div class="card-sub"><span data-i18n="dash_top10_sub">Revenue vs food cost this period</span></div></div>
       </div>
       <div style="height:210px;"><canvas id="chartTop"></canvas></div>
     </div>
@@ -764,7 +764,7 @@ tr:last-child td { border-bottom: none; }
 <!-- ===== SECTION: FOOD COST ===== -->
 <div id="section-profitability" class="section" style="padding:28px 32px;">
   <div class="section-header">
-    <div><div class="section-title">Food Cost by Item</div><div class="section-sub">All 29 menu items · Jan 25 – Mar 15, 2026</div></div>
+    <div><div class="section-title" data-i18n="fc_title">Food Cost by Item</div><div class="section-sub" data-i18n="sec_insights_sub">All 29 menu items · Jan 25 – Mar 15, 2026</div></div>
     <button class="btn-ghost" onclick="window.print()">↓ Export</button>
   </div>
   <details class="guideline-banner">
@@ -808,27 +808,27 @@ tr:last-child td { border-bottom: none; }
 <!-- ===== SECTION: MENU ANALYSIS ===== -->
 <div id="section-engineering" class="section" style="padding:28px 32px;">
   <div class="section-header">
-    <div><div class="section-title">Menu Analysis</div><div class="section-sub">4-quadrant matrix: Volume vs Contribution Margin per unit</div></div>
+    <div><div class="section-title" data-i18n="sec_menuanalysis_title">Menu Analysis</div><div class="section-sub" data-i18n="sec_menuanalysis_sub">4-quadrant matrix: Volume vs Contribution Margin per unit</div></div>
   </div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;">
     <div class="quad-box quad-star-bg">
       <div style="font-size:13.5px;font-weight:700;color:#166534;margin-bottom:4px;">⭐ Stars — High Volume · High Margin</div>
-      <div style="font-size:12px;color:#166534;margin-bottom:12px;opacity:0.8;">Core menu. Protect these, feature them, never cut corners on quality.</div>
+      <div style="font-size:12px;color:#166534;margin-bottom:12px;opacity:0.8;"><span data-i18n="eng_stars_desc">Core menu. Protect these, feature them, never cut corners on quality.</span></div>
       <div id="star-list"></div>
     </div>
     <div class="quad-box quad-puzzle-bg">
       <div style="font-size:13.5px;font-weight:700;color:#1e40af;margin-bottom:4px;">💎 Hidden Gems — Low Volume · High Margin</div>
-      <div style="font-size:12px;color:#1e40af;margin-bottom:12px;opacity:0.8;">High margin but underordered. Better menu placement or a special can unlock volume.</div>
+      <div style="font-size:12px;color:#1e40af;margin-bottom:12px;opacity:0.8;"><span data-i18n="eng_gems_desc">High margin but underordered. Better menu placement or a special can unlock volume.</span></div>
       <div id="puzzle-list"></div>
     </div>
     <div class="quad-box quad-plowhorse-bg">
       <div style="font-size:13.5px;font-weight:700;color:#854d0e;margin-bottom:4px;">⚙ Workhorses — High Volume · Lower Margin</div>
-      <div style="font-size:12px;color:#854d0e;margin-bottom:12px;opacity:0.8;">Popular but margin-thin. Reprice +$1–2 or tighten portion spec.</div>
+      <div style="font-size:12px;color:#854d0e;margin-bottom:12px;opacity:0.8;"><span data-i18n="eng_workhorses_desc">Popular but margin-thin. Reprice +$1–2 or tighten portion spec.</span></div>
       <div id="plowhorse-list"></div>
     </div>
     <div class="quad-box quad-dog-bg">
       <div style="font-size:13.5px;font-weight:700;color:#b91c1c;margin-bottom:4px;">📉 Underperformers — Low Volume · Low Margin</div>
-      <div style="font-size:12px;color:#b91c1c;margin-bottom:12px;opacity:0.8;">Review or remove. Don't let these occupy menu real estate or prep time.</div>
+      <div style="font-size:12px;color:#b91c1c;margin-bottom:12px;opacity:0.8;"><span data-i18n="eng_underperformers_desc">Review or remove. Don't let these occupy menu real estate or prep time.</span></div>
       <div id="dog-list"></div>
     </div>
   </div>
@@ -843,8 +843,8 @@ tr:last-child td { border-bottom: none; }
 <!-- ===== SECTION: PREP & RECIPES ===== -->
 <div id="section-prep" class="section" style="padding:28px 32px;">
   <div class="section-header">
-    <div><div class="section-title">Prep &amp; Recipes</div><div class="section-sub">Weekly quantities based on ~35 covers/day</div></div>
-    <button class="btn-ghost" onclick="window.print()">🖨 Print Guide</button>
+    <div><div class="section-title" data-i18n="sec_prep_title">Prep &amp; Recipes</div><div class="section-sub" data-i18n="sec_prep_sub">Weekly quantities based on ~35 covers/day</div></div>
+    <button class="btn-ghost" onclick="window.print()"><span data-i18n="btn_print_guide">🖨 Print Guide</span></button>
   </div>
   <details class="guideline-banner">
     <summary>📋 How to use Prep &amp; Recipes</summary>
@@ -865,7 +865,7 @@ tr:last-child td { border-bottom: none; }
   <div id="prepboard-header" style="padding:20px 28px 0;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
     <div>
       <div style="display:flex;align-items:center;gap:10px;">
-        <div class="section-title" style="margin:0;">Prep Board</div>
+        <div class="section-title" style="margin:0;" data-i18n="sec_prepboard_title">Prep Board</div>
         <div style="display:flex;align-items:center;gap:5px;">
           <div style="width:7px;height:7px;border-radius:99px;background:#34C97A;animation:blink 2s infinite;"></div>
           <span style="font-size:11px;font-weight:700;color:#34C97A;letter-spacing:0.04em;">LIVE</span>
@@ -1049,7 +1049,7 @@ tr:last-child td { border-bottom: none; }
 <div id="section-yield" class="section" style="padding:28px 32px;">
   <div class="section-header">
     <div>
-      <div class="section-title">Yield Control</div>
+      <div class="section-title" data-i18n="sec_yield_title">Yield Control</div>
       <div class="section-sub">Pack → Portion → Pizzas — catch portioning losses the same day, not at month end</div>
     </div>
     <div class="ai-badge">⚖ Pack-to-Plate</div>
@@ -1228,7 +1228,7 @@ tr:last-child td { border-bottom: none; }
 <!-- ===== SECTION: ORDER GUIDE ===== -->
 <div id="section-orders" class="section" style="padding:28px 32px;">
   <div class="section-header">
-    <div><div class="section-title">Order Guide</div><div class="section-sub">6 suppliers · weekly estimated costs</div></div>
+    <div><div class="section-title" data-i18n="sec_orders_title">Order Guide</div><div class="section-sub" data-i18n="sec_orders_sub">6 suppliers · weekly estimated costs</div></div>
   </div>
   <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px;margin-bottom:20px;overflow-x:auto;padding-bottom:4px;">
     <div class="card kpi" style="padding:14px 16px;border-top:3px solid #4F8EF7;"><div class="kpi-label" style="font-size:11.5px;color:#4F8EF7;">Gordon FS</div><div style="font-size:18px;font-weight:800;letter-spacing:-0.02em;">$1,067<span style="font-size:12px;font-weight:500;color:var(--muted);">/wk</span></div><div style="font-size:11px;color:var(--muted);margin-top:3px;">3 inv · Tue→Thu</div></div>
@@ -1247,7 +1247,7 @@ tr:last-child td { border-bottom: none; }
 <!-- ===== SECTION: STAFF & TASKS ===== -->
 <div id="section-staff" class="section" style="padding:28px 32px;">
   <div class="section-header">
-    <div><div class="section-title">Staff &amp; Tasks</div><div class="section-sub">Today's team and daily task board · Mar 14, 2026</div></div>
+    <div><div class="section-title" data-i18n="sec_staff_title">Staff &amp; Tasks</div><div class="section-sub">Today's team and daily task board · Mar 14, 2026</div></div>
     <button class="btn-primary" onclick="alert('Add task flow coming in the next version.')">+ Add Task</button>
   </div>
 
@@ -1255,7 +1255,7 @@ tr:last-child td { border-bottom: none; }
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;">
     <div class="card" style="padding:20px;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-        <div class="card-title">Today's Shift</div>
+        <div class="card-title"><span data-i18n="staff_shift">Today's Shift</span></div>
         <span class="chip chip-green" style="margin:0;">3 on shift</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:10px;">
@@ -1296,7 +1296,7 @@ tr:last-child td { border-bottom: none; }
 
     <!-- Labor cost card -->
     <div class="card" style="padding:20px;">
-      <div class="card-title" style="margin-bottom:16px;">This Week's Labor</div>
+      <div class="card-title" style="margin-bottom:16px;"><span data-i18n="staff_week_labor">This Week's Labor</span></div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
         <div style="background:var(--bg-card2);border-radius:9px;padding:14px;">
           <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;font-weight:600;margin-bottom:5px;">Labor Cost</div>
@@ -1330,7 +1330,7 @@ tr:last-child td { border-bottom: none; }
   <div class="card" style="overflow:hidden;">
     <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
       <div>
-        <div class="card-title">Daily Task Board</div>
+        <div class="card-title"><span data-i18n="staff_task_board">Daily Task Board</span></div>
         <div class="card-sub">Today's kitchen and management tasks</div>
       </div>
       <div style="display:flex;gap:8px;">
@@ -1388,7 +1388,7 @@ tr:last-child td { border-bottom: none; }
 <!-- ===== SECTION: INVOICES ===== -->
 <div id="section-invoices" class="section" style="padding:28px 32px;">
   <div class="section-header">
-    <div><div class="section-title">Invoice Inbox</div><div style="margin-top:5px;"><code id="invoice-inbox-header" style="font-family:monospace;font-size:12px;background:rgba(10,132,255,0.12);color:#3D9BFF;padding:3px 10px;border-radius:6px;">botte@culinaraos.com</code></div></div>
+    <div><div class="section-title" data-i18n="inv_inbox_title">Invoice Inbox</div><div style="margin-top:5px;"><code id="invoice-inbox-header" style="font-family:monospace;font-size:12px;background:rgba(10,132,255,0.12);color:#3D9BFF;padding:3px 10px;border-radius:6px;">botte@culinaraos.com</code></div></div>
     <button class="btn-primary" onclick="alert('Upload a PDF invoice — AI extracts all line items, matches to QuickBooks, and flags variances.')">+ Upload Invoice</button>
   </div>
   <details style="margin-bottom:18px;background:rgba(6,182,212,0.05);border:1px solid rgba(6,182,212,0.2);border-radius:12px;padding:0;overflow:hidden;">
@@ -1421,7 +1421,7 @@ tr:last-child td { border-bottom: none; }
         </div>
       </div>
       <div class="card" style="padding:18px;">
-        <div class="card-title" style="margin-bottom:12px;">This period</div>
+        <div class="card-title" style="margin-bottom:12px;"><span data-i18n="inv_this_period">This period</span></div>
         <div style="display:flex;flex-direction:column;gap:9px;font-size:13px;">
           <div style="display:flex;justify-content:space-between;"><span style="color:var(--muted);">Total invoices</span><span style="font-weight:700;">27</span></div>
           <div style="display:flex;justify-content:space-between;"><span style="color:var(--muted);">Suppliers</span><span style="font-weight:700;">8</span></div>
@@ -1438,7 +1438,7 @@ tr:last-child td { border-bottom: none; }
 <div id="section-social" class="section" style="padding:28px 32px;">
   <div class="section-header" style="margin-bottom:16px;">
     <div>
-      <div class="section-title">Social Media</div>
+      <div class="section-title" data-i18n="sec_social_title">Social Media</div>
       <div class="section-sub">Data-driven content planning — what to push, when to post, and what's happening in Hudson</div>
     </div>
     <div class="ai-badge">✦ AI-powered</div>
@@ -1473,13 +1473,13 @@ tr:last-child td { border-bottom: none; }
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
       <!-- Items to push -->
       <div class="card" style="padding:20px 22px;">
-        <div class="card-title" style="margin-bottom:4px;">📣 Items to Push This Week</div>
+        <div class="card-title" style="margin-bottom:4px;"><span data-i18n="social_push_title">📣 Items to Push This Week</span></div>
         <div class="card-sub" style="margin-bottom:14px;">Low sellers with high margin — need visibility, not a price cut</div>
         <div id="social-push-list"></div>
       </div>
       <!-- Best timing -->
       <div class="card" style="padding:20px 22px;">
-        <div class="card-title" style="margin-bottom:4px;">🕐 Best Times to Post</div>
+        <div class="card-title" style="margin-bottom:4px;"><span data-i18n="social_best_times">🕐 Best Times to Post</span></div>
         <div class="card-sub" style="margin-bottom:14px;">Based on your 38.7 covers/day pattern and Quebec dining habits</div>
         <div style="display:flex;flex-direction:column;gap:9px;">
           <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:rgba(52,201,122,0.07);border:1px solid rgba(52,201,122,0.18);border-radius:10px;">
@@ -1527,7 +1527,7 @@ tr:last-child td { border-bottom: none; }
 <!-- ===== SECTION: INTEGRATIONS ===== -->
 <div id="section-settings" class="section" style="padding:28px 32px;">
   <div class="section-header">
-    <div><div class="section-title">Integrations</div><div class="section-sub">Connect your POS, accounting, and invoice systems</div></div>
+    <div><div class="section-title" data-i18n="sec_settings_title">Integrations</div><div class="section-sub" data-i18n="sec_settings_sub">Connect your POS, accounting, and invoice systems</div></div>
   </div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
     <!-- Lightspeed Connected Card -->
@@ -1687,7 +1687,7 @@ tr:last-child td { border-bottom: none; }
 <!-- ===== SECTION: WEEKLY SNAPSHOT ===== -->
 <div id="section-snapshot" class="section" style="padding:28px 32px;">
   <div class="section-header">
-    <div><div class="section-title">Weekly Snapshot</div><div class="section-sub">Week of Mar 8–12, 2026 · 5 days</div></div>
+    <div><div class="section-title" data-i18n="sec_snapshot_title">Weekly Snapshot</div><div class="section-sub" data-i18n="sec_snapshot_sub">Week of Mar 8–12, 2026 · 5 days</div></div>
     <div style="display:flex;gap:8px;">
       <button class="btn-ghost" style="font-size:12px;">← Prev Week</button>
       <button class="btn-ghost" style="font-size:12px;color:#4F8EF7;border-color:rgba(79,142,247,0.3);">This Week</button>
@@ -1730,7 +1730,7 @@ tr:last-child td { border-bottom: none; }
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
     <!-- Top items this week -->
     <div class="card" style="padding:20px;">
-      <div class="card-title" style="margin-bottom:14px;">Top Items This Week</div>
+      <div class="card-title" style="margin-bottom:14px;"><span data-i18n="snap_top_items">Top Items This Week</span></div>
       <div style="display:flex;flex-direction:column;gap:6px;">
         <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05);">
           <div style="font-size:13px;font-weight:600;flex:1;">Pepperoni</div>
@@ -1778,7 +1778,7 @@ tr:last-child td { border-bottom: none; }
 
     <!-- On-track vs off-track -->
     <div class="card" style="padding:20px;">
-      <div class="card-title" style="margin-bottom:4px;">Week Status</div>
+      <div class="card-title" style="margin-bottom:4px;"><span data-i18n="snap_week_status">Week Status</span></div>
       <div class="card-sub" style="margin-bottom:16px;">Are you on pace for the 25% food cost target?</div>
       <div style="background:rgba(240,82,82,0.08);border:1px solid rgba(240,82,82,0.2);border-left:4px solid #F05252;border-radius:10px;padding:16px;margin-bottom:12px;">
         <div style="font-size:13px;font-weight:700;color:#F05252;margin-bottom:4px;">Off target by 14.1pp this week</div>
@@ -1804,7 +1804,7 @@ tr:last-child td { border-bottom: none; }
   <!-- Upcoming orders & key actions -->
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
     <div class="card" style="padding:20px;">
-      <div class="card-title" style="margin-bottom:14px;">Upcoming Orders This Week</div>
+      <div class="card-title" style="margin-bottom:14px;"><span data-i18n="snap_upcoming_orders">Upcoming Orders This Week</span></div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:9px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);">
           <div><div style="font-size:13px;font-weight:600;">Gordon Food Service</div><div style="font-size:11px;color:var(--muted);margin-top:1px;">Order Tue → Thu delivery</div></div>
@@ -1829,7 +1829,7 @@ tr:last-child td { border-bottom: none; }
       </div>
     </div>
     <div class="card" style="padding:20px;">
-      <div class="card-title" style="margin-bottom:4px;">Action Items This Week</div>
+      <div class="card-title" style="margin-bottom:4px;"><span data-i18n="snap_action_items">Action Items This Week</span></div>
       <div class="card-sub" style="margin-bottom:14px;">Ranked by impact</div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:9px;background:rgba(240,82,82,0.08);border:1px solid rgba(240,82,82,0.18);">
@@ -1856,7 +1856,7 @@ tr:last-child td { border-bottom: none; }
 <!-- ===== SECTION: REPORTS ===== -->
 <div id="section-reports" class="section" style="padding:28px 32px;">
   <div class="section-header">
-    <div><div class="section-title">Reports</div><div class="section-sub">Generate and export period summaries for ownership and staff</div></div>
+    <div><div class="section-title" data-i18n="sec_reports_title">Reports</div><div class="section-sub" data-i18n="sec_reports_sub">Generate and export period summaries for ownership and staff</div></div>
     <button class="btn-primary" onclick="window.print()">↓ Export PDF</button>
   </div>
 
@@ -1963,7 +1963,7 @@ tr:last-child td { border-bottom: none; }
 <div id="section-efficiency" class="section" style="padding:28px 32px;">
   <div class="section-header">
     <div>
-      <div class="section-title">Efficiency Score</div>
+      <div class="section-title" data-i18n="sec_efficiency_title">Efficiency Score</div>
       <div class="section-sub">How well Bottē is performing across prep, pricing, and sourcing · Jan 25 – Mar 15, 2026</div>
     </div>
     <div class="ai-badge">✦ AI-scored · 49 days</div>
@@ -2119,7 +2119,7 @@ tr:last-child td { border-bottom: none; }
   <div class="card" style="overflow:hidden;">
     <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
       <div>
-        <div class="card-title">Supplier Price Tracker</div>
+        <div class="card-title"><span data-i18n="eff_supplier_tracker">Supplier Price Tracker</span></div>
         <div class="card-sub">Key ingredient price changes detected this period</div>
       </div>
       <span class="chip chip-red" style="margin:0;">3 variances</span>
@@ -2143,7 +2143,7 @@ tr:last-child td { border-bottom: none; }
   <div style="margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:16px;">
     <div class="card" style="padding:20px;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
-        <div class="card-title">Expiry Alerts</div>
+        <div class="card-title"><span data-i18n="eff_expiry_alerts">Expiry Alerts</span></div>
         <span class="chip chip-red" style="margin:0;">2 items</span>
       </div>
       <div style="display:flex;flex-direction:column;gap:10px;">
@@ -2172,7 +2172,7 @@ tr:last-child td { border-bottom: none; }
     </div>
 
     <div class="card" style="padding:20px;">
-      <div class="card-title" style="margin-bottom:14px;">Food Safety</div>
+      <div class="card-title" style="margin-bottom:14px;"><span data-i18n="eff_food_safety">Food Safety</span></div>
       <div style="padding:13px 15px;background:rgba(240,82,82,0.07);border:1px solid rgba(240,82,82,0.18);border-radius:9px;margin-bottom:12px;">
         <div style="font-size:12px;font-weight:700;color:#F05252;margin-bottom:6px;">⚠ FIFO Reminder</div>
         <div style="font-size:12px;color:var(--muted);line-height:1.6;">During slower weeks, ingredients can sit longer than usual. Check expiry dates on all perishables and rotate stock — oldest items must be used first.</div>
@@ -4936,6 +4936,68 @@ const T = {
     yield_ingredient:'Ingredient', yield_pack:'Pack Size', yield_portion:'Portion',
     yield_yield:'Yield %', yield_cost_kg:'Cost/kg', yield_cost_portion:'Cost/Portion',
     yield_covers:'Expected covers tonight',
+    // Section titles & subtitles
+    sec_insights_title:'AI Insights', sec_insights_sub:'Bottē Restaurant · Jan 25 – Mar 15, 2026',
+    sec_menuanalysis_title:'Menu Analysis', sec_menuanalysis_sub:'4-quadrant matrix: Volume vs Contribution Margin per unit',
+    sec_prep_title:'Prep & Recipes', sec_prep_sub:'Weekly quantities based on ~35 covers/day',
+    sec_prepboard_title:'Prep Board', sec_prepboard_sub:'Sales-driven prep tasks · updating as covers come in',
+    sec_yield_title:'Yield Control', sec_yield_sub:'Pack → Portion → Pizzas — catch portioning losses the same day',
+    sec_orders_title:'Order Guide', sec_orders_sub:'6 suppliers · weekly estimated costs',
+    sec_staff_title:'Staff & Tasks', sec_staff_sub:'Today\'s team and daily task board',
+    sec_social_title:'Social Media', sec_social_sub:'Data-driven content planning — what to push, when to post',
+    sec_settings_title:'Integrations', sec_settings_sub:'Connect your POS, accounting, and invoice systems',
+    sec_snapshot_title:'Weekly Snapshot', sec_snapshot_sub:'Week of Mar 8–12, 2026 · 5 days',
+    sec_reports_title:'Reports', sec_reports_sub:'Generate and export period summaries for ownership and staff',
+    sec_efficiency_title:'Efficiency Score', sec_efficiency_sub:'How well Bottē is performing across prep, pricing, and sourcing',
+    // Dashboard secondary
+    dash_fc_trend_sub:'Weekly food cost % vs 25% target',
+    dash_fc_vs_sub:'Current period breakdown',
+    dash_purchases:'Purchases', dash_credit:'Credit', dash_net_cost:'Net Cost',
+    dash_top10_sub:'Revenue vs food cost this period',
+    dash_bev_healthy:'healthy', dash_benchmark:'benchmark 40%+',
+    dash_target65:'target <65%',
+    // Menu Analysis quadrant descriptions
+    eng_stars_desc:'Core menu. Protect these, feature them, never cut corners on quality.',
+    eng_gems_desc:'High margin but underordered. Better menu placement or a special can unlock volume.',
+    eng_workhorses_desc:'Popular but margin-thin. Reprice +$1–2 or tighten portion spec.',
+    eng_underperformers_desc:'Review or remove. Don\'t let these occupy menu real estate or prep time.',
+    // Prep Board
+    prepboard_covers_today:'Covers Today', prepboard_projected:'Projected',
+    prepboard_live_sale:'Live Sale Feed', prepboard_via_ls:'⚡ via Lightspeed',
+    prepboard_waiting:'Waiting for service to start...',
+    // Buttons
+    btn_print_guide:'🖨 Print Guide', btn_switch_rest:'↩ Switch Restaurant',
+    btn_kitchen_exit:'✕ Exit Kitchen Mode',
+    // Staff
+    staff_shift:'Today\'s Shift', staff_week_labor:'This Week\'s Labor',
+    staff_task_board:'Daily Task Board', staff_task_sub:'Today\'s kitchen and management tasks',
+    // Snapshot
+    snap_top_items:'Top Items This Week', snap_week_status:'Week Status',
+    snap_week_status_sub:'Are you on pace for the 25% food cost target?',
+    snap_upcoming_orders:'Upcoming Orders This Week',
+    snap_action_items:'Action Items This Week', snap_action_sub:'Ranked by impact',
+    // Efficiency
+    eff_supplier_tracker:'Supplier Price Tracker', eff_supplier_sub:'Key ingredient price changes detected this period',
+    eff_expiry_alerts:'Expiry Alerts', eff_food_safety:'Food Safety',
+    // Social
+    social_push_title:'📣 Items to Push This Week',
+    social_push_sub:'Low sellers with high margin — need visibility, not a price cut',
+    social_best_times:'🕐 Best Times to Post',
+    social_best_sub:'Based on your 38.7 covers/day pattern and Quebec dining habits',
+    // Invoices
+    inv_this_period:'This period', inv_credits:'Credits applied',
+    // Sidebar
+    sidebar_kitchen_intel:'Kitchen Intelligence', sidebar_live_sync:'Live sync active',
+    // Food Cost guidelines
+    fc_guide_title:'📋 Keeping this accurate',
+    fc_guide_1:'Update item costs whenever a supplier invoice changes — even small shifts compound fast.',
+    fc_guide_2:'Check the Food Cost % column weekly. Anything above 35% needs a pricing review.',
+    fc_guide_3:'Use the Quick Add button to add new menu items or log a price change in seconds.',
+    // Prep guidelines
+    prep_guide_title:'📋 How to use Prep & Recipes',
+    prep_guide_1:'Quantities are calculated from your 7-day sales average (~35 covers/day).',
+    prep_guide_2:'Click any quantity to edit it inline — your change is saved locally.',
+    prep_guide_3:'Print this guide before each shift using the Print Guide button.',
   },
   fr: {
     // Nav
@@ -5072,6 +5134,68 @@ const T = {
     yield_ingredient:'Ingr\u00e9dient', yield_pack:'Format', yield_portion:'Portion',
     yield_yield:'Rendement %', yield_cost_kg:'Co\u00fbt/kg', yield_cost_portion:'Co\u00fbt/Portion',
     yield_covers:'Couverts pr\u00e9vus ce soir',
+    // Section titles & subtitles
+    sec_insights_title:'Aper\u00e7us IA', sec_insights_sub:'Bott\u0113 Restaurant · 25 jan – 15 mars 2026',
+    sec_menuanalysis_title:'Analyse du Menu', sec_menuanalysis_sub:'Matrice 4 quadrants : Volume vs Marge de Contribution',
+    sec_prep_title:'Pr\u00e9parations & Recettes', sec_prep_sub:'Quantit\u00e9s hebdomadaires bas\u00e9es sur ~35 couverts/jour',
+    sec_prepboard_title:'Tableau de Pr\u00e9pa', sec_prepboard_sub:'T\u00e2ches bas\u00e9es sur les ventes · mise \u00e0 jour en temps r\u00e9el',
+    sec_yield_title:'Contr\u00f4le des Portions', sec_yield_sub:'Format → Portion → Pizzas — d\u00e9tectez les pertes le jour m\u00eame',
+    sec_orders_title:'Guide de Commande', sec_orders_sub:'6 fournisseurs · co\u00fbts hebdomadaires estim\u00e9s',
+    sec_staff_title:'Personnel & T\u00e2ches', sec_staff_sub:'L\u00e9quipe du jour et tableau des t\u00e2ches',
+    sec_social_title:'M\u00e9dias Sociaux', sec_social_sub:'Planification de contenu bas\u00e9e sur les donn\u00e9es',
+    sec_settings_title:'Int\u00e9grations', sec_settings_sub:'Connectez votre PDV, comptabilit\u00e9 et facturation',
+    sec_snapshot_title:'Bilan Hebdomadaire', sec_snapshot_sub:'Semaine du 8–12 mars 2026 · 5 jours',
+    sec_reports_title:'Rapports', sec_reports_sub:'G\u00e9n\u00e9rez et exportez des r\u00e9sum\u00e9s pour la direction et le personnel',
+    sec_efficiency_title:'Score d\'Efficacit\u00e9', sec_efficiency_sub:'Performance de Bott\u0113 en pr\u00e9paration, tarification et approvisionnement',
+    // Dashboard secondary
+    dash_fc_trend_sub:'Co\u00fbt mati\u00e8re hebdo % vs cible 25%',
+    dash_fc_vs_sub:'Ventilation de la p\u00e9riode actuelle',
+    dash_purchases:'Achats', dash_credit:'Cr\u00e9dit', dash_net_cost:'Co\u00fbt Net',
+    dash_top10_sub:'Revenus vs co\u00fbt mati\u00e8re cette p\u00e9riode',
+    dash_bev_healthy:'sain', dash_benchmark:'r\u00e9f\u00e9rence 40%+',
+    dash_target65:'cible <65%',
+    // Menu Analysis quadrant descriptions
+    eng_stars_desc:'Menu central. Prot\u00e9gez-les, mettez-les en valeur, ne faites jamais de compromis sur la qualit\u00e9.',
+    eng_gems_desc:'Marge \u00e9lev\u00e9e mais peu command\u00e9s. Un meilleur emplacement peut d\u00e9bloquer le volume.',
+    eng_workhorses_desc:'Populaires mais \u00e0 faible marge. Augmentez de +$1–2 ou resserrez les sp\u00e9cifications de portion.',
+    eng_underperformers_desc:'R\u00e9visez ou supprimez. Ne laissez pas ces articles occuper du temps de pr\u00e9paration.',
+    // Prep Board
+    prepboard_covers_today:'Couverts Aujourd\'hui', prepboard_projected:'Pr\u00e9vu',
+    prepboard_live_sale:'Ventes en Direct', prepboard_via_ls:'⚡ via Lightspeed',
+    prepboard_waiting:'En attente du service...',
+    // Buttons
+    btn_print_guide:'🖨 Imprimer le Guide', btn_switch_rest:'↩ Changer de Restaurant',
+    btn_kitchen_exit:'✕ Quitter le Mode Cuisine',
+    // Staff
+    staff_shift:'Équipe Aujourd\'hui', staff_week_labor:'Main-d\'Œuvre Cette Semaine',
+    staff_task_board:'Tableau des T\u00e2ches', staff_task_sub:'T\u00e2ches cuisine et gestion du jour',
+    // Snapshot
+    snap_top_items:'Meilleurs Articles Cette Semaine', snap_week_status:'Statut de la Semaine',
+    snap_week_status_sub:'Êtes-vous en bonne voie pour la cible de 25% de co\u00fbt mati\u00e8re?',
+    snap_upcoming_orders:'Commandes \u00e0 Venir Cette Semaine',
+    snap_action_items:'Actions Cette Semaine', snap_action_sub:'Class\u00e9es par impact',
+    // Efficiency
+    eff_supplier_tracker:'Suivi des Prix Fournisseurs', eff_supplier_sub:'Changements de prix d\u00e9tect\u00e9s cette p\u00e9riode',
+    eff_expiry_alerts:'Alertes d\'Expiration', eff_food_safety:'Hygi\u00e8ne Alimentaire',
+    // Social
+    social_push_title:'📣 Articles \u00e0 Mettre en Avant Cette Semaine',
+    social_push_sub:'Articles \u00e0 faible volume et haute marge — visibilit\u00e9 requise',
+    social_best_times:'🕐 Meilleurs Moments pour Publier',
+    social_best_sub:'Bas\u00e9 sur votre r\u00e9gularit\u00e9 de 38,7 couverts/jour et les habitudes du Qu\u00e9bec',
+    // Invoices
+    inv_this_period:'Cette p\u00e9riode', inv_credits:'Cr\u00e9dits appliqu\u00e9s',
+    // Sidebar
+    sidebar_kitchen_intel:'Intelligence Cuisine', sidebar_live_sync:'Sync en direct',
+    // Food Cost guidelines
+    fc_guide_title:'📋 Maintenir la pr\u00e9cision',
+    fc_guide_1:'Mettez \u00e0 jour les co\u00fbts des articles d\u00e8s qu\'une facture fournisseur change.',
+    fc_guide_2:'V\u00e9rifiez la colonne Co\u00fbt Mati\u00e8re % chaque semaine. Tout ce qui d\u00e9passe 35% n\u00e9cessite une r\u00e9vision.',
+    fc_guide_3:'Utilisez le bouton Ajout rapide pour ajouter de nouveaux articles ou signaler un changement de prix.',
+    // Prep guidelines
+    prep_guide_title:'📋 Comment utiliser Pr\u00e9parations & Recettes',
+    prep_guide_1:'Les quantit\u00e9s sont calcul\u00e9es \u00e0 partir de votre moyenne de ventes sur 7 jours (~35 couverts/jour).',
+    prep_guide_2:'Cliquez sur une quantit\u00e9 pour la modifier en ligne — votre modification est sauvegard\u00e9e localement.',
+    prep_guide_3:'Imprimez ce guide avant chaque service en utilisant le bouton Imprimer le Guide.',
   }
 };
 
