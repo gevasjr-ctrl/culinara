@@ -1,0 +1,219 @@
+[
+  {
+    "supplier": "Gordon Food Service",
+    "schedule": "Order Tue for Thu delivery",
+    "color": "#2563eb",
+    "items": [
+      {
+        "name": "Mozzarella shred (Saputo 20%)",
+        "pack": "2×5 KG",
+        "qty": "3 CS = 30 kg",
+        "period": 455.25,
+        "weekly": 212.45
+      },
+      {
+        "name": "Pork belly fresh (Olymel)",
+        "pack": "3×~7 KGA",
+        "qty": "3 CS = 21.1 kg",
+        "period": 282.61,
+        "weekly": 131.88
+      },
+      {
+        "name": "Parmesan Grana Padano 1/8 wheel",
+        "pack": "~4.7 KG",
+        "qty": "1 EA = 4.74 kg",
+        "period": 164.38,
+        "weekly": 76.71
+      },
+      {
+        "name": "Olives Kalamata halves (Krinos)",
+        "pack": "10×1 KG",
+        "qty": "1 CS = 10 kg",
+        "period": 152.98,
+        "weekly": 71.39
+      },
+      {
+        "name": "Salt kosher (Diamond)",
+        "pack": "9×1.36 KG",
+        "qty": "1 CS = 12.2 kg",
+        "period": 126.51,
+        "weekly": 59.04
+      },
+      {
+        "name": "Fior di latte 250g (Saputo)",
+        "pack": "1×3 KG",
+        "qty": "2 CS = 6 kg",
+        "period": 124.86,
+        "weekly": 58.27
+      },
+      {
+        "name": "Pepperoni Calabria dry cured (Sila)",
+        "pack": "2×3.4 KG",
+        "qty": "1 CS = 6.8 kg",
+        "period": 105.12,
+        "weekly": 49.06
+      },
+      {
+        "name": "Honey golden liquid squeeze",
+        "pack": "6×1 KG",
+        "qty": "1 CS = 6 kg",
+        "period": 100.54,
+        "weekly": 46.92
+      },
+      {
+        "name": "Romaine baby artisan (Markon)",
+        "pack": "1×24 UN",
+        "qty": "2 CS = 48 heads",
+        "period": 91.6,
+        "weekly": 42.75
+      },
+      {
+        "name": "Chicken breast B/S fresh (Regal)",
+        "pack": "1×5 KG",
+        "qty": "1 CS = 5 kg",
+        "period": 84.77,
+        "weekly": 39.56
+      }
+    ]
+  },
+  {
+    "supplier": "Farinex",
+    "schedule": "Flour & tomato specialist",
+    "color": "#dc2626",
+    "items": [
+      {
+        "name": "Farine pizza Tipo 00 bio (Milanaise)",
+        "pack": "25 KG sac",
+        "qty": "10 sacs = 250 kg",
+        "period": 532.9,
+        "weekly": 248.69
+      },
+      {
+        "name": "Tomates italiennes pelées (6×100oz)",
+        "pack": "6×100 oz",
+        "qty": "15 CS",
+        "period": 558.6,
+        "weekly": 260.68
+      }
+    ]
+  },
+  {
+    "supplier": "Distributions Macchi",
+    "schedule": "Charcuterie specialist",
+    "color": "#7c3aed",
+    "items": [
+      {
+        "name": "Prosciutto Poggio ($23.50/kg)",
+        "pack": "~6 KG",
+        "qty": "6.34 kg",
+        "period": 148.99,
+        "weekly": 69.53
+      },
+      {
+        "name": "Spianata piccante ($27.95/kg)",
+        "pack": "~2.7 KG",
+        "qty": "2.68 kg",
+        "period": 74.91,
+        "weekly": 34.96
+      }
+    ]
+  },
+  {
+    "supplier": "Les Jardins Quatre Saisons",
+    "schedule": "Local produce · Mon/Thu",
+    "color": "#059669",
+    "items": [
+      {
+        "name": "Basilic caisse vrac (12)",
+        "pack": "Caisse",
+        "qty": "4 caisses",
+        "period": 94.0,
+        "weekly": 43.87
+      },
+      {
+        "name": "Kale caisse",
+        "pack": "Caisse",
+        "qty": "2 caisses",
+        "period": 81.5,
+        "weekly": 38.03
+      },
+      {
+        "name": "Champignon shiitake",
+        "pack": "Boite",
+        "qty": "2 boites",
+        "period": 59.0,
+        "weekly": 27.53
+      },
+      {
+        "name": "Champignon portobello 5 LBS",
+        "pack": "5 LBS",
+        "qty": "2 (+ 1 free)",
+        "period": 45.0,
+        "weekly": 21.0
+      },
+      {
+        "name": "Tomates medley · serre · citron",
+        "pack": "various",
+        "qty": "various",
+        "period": 60.5,
+        "weekly": 28.23
+      },
+      {
+        "name": "Ananas · patate yams · oignon rouge",
+        "pack": "various",
+        "qty": "various",
+        "period": 79.5,
+        "weekly": 37.1
+      }
+    ]
+  },
+  {
+    "supplier": "Costco Wholesale",
+    "schedule": "Dairy pickup",
+    "color": "#d97706",
+    "items": [
+      {
+        "name": "Mozzarella (3 × $14.99)",
+        "pack": "per unit",
+        "qty": "3 units",
+        "period": 44.97,
+        "weekly": 20.99
+      }
+    ]
+  },
+  {
+    "supplier": "Boissons / SAQ",
+    "schedule": "Order Wed · Fri delivery",
+    "color": "#06B6D4",
+    "items": [
+      {
+        "name": "Draft beer keg — local (20L)",
+        "pack": "20L keg",
+        "qty": "1 keg / 2 wks",
+        "period": 245.0,
+        "weekly": 114.33
+      },
+      {
+        "name": "House red wine (12×750ml case)",
+        "pack": "12 btl case",
+        "qty": "1 CS / 2 wks",
+        "period": 84.0,
+        "weekly": 39.2
+      },
+      {
+        "name": "House white wine (12×750ml case)",
+        "pack": "12 btl case",
+        "qty": "1 CS / 2 wks",
+        "period": 72.0,
+        "weekly": 33.6
+      },
+      {
+        "name": "Sparkling water 500ml (24×btl)",
+        "pack": "24 btl case",
+        "qty": "1 CS / wk",
+        "period": 28.8,
+        "weekly": 13.44
+      }
+    ]
+  }
+]

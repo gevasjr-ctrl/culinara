@@ -20,3 +20,10 @@ serve.py
 node_modules/
 .env
 .env.local
+
+# AI Agent Team — runtime data
+reports/
+memory/
+data/_debug_*
+agents/__pycache__/
+__pycache__/

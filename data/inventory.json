@@ -1,0 +1,155 @@
+[
+  {
+    "id": 1,
+    "cat": "Doughs & Flour",
+    "name": "00 Organic Flour (Farinex)",
+    "unit": "25kg bag",
+    "onHand": 8,
+    "par": 10,
+    "unitCost": 42.0
+  },
+  {
+    "id": 2,
+    "cat": "Doughs & Flour",
+    "name": "Sourdough Starter",
+    "unit": "L",
+    "onHand": 3.5,
+    "par": 2,
+    "unitCost": 0
+  },
+  {
+    "id": 3,
+    "cat": "Pantry",
+    "name": "Crushed Tomato San Marzano",
+    "unit": "can",
+    "onHand": 36,
+    "par": 30,
+    "unitCost": 3.2
+  },
+  {
+    "id": 4,
+    "cat": "Pantry",
+    "name": "Olive Oil Extra Virgin",
+    "unit": "L",
+    "onHand": 9,
+    "par": 8,
+    "unitCost": 12.0
+  },
+  {
+    "id": 5,
+    "cat": "Pantry",
+    "name": "Garlic (fresh)",
+    "unit": "kg",
+    "onHand": 3.2,
+    "par": 3,
+    "unitCost": 4.5
+  },
+  {
+    "id": 6,
+    "cat": "Dairy & Cheese",
+    "name": "Fior di Latte Mozzarella",
+    "unit": "kg",
+    "onHand": 12,
+    "par": 15,
+    "unitCost": 14.5
+  },
+  {
+    "id": 7,
+    "cat": "Dairy & Cheese",
+    "name": "Fresh Mozzarella (bianca)",
+    "unit": "kg",
+    "onHand": 7,
+    "par": 8,
+    "unitCost": 16.0
+  },
+  {
+    "id": 8,
+    "cat": "Dairy & Cheese",
+    "name": "Bocconcini",
+    "unit": "kg",
+    "onHand": 4,
+    "par": 5,
+    "unitCost": 18.0
+  },
+  {
+    "id": 9,
+    "cat": "Proteins",
+    "name": "Pepperoni",
+    "unit": "kg",
+    "onHand": 5.5,
+    "par": 6,
+    "unitCost": 18.0
+  },
+  {
+    "id": 10,
+    "cat": "Proteins",
+    "name": "Prosciutto Crudo",
+    "unit": "kg",
+    "onHand": 3.2,
+    "par": 4,
+    "unitCost": 38.0
+  },
+  {
+    "id": 11,
+    "cat": "Proteins",
+    "name": "BBQ Chicken (cooked)",
+    "unit": "kg",
+    "onHand": 4.5,
+    "par": 4,
+    "unitCost": 9.8
+  },
+  {
+    "id": 12,
+    "cat": "Proteins",
+    "name": "Blue Sausage",
+    "unit": "kg",
+    "onHand": 2.1,
+    "par": 3,
+    "unitCost": 22.0
+  },
+  {
+    "id": 13,
+    "cat": "Produce",
+    "name": "Cremini Mushrooms",
+    "unit": "kg",
+    "onHand": 8,
+    "par": 6,
+    "unitCost": 6.5
+  },
+  {
+    "id": 14,
+    "cat": "Produce",
+    "name": "Kale (fresh)",
+    "unit": "kg",
+    "onHand": 6,
+    "par": 5,
+    "unitCost": 5.0
+  },
+  {
+    "id": 15,
+    "cat": "Produce",
+    "name": "Romaine Hearts",
+    "unit": "head",
+    "onHand": 24,
+    "par": 20,
+    "unitCost": 1.8
+  },
+  {
+    "id": 16,
+    "cat": "Produce",
+    "name": "Red Onions",
+    "unit": "kg",
+    "onHand": 1.5,
+    "par": 5,
+    "unitCost": 2.5
+  },
+  {
+    "id": 17,
+    "cat": "Other",
+    "name": "Oggi GF Crust",
+    "unit": "unit",
+    "onHand": 8,
+    "par": 24,
+    "unitCost": 5.34
+  }
+]

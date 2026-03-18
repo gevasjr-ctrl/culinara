@@ -1,0 +1,14 @@
+.git
+.claude
+.env
+.env.local
+*.xlsx
+*.docx
+*.doc
+*.pdf
+__pycache__
+agents/__pycache__
+.DS_Store
+serve.py
+memory
+reports
