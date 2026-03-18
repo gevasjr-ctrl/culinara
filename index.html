@@ -96,34 +96,85 @@ body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color
 .mob-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 39; }
 .mob-overlay.visible { display: block; }
 @media (max-width: 768px) {
+  /* Mobile top bar */
   .mob-topbar { display: flex; }
   .mob-overlay { display: none; }
-  .sidebar { transform: translateX(-100%); top: 0; z-index: 45; }
-  .sidebar.mob-open { transform: translateX(0); }
   .mob-overlay.visible { display: block; }
-  .main { margin-left: 0; padding-top: 54px; }
-  .topbar { display: none; }
-  .kpi-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+
+  /* Sidebar slide-in */
+  .sidebar { transform: translateX(-100%); top: 0; z-index: 45; height: 100vh; overflow-y: auto; }
+  .sidebar.mob-open { transform: translateX(0); box-shadow: 8px 0 32px rgba(0,0,0,0.5); }
+
+  /* Main content */
+  .main { margin-left: 0 !important; padding-top: 54px; min-height: calc(100vh - 54px); }
+  .topbar { display: none !important; }
+
+  /* Restaurant selector screen */
+  .screen-dark { align-items: flex-start; padding-top: 70px; overflow-y: auto; min-height: 100vh; }
+  .rest-wrap { padding: 16px; max-width: 100%; }
+  .rest-header h1 { font-size: 22px; }
+  .rest-grid { grid-template-columns: 1fr !important; gap: 12px; }
+
+  /* Login */
+  .login-wrap { padding: 16px; }
+  .login-card { padding: 24px 20px; }
+  .login-wordmark { font-size: 28px; }
+
+  /* Section padding */
   .section { padding: 0; }
-  .section-header { flex-direction: column; gap: 10px; align-items: flex-start; }
+  .section-header { flex-direction: column; gap: 10px; align-items: flex-start; margin-bottom: 16px; }
   .section-header > div:last-child { align-self: flex-start; }
-  div[style*="padding:28px 32px"], div[style*="padding: 28px 32px"] { padding: 16px !important; }
-  div[style*="padding:24px 32px"], div[style*="padding: 24px 32px"] { padding: 16px !important; }
-  .savings-banner { flex-direction: column; gap: 14px; }
-  .alert-strip { flex-direction: column; }
-  table { font-size: 12px; }
+  .section-title { font-size: 17px !important; }
+  div[style*="padding:28px 32px"] { padding: 16px !important; }
+  div[style*="padding: 28px 32px"] { padding: 16px !important; }
+  div[style*="padding:24px 32px"] { padding: 16px !important; }
+  div[style*="padding: 24px 32px"] { padding: 16px !important; }
+  div[style*="padding:32px"] { padding: 16px !important; }
+
+  /* KPIs */
+  .kpi-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
+  .kpi { padding: 14px 16px !important; }
+  .kpi-value { font-size: 1.4rem !important; }
+  .value-number { font-size: 1.9rem !important; }
+
+  /* Grids: collapse multi-col to 1 or 2 col */
+  .chart-grid { grid-template-columns: 1fr !important; }
+  .bottom-grid { grid-template-columns: 1fr !important; }
   div[style*="grid-template-columns:repeat(4"] { grid-template-columns: repeat(2,1fr) !important; }
   div[style*="grid-template-columns: repeat(4"] { grid-template-columns: repeat(2,1fr) !important; }
   div[style*="grid-template-columns:repeat(3"] { grid-template-columns: repeat(1,1fr) !important; }
   div[style*="grid-template-columns: repeat(3"] { grid-template-columns: repeat(1,1fr) !important; }
-  .rest-grid { grid-template-columns: 1fr !important; }
-  .login-card { padding: 24px 20px; }
-  .section-title { font-size: 17px; }
-  .kpi-value { font-size: 1.6rem; }
-  .kpi { padding: 14px 16px; }
-  .topbar { padding: 10px 16px; }
-  div[style*="overflow-x:auto"] { overflow-x: auto; }
+  div[style*="grid-template-columns:repeat(2"] { grid-template-columns: 1fr !important; }
+  div[style*="grid-template-columns: repeat(2"] { grid-template-columns: 1fr !important; }
+  div[style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+  div[style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
+
+  /* Savings banner + alerts */
+  .savings-banner { flex-direction: column; gap: 14px; padding: 16px !important; }
+  .alert-strip { flex-direction: column; }
+  .alert-pill { min-width: 0; }
+
+  /* Tables: horizontal scroll */
+  .card { overflow: visible; }
+  div[style*="overflow-x:auto"], div[style*="overflow-x: auto"] { -webkit-overflow-scrolling: touch; }
+  table { font-size: 11px; min-width: 480px; }
+  th, td { padding: 8px 9px; white-space: nowrap; }
+
+  /* Cards */
   .card { border-radius: 10px; }
+
+  /* Filter rows */
+  .filter-row { gap: 4px; }
+  .filter-btn { font-size: 11.5px; padding: 5px 10px; }
+
+  /* Bottom nav / FAB */
+  #quick-add-fab { bottom: 20px; right: 20px; width: 48px; height: 48px; font-size: 22px; }
+
+  /* Hide period badge on mobile topbar */
+  .period-badge { display: none; }
+
+  /* Topbar section header on mobile */
+  .section > div:first-child { padding: 12px 16px !important; }
 }
 .nav-item { display: flex; align-items: center; gap: 10px; padding: 8.5px 14px; border-radius: 9px; cursor: pointer; color: #6C6C70; font-size: 13px; font-weight: 500; transition: all 0.12s; margin: 1px 10px; letter-spacing: -0.005em; }
 .nav-item:hover { background: var(--sidebar-hover); color: #AEAEB2; }
@@ -4856,7 +4907,7 @@ const T = {
     nav_prep:'Prep & Recipes', nav_prepboard:'Prep Board', nav_yield:'Yield Control',
     nav_inventory:'Inventory', nav_orders:'Order Guide', nav_staff:'Staff & Tasks',
     nav_invoices:'Invoices', nav_reports:'Reports', nav_social:'Social Media',
-    nav_settings:'Integrations', nav_ask:'Ask AI',
+    nav_settings:'Integrations', nav_ask:'Ask AI', nav_recipes:'Recipe Costing',
     nav_label_overview:'Overview', nav_label_analysis:'Analysis',
     nav_label_operations:'Operations', nav_label_settings:'Settings',
     // Section headers
@@ -4941,7 +4992,7 @@ const T = {
     select_subtitle:'Select a restaurant to open its dashboard',
     // Dashboard
     dash_title:'Kitchen Intelligence Dashboard', dash_sync:'\u21bb Sync Now',
-    dash_opportunity:'<span data-i18n="dash_opportunity">YOUR OPPORTUNITY THIS PERIOD</span>', dash_top_fixes:'<span data-i18n="dash_top_fixes">TOP FIXES TO CLOSE THE GAP</span>',
+    dash_opportunity:'YOUR OPPORTUNITY THIS PERIOD', dash_top_fixes:'TOP FIXES TO CLOSE THE GAP',
     kpi_food_cost:'Food Cost %', kpi_behind_target:'Behind Target',
     kpi_period_revenue:'Period Revenue', kpi_gross_profit:'Gross Profit',
     kpi_bev_cost:'Bev Cost %', kpi_attach_rate:'Drink Attach Rate', kpi_prime_cost:'Prime Cost',
@@ -5049,201 +5100,162 @@ const T = {
   },
   fr: {
     // Nav
-    nav_insights:'Aperçus', nav_dashboard:'Tableau de bord', nav_snapshot:'Bilan hebdo',
-    nav_foodcost:'Coût des aliments', nav_menuanalysis:'Analyse du menu', nav_efficiency:'Efficacité',
-    nav_prep:'Préparations', nav_prepboard:'Tableau de prépa', nav_yield:'Contrôle des pertes',
-    nav_inventory:'Inventaire', nav_orders:'Guide de commande', nav_staff:'Personnel & tâches',
-    nav_invoices:'Factures', nav_reports:'Rapports', nav_social:'Médias sociaux',
-    nav_settings:'Intégrations', nav_ask:'Assistant IA',
+    nav_insights:'Aperçus IA', nav_dashboard:'Tableau de bord', nav_snapshot:'Bilan de la semaine',
+    nav_foodcost:'Coût matière', nav_menuanalysis:'Analyse du menu', nav_efficiency:'Performance',
+    nav_prep:'Prep & Recettes', nav_prepboard:'Tableau de prep', nav_yield:'Contrôle des portions',
+    nav_inventory:'Inventaire', nav_orders:'Guide de commande', nav_staff:'Équipe & tâches',
+    nav_invoices:'Factures', nav_reports:'Rapports', nav_social:'Réseaux sociaux',
+    nav_settings:'Intégrations', nav_ask:'Assistant IA', nav_recipes:'Coût des recettes',
     nav_label_overview:'Vue d\'ensemble', nav_label_analysis:'Analyse',
     nav_label_operations:'Opérations', nav_label_settings:'Paramètres',
     // Section headers
-    sec_insights:'Vue d\'ensemble', sec_dashboard:'Tableau de bord',
-    sec_foodcost:'Coût des aliments', sec_menuanalysis:'Analyse du menu',
-    sec_efficiency:'Efficacité', sec_prep:'Préparations',
+    sec_insights:'Aperçus', sec_dashboard:'Tableau de bord',
+    sec_foodcost:'Coût matière', sec_menuanalysis:'Analyse du menu',
+    sec_efficiency:'Performance', sec_prep:'Prep & Recettes',
     sec_orders:'Guide de commande', sec_invoices:'Factures', sec_reports:'Rapports',
-    // Common
-    btn_add:'+ Ajouter', btn_save:'Sauvegarder', btn_cancel:'Annuler',
+    // Common buttons
+    btn_add:'+ Ajouter', btn_save:'Enregistrer', btn_cancel:'Annuler',
     btn_export:'Exporter', btn_print:'Imprimer', btn_sync:'Synchroniser',
+    // Common labels
     label_units:'Unités', label_price:'Prix', label_cost:'Coût',
-    label_revenue:'Revenus', label_fc:'Coût des aliments %', label_gm:'Marge brute',
-    label_covers:'Couverts aujourd\'hui', label_projected:'Projeté',
-    // Invoice translator labels
-    inv_translator_title:'Traducteur factures : Français → Anglais',
-    inv_translator_desc:'Les factures des fournisseurs du Québec arrivent en français. Termes courants :',
+    label_revenue:'Revenus', label_fc:'Coût matière %', label_gm:'Marge brute',
+    label_covers:'Couverts aujourd\'hui', label_projected:'Prévu',
+    // Invoice translator
+    inv_translator_title:'Traducteur de factures : Français → Anglais',
+    inv_translator_desc:'Les factures des fournisseurs québécois arrivent en français. Termes courants :',
     // Extended labels
-    nav_recipe_costing: 'Co\u00fbt des Recettes',
-    nav_prep_board: 'Tableau de Prep',
-    lbl_ingredient: 'Ingr\u00e9dient',
-    lbl_quantity: 'Quantit\u00e9',
-    lbl_unit: 'Unit\u00e9',
-    lbl_cost: 'Co\u00fbt',
-    lbl_category: 'Cat\u00e9gorie',
-    lbl_supplier: 'Fournisseur',
-    lbl_price: 'Prix',
-    lbl_food_cost: 'Co\u00fbt Mati\u00e8re',
-    lbl_gross_margin: 'Marge Brute',
-    lbl_revenue: 'Revenu',
-    lbl_total: 'Total',
-    lbl_target: 'Cible',
-    lbl_status: 'Statut',
-    lbl_on_target: 'Dans la cible',
-    lbl_over_target: 'Hors cible',
-    lbl_save: 'Enregistrer',
-    lbl_cancel: 'Annuler',
-    lbl_add: 'Ajouter',
-    lbl_edit: 'Modifier',
-    lbl_delete: 'Supprimer',
-    lbl_import: 'Importer',
-    lbl_export: 'Exporter',
-    lbl_download: 'T\u00e9l\u00e9charger',
-    lbl_upload: 'T\u00e9l\u00e9verser',
-    lbl_search: 'Rechercher',
-    lbl_filter: 'Filtrer',
-    lbl_all: 'Tout',
-    lbl_weekly: 'Hebdomadaire',
-    lbl_daily: 'Quotidien',
-    lbl_tonight: 'Ce soir',
-    lbl_covers: 'Couverts',
-    lbl_per_day: 'par jour',
-    lbl_this_period: 'Cette p\u00e9riode',
-    lbl_vs_target: 'vs Cible',
-    lbl_invoice: 'Facture',
-    lbl_invoices: 'Factures',
-    lbl_pending: 'En attente',
-    lbl_paid: 'Pay\u00e9e',
-    lbl_review: '\u00c0 r\u00e9viser',
-    lbl_prep_today: "Prep d'aujourd'hui",
-    lbl_kitchen_mode: 'Mode Cuisine',
-    section_insights: 'Aper\u00e7us',
-    section_dashboard: 'Tableau de Bord',
-    section_food_cost: 'Co\u00fbt Mati\u00e8re',
-    section_menu_analysis: 'Analyse du Menu',
-    section_efficiency: 'Efficacit\u00e9',
-    section_prep: 'Prep & Recettes',
-    section_yield: 'Contr\u00f4le des Portions',
-    section_orders: 'Guide de Commande',
-    section_staff: 'Personnel & T\u00e2ches',
-    section_reports: 'Rapports',
-    section_settings: 'Param\u00e8tres',
-    msg_no_data: 'Pas de donn\u00e9es',
-    msg_loading: 'Chargement\u2026',
-    msg_saved: 'Enregistr\u00e9',
-    msg_error: 'Erreur',
+    nav_recipe_costing:'Coût des recettes', nav_prep_board:'Tableau de prep',
+    lbl_ingredient:'Ingrédient', lbl_quantity:'Quantité', lbl_unit:'Unité',
+    lbl_cost:'Coût', lbl_category:'Catégorie', lbl_supplier:'Fournisseur',
+    lbl_price:'Prix', lbl_food_cost:'Coût matière', lbl_gross_margin:'Marge brute',
+    lbl_revenue:'Revenu', lbl_total:'Total', lbl_target:'Cible',
+    lbl_status:'Statut', lbl_on_target:'Dans la cible', lbl_over_target:'Hors cible',
+    lbl_save:'Enregistrer', lbl_cancel:'Annuler', lbl_add:'Ajouter',
+    lbl_edit:'Modifier', lbl_delete:'Supprimer', lbl_import:'Importer',
+    lbl_export:'Exporter', lbl_download:'Télécharger', lbl_upload:'Téléverser',
+    lbl_search:'Rechercher', lbl_filter:'Filtrer', lbl_all:'Tout',
+    lbl_weekly:'Hebdomadaire', lbl_daily:'Quotidien', lbl_tonight:'Ce soir',
+    lbl_covers:'Couverts', lbl_per_day:'par jour', lbl_this_period:'Cette période',
+    lbl_vs_target:'vs cible', lbl_invoice:'Facture', lbl_invoices:'Factures',
+    lbl_pending:'En attente', lbl_paid:'Payée', lbl_review:'À réviser',
+    lbl_prep_today:"Prep d'aujourd'hui", lbl_kitchen_mode:'Mode cuisine',
+    // Section names (used in JS)
+    section_insights:'Aperçus', section_dashboard:'Tableau de bord',
+    section_food_cost:'Coût matière', section_menu_analysis:'Analyse du menu',
+    section_efficiency:'Performance', section_prep:'Prep & Recettes',
+    section_yield:'Contrôle des portions', section_orders:'Guide de commande',
+    section_staff:'Équipe & tâches', section_reports:'Rapports', section_settings:'Paramètres',
+    msg_no_data:'Aucune donnée', msg_loading:'Chargement…', msg_saved:'Enregistré', msg_error:'Erreur',
     // Login
-    login_welcome:'Bon retour', login_subtitle:'Connectez-vous \u00e0 votre tableau de bord',
+    login_welcome:'Bon retour', login_subtitle:'Connectez-vous à votre tableau de bord',
     login_email:'Adresse courriel', login_password:'Mot de passe',
-    login_btn:'Se connecter \u2192', login_with:'Connectez-vous avec votre compte CulinaraOs',
-    login_footer:'Utilis\u00e9 par 12+ restaurants au Qu\u00e9bec', login_error:'Courriel ou mot de passe incorrect.',
-    // Selector
-    select_subtitle:'S\u00e9lectionnez un restaurant pour ouvrir son tableau de bord',
+    login_btn:'Se connecter →', login_with:'Connectez-vous avec votre compte CulinaraOs',
+    login_footer:'Utilisé par 12+ restaurants au Québec', login_error:'Courriel ou mot de passe incorrect.',
+    // Restaurant selector
+    select_subtitle:'Sélectionnez un restaurant pour ouvrir son tableau de bord',
     // Dashboard
-    dash_title:'Tableau de Bord Cuisine', dash_sync:'\u21bb Synchroniser',
-    dash_opportunity:'VOTRE OPPORTUNIT\u00c9 CETTE P\u00c9RIODE', dash_top_fixes:'CORRECTIONS PRIORITAIRES',
-    kpi_food_cost:'Co\u00fbt Mati\u00e8re %', kpi_behind_target:'Sous la Cible',
-    kpi_period_revenue:'Revenus de la P\u00e9riode', kpi_gross_profit:'Profit Brut',
-    kpi_bev_cost:'Co\u00fbt Boissons %', kpi_attach_rate:'Taux Boissons', kpi_prime_cost:'Co\u00fbt Premier',
-    chart_fc_trend:'Tendance Co\u00fbt Mati\u00e8re \u2014 7 Semaines', chart_fc_vs_target:'Co\u00fbt Mati\u00e8re vs Cible',
-    chart_top10:'Top 10 Articles par Revenu', chart_supplier:'R\u00e9partition Achats Fournisseurs',
-    priority_actions:'Actions Prioritaires Cette Semaine', priority_sub:'Class\u00e9es par impact sur les revenus',
-    // Food Cost
-    fc_title:'Co\u00fbt Mati\u00e8re par Article', fc_filter_all:'Tous',
-    fc_col_item:'Article', fc_col_cat:'Cat\u00e9gorie', fc_col_units:'Unit\u00e9s', fc_col_price:'Prix',
-    fc_col_portion:'Co\u00fbt Portion', fc_col_fc:'Co\u00fbt Mati\u00e8re %', fc_col_rev:'Revenus',
-    fc_col_gm_unit:'MB / Unit\u00e9', fc_col_gm:'Marge Brute', fc_col_status:'Statut',
-    fc_total_rev:'Revenus Totaux', fc_net_cost:'Co\u00fbt Mati\u00e8re Net',
-    fc_gross_margin:'Marge Brute', fc_blended:'CM% Moyen',
+    dash_title:'Tableau de bord — Cuisine', dash_sync:'↻ Synchroniser',
+    dash_opportunity:'VOTRE OPPORTUNITÉ CETTE PÉRIODE',
+    dash_top_fixes:'CORRECTIONS PRIORITAIRES',
+    kpi_food_cost:'Coût matière %', kpi_behind_target:'Sous la cible',
+    kpi_period_revenue:'Revenus de la période', kpi_gross_profit:'Profit brut',
+    kpi_bev_cost:'Coût boissons %', kpi_attach_rate:'Taux boissons', kpi_prime_cost:'Coût prime',
+    chart_fc_trend:'Tendance coût matière — 7 semaines', chart_fc_vs_target:'Coût matière vs cible',
+    chart_top10:'Top 10 articles par revenu', chart_supplier:'Répartition des achats fournisseurs',
+    priority_actions:'Actions prioritaires cette semaine', priority_sub:'Classées par impact sur les revenus',
+    // Food Cost table
+    fc_title:'Coût matière par article', fc_filter_all:'Tous',
+    fc_col_item:'Article', fc_col_cat:'Catégorie', fc_col_units:'Unités', fc_col_price:'Prix',
+    fc_col_portion:'Coût portion', fc_col_fc:'Coût matière %', fc_col_rev:'Revenus',
+    fc_col_gm_unit:'MB / unité', fc_col_gm:'Marge brute', fc_col_status:'Statut',
+    fc_total_rev:'Revenus totaux', fc_net_cost:'Coût matière net',
+    fc_gross_margin:'Marge brute', fc_blended:'CM% moyen',
     // Menu Analysis
-    eng_stars:'\u2b50 \u00c9toiles \u2014 Volume \u00c9lev\u00e9 \u00b7 Marge \u00c9lev\u00e9e',
-    eng_gems:'\ud83d\udc8e Joyaux \u2014 Faible Volume \u00b7 Marge \u00c9lev\u00e9e',
-    eng_workhorses:'\u2699 Valeurs S\u00fbres \u2014 Volume \u00c9lev\u00e9 \u00b7 Marge Faible',
-    eng_underperformers:'\ud83d\udcc9 Sous-Performeurs \u2014 Faible Volume \u00b7 Marge Faible',
-    eng_chart_title:'Volume vs Marge sur Co\u00fbt', eng_chart_sub:'Taille bulle = revenus de la p\u00e9riode',
+    eng_stars:'⭐ Étoiles — Volume élevé · Marge élevée',
+    eng_gems:'💎 Joyaux — Faible volume · Marge élevée',
+    eng_workhorses:'⚙ Valeurs sûres — Volume élevé · Marge faible',
+    eng_underperformers:'📉 Sous-performeurs — Faible volume · Marge faible',
+    eng_chart_title:'Volume vs marge sur coût', eng_chart_sub:'Taille bulle = revenus de la période',
+    eng_stars_desc:'Menu central. Protégez-les, mettez-les en valeur, ne faites jamais de compromis sur la qualité.',
+    eng_gems_desc:'Marge élevée mais peu commandés. Un meilleur emplacement au menu peut débloquer le volume.',
+    eng_workhorses_desc:'Populaires mais à faible marge. Ajustez +$1–2 ou resserrez les portions.',
+    eng_underperformers_desc:'Révisez ou retirez. Ne laissez pas ces articles occuper du temps de prep.',
     // Prep Board
-    prepboard_live:'EN DIRECT', prepboard_reset:'\u21ba R\u00e9initialiser', prepboard_kitchen_mode:'\u26f6 Mode Cuisine',
-    prepboard_sub:'T\u00e2ches de pr\u00e9p bas\u00e9es sur les ventes \u00b7 mise \u00e0 jour en temps r\u00e9el',
-    prepboard_todo:'\u00c0 Faire', prepboard_inprog:'En Cours', prepboard_done:'Termin\u00e9',
+    prepboard_live:'EN DIRECT', prepboard_reset:'↺ Réinitialiser', prepboard_kitchen_mode:'⛶ Mode cuisine',
+    prepboard_sub:'Tâches de prep basées sur les ventes · mis à jour en temps réel',
+    prepboard_todo:'À faire', prepboard_inprog:'En cours', prepboard_done:'Terminé',
+    prepboard_covers_today:'Couverts aujourd\'hui', prepboard_projected:'Prévu',
+    prepboard_live_sale:'Ventes en direct', prepboard_via_ls:'⚡ via Lightspeed',
+    prepboard_waiting:'En attente du service…',
     // Orders
-    orders_col_ingredient:'Ingr\u00e9dient', orders_col_pack:'Format',
-    orders_col_period:'Qté Période', orders_col_weekly:'Est. Hebdo',
+    orders_col_ingredient:'Ingrédient', orders_col_pack:'Format',
+    orders_col_period:'Qté période', orders_col_weekly:'Est. hebdo',
     orders_subtotal:'Sous-total',
     // Invoices
-    inv_inbox_title:'Boîte de Réception Factures', inv_how_flow:'Flux des factures',
-    inv_status_review:'\u26a0 \u00c0 r\u00e9viser', inv_status_pending:'\u23f3 En attente', inv_status_matched:'\u2713 Valid\u00e9 QBO',
-    inv_step1:'Le fournisseur envoie le PDF par courriel', inv_step2:'L\'IA extrait chaque ligne',
-    inv_step3:'Le tableau de bord se met \u00e0 jour', inv_step4:'Pouss\u00e9 automatiquement vers QBO',
+    inv_inbox_title:'Boîte de réception — Factures', inv_how_flow:'Comment les factures arrivent',
+    inv_status_review:'⚠ À réviser', inv_status_pending:'⏳ En attente', inv_status_matched:'✓ Validé QBO',
+    inv_step1:'Le fournisseur envoie le PDF par courriel', inv_step2:'L\'IA extrait chaque ligne article',
+    inv_step3:'Le tableau de bord se met à jour automatiquement', inv_step4:'Exporté vers QBO',
+    inv_this_period:'Cette période', inv_credits:'Crédits appliqués',
     // Settings
-    settings_inbox_addr:'Adresse de la bo\u00eete', settings_ai_extraction:'Extraction IA des lignes',
-    settings_authorize:'Autoriser CulinaraOs \u00e0 lire vos donn\u00e9es de ventes',
-    settings_what_access:'Ce \u00e0 quoi CulinaraOs aura acc\u00e8s',
+    settings_inbox_addr:'Adresse de réception', settings_ai_extraction:'Extraction IA des lignes',
+    settings_authorize:'Autoriser CulinaraOs à accéder à vos données de ventes PDV',
+    settings_what_access:'Ce à quoi CulinaraOs aura accès',
     // Efficiency
-    eff_pricing:'Tarification', eff_prep:'Efficacit\u00e9 Pr\u00e9p', eff_sourcing:'Approvisionnement',
+    eff_pricing:'Tarification', eff_prep:'Efficacité prep', eff_sourcing:'Approvisionnement',
+    eff_supplier_tracker:'Suivi des prix fournisseurs', eff_supplier_sub:'Variations de prix détectées cette période',
+    eff_expiry_alerts:'Alertes de péremption', eff_food_safety:'Hygiène alimentaire',
     // Yield
-    yield_ingredient:'Ingr\u00e9dient', yield_pack:'Format', yield_portion:'Portion',
-    yield_yield:'Rendement %', yield_cost_kg:'Co\u00fbt/kg', yield_cost_portion:'Co\u00fbt/Portion',
-    yield_covers:'Couverts pr\u00e9vus ce soir',
+    yield_ingredient:'Ingrédient', yield_pack:'Format', yield_portion:'Portion',
+    yield_yield:'Rendement %', yield_cost_kg:'Coût/kg', yield_cost_portion:'Coût/portion',
+    yield_covers:'Couverts prévus ce soir',
     // Section titles & subtitles
-    sec_insights_title:'Aper\u00e7us IA', sec_insights_sub:'Bott\u0113 Restaurant · 25 jan – 15 mars 2026',
-    sec_menuanalysis_title:'Analyse du Menu', sec_menuanalysis_sub:'Matrice 4 quadrants : Volume vs Marge de Contribution',
-    sec_prep_title:'Pr\u00e9parations & Recettes', sec_prep_sub:'Quantit\u00e9s hebdomadaires bas\u00e9es sur ~35 couverts/jour',
-    sec_prepboard_title:'Tableau de Pr\u00e9pa', sec_prepboard_sub:'T\u00e2ches bas\u00e9es sur les ventes · mise \u00e0 jour en temps r\u00e9el',
-    sec_yield_title:'Contr\u00f4le des Portions', sec_yield_sub:'Format → Portion → Pizzas — d\u00e9tectez les pertes le jour m\u00eame',
-    sec_orders_title:'Guide de Commande', sec_orders_sub:'6 fournisseurs · co\u00fbts hebdomadaires estim\u00e9s',
-    sec_staff_title:'Personnel & T\u00e2ches', sec_staff_sub:'L\u00e9quipe du jour et tableau des t\u00e2ches',
-    sec_social_title:'M\u00e9dias Sociaux', sec_social_sub:'Planification de contenu bas\u00e9e sur les donn\u00e9es',
-    sec_settings_title:'Int\u00e9grations', sec_settings_sub:'Connectez votre PDV, comptabilit\u00e9 et facturation',
-    sec_snapshot_title:'Bilan Hebdomadaire', sec_snapshot_sub:'Semaine du 8–12 mars 2026 · 5 jours',
-    sec_reports_title:'Rapports', sec_reports_sub:'G\u00e9n\u00e9rez et exportez des r\u00e9sum\u00e9s pour la direction et le personnel',
-    sec_efficiency_title:'Score d\'Efficacit\u00e9', sec_efficiency_sub:'Performance de Bott\u0113 en pr\u00e9paration, tarification et approvisionnement',
+    sec_insights_title:'Aperçus IA', sec_insights_sub:'Bottē Restaurant · 25 jan – 15 mars 2026',
+    sec_menuanalysis_title:'Analyse du menu', sec_menuanalysis_sub:'Matrice 4 quadrants : Volume vs Marge de contribution',
+    sec_prep_title:'Prep & Recettes', sec_prep_sub:'Quantités hebdomadaires basées sur ~35 couverts/jour',
+    sec_prepboard_title:'Tableau de prep', sec_prepboard_sub:'Tâches basées sur les ventes · mis à jour en temps réel',
+    sec_yield_title:'Contrôle des portions', sec_yield_sub:'Format → Portion → Pizzas — détectez les pertes le jour même',
+    sec_orders_title:'Guide de commande', sec_orders_sub:'6 fournisseurs · coûts hebdomadaires estimés',
+    sec_staff_title:'Équipe & tâches', sec_staff_sub:'L\'équipe du jour et le tableau des tâches',
+    sec_social_title:'Réseaux sociaux', sec_social_sub:'Planification de contenu basée sur les données',
+    sec_settings_title:'Intégrations', sec_settings_sub:'Connectez votre PDV, comptabilité et facturation',
+    sec_snapshot_title:'Bilan hebdomadaire', sec_snapshot_sub:'Semaine du 8–12 mars 2026 · 5 jours',
+    sec_reports_title:'Rapports', sec_reports_sub:'Générez et exportez des résumés pour la direction et le personnel',
+    sec_efficiency_title:'Performance', sec_efficiency_sub:'Résultats de Bottē en prep, tarification et approvisionnement',
     // Dashboard secondary
-    dash_fc_trend_sub:'Co\u00fbt mati\u00e8re hebdo % vs cible 25%',
-    dash_fc_vs_sub:'Ventilation de la p\u00e9riode actuelle',
-    dash_purchases:'Achats', dash_credit:'Cr\u00e9dit', dash_net_cost:'Co\u00fbt Net',
-    dash_top10_sub:'Revenus vs co\u00fbt mati\u00e8re cette p\u00e9riode',
-    dash_bev_healthy:'sain', dash_benchmark:'r\u00e9f\u00e9rence 40%+',
-    dash_target65:'cible <65%',
-    // Menu Analysis quadrant descriptions
-    eng_stars_desc:'Menu central. Prot\u00e9gez-les, mettez-les en valeur, ne faites jamais de compromis sur la qualit\u00e9.',
-    eng_gems_desc:'Marge \u00e9lev\u00e9e mais peu command\u00e9s. Un meilleur emplacement peut d\u00e9bloquer le volume.',
-    eng_workhorses_desc:'Populaires mais \u00e0 faible marge. Augmentez de +$1–2 ou resserrez les sp\u00e9cifications de portion.',
-    eng_underperformers_desc:'R\u00e9visez ou supprimez. Ne laissez pas ces articles occuper du temps de pr\u00e9paration.',
-    // Prep Board
-    prepboard_covers_today:'Couverts Aujourd\'hui', prepboard_projected:'Pr\u00e9vu',
-    prepboard_live_sale:'Ventes en Direct', prepboard_via_ls:'⚡ via Lightspeed',
-    prepboard_waiting:'En attente du service...',
-    // Buttons
-    btn_print_guide:'🖨 Imprimer le Guide', btn_switch_rest:'↩ Changer de Restaurant',
-    btn_kitchen_exit:'✕ Quitter le Mode Cuisine',
+    dash_fc_trend_sub:'Coût matière hebdo % vs cible 25%',
+    dash_fc_vs_sub:'Ventilation de la période en cours',
+    dash_purchases:'Achats', dash_credit:'Crédit', dash_net_cost:'Coût net',
+    dash_top10_sub:'Revenus vs coût matière cette période',
+    dash_bev_healthy:'sain', dash_benchmark:'référence 40%+', dash_target65:'cible <65%',
     // Staff
-    staff_shift:'Équipe Aujourd\'hui', staff_week_labor:'Main-d\'Œuvre Cette Semaine',
-    staff_task_board:'Tableau des T\u00e2ches', staff_task_sub:'T\u00e2ches cuisine et gestion du jour',
+    staff_shift:'Équipe aujourd\'hui', staff_week_labor:'Main-d\'œuvre cette semaine',
+    staff_task_board:'Tableau des tâches', staff_task_sub:'Tâches cuisine et gestion du jour',
     // Snapshot
-    snap_top_items:'Meilleurs Articles Cette Semaine', snap_week_status:'Statut de la Semaine',
-    snap_week_status_sub:'Êtes-vous en bonne voie pour la cible de 25% de co\u00fbt mati\u00e8re?',
-    snap_upcoming_orders:'Commandes \u00e0 Venir Cette Semaine',
-    snap_action_items:'Actions Cette Semaine', snap_action_sub:'Class\u00e9es par impact',
-    // Efficiency
-    eff_supplier_tracker:'Suivi des Prix Fournisseurs', eff_supplier_sub:'Changements de prix d\u00e9tect\u00e9s cette p\u00e9riode',
-    eff_expiry_alerts:'Alertes d\'Expiration', eff_food_safety:'Hygi\u00e8ne Alimentaire',
+    snap_top_items:'Meilleurs articles cette semaine', snap_week_status:'Statut de la semaine',
+    snap_week_status_sub:'Êtes-vous en bonne voie pour la cible de 25% de coût matière?',
+    snap_upcoming_orders:'Commandes à venir cette semaine',
+    snap_action_items:'Actions cette semaine', snap_action_sub:'Classées par impact',
     // Social
-    social_push_title:'📣 Articles \u00e0 Mettre en Avant Cette Semaine',
-    social_push_sub:'Articles \u00e0 faible volume et haute marge — visibilit\u00e9 requise',
-    social_best_times:'🕐 Meilleurs Moments pour Publier',
-    social_best_sub:'Bas\u00e9 sur votre r\u00e9gularit\u00e9 de 38,7 couverts/jour et les habitudes du Qu\u00e9bec',
-    // Invoices
-    inv_this_period:'Cette p\u00e9riode', inv_credits:'Cr\u00e9dits appliqu\u00e9s',
+    social_push_title:'📣 Articles à mettre en avant cette semaine',
+    social_push_sub:'Articles à faible volume et haute marge — visibilité requise',
+    social_best_times:'🕐 Meilleurs moments pour publier',
+    social_best_sub:'Basé sur votre achalandage de 38,7 couverts/jour et les habitudes québécoises',
     // Sidebar
-    sidebar_kitchen_intel:'Intelligence Cuisine', sidebar_live_sync:'Sync en direct',
+    sidebar_kitchen_intel:'Intelligence cuisine', sidebar_live_sync:'Sync en direct',
+    // Buttons
+    btn_print_guide:'🖨 Imprimer le guide', btn_switch_rest:'↩ Changer de restaurant',
+    btn_kitchen_exit:'✕ Quitter le mode cuisine',
     // Food Cost guidelines
-    fc_guide_title:'📋 Maintenir la pr\u00e9cision',
-    fc_guide_1:'Mettez \u00e0 jour les co\u00fbts des articles d\u00e8s qu\'une facture fournisseur change.',
-    fc_guide_2:'V\u00e9rifiez la colonne Co\u00fbt Mati\u00e8re % chaque semaine. Tout ce qui d\u00e9passe 35% n\u00e9cessite une r\u00e9vision.',
+    fc_guide_title:'📋 Garder les données à jour',
+    fc_guide_1:'Mettez à jour les coûts des articles dès qu\'une facture fournisseur change.',
+    fc_guide_2:'Vérifiez la colonne Coût matière % chaque semaine. Tout ce qui dépasse 35% doit être revu.',
     fc_guide_3:'Utilisez le bouton Ajout rapide pour ajouter de nouveaux articles ou signaler un changement de prix.',
     // Prep guidelines
-    prep_guide_title:'📋 Comment utiliser Pr\u00e9parations & Recettes',
-    prep_guide_1:'Les quantit\u00e9s sont calcul\u00e9es \u00e0 partir de votre moyenne de ventes sur 7 jours (~35 couverts/jour).',
-    prep_guide_2:'Cliquez sur une quantit\u00e9 pour la modifier en ligne — votre modification est sauvegard\u00e9e localement.',
-    prep_guide_3:'Imprimez ce guide avant chaque service en utilisant le bouton Imprimer le Guide.',
+    prep_guide_title:'📋 Comment utiliser Prep & Recettes',
+    prep_guide_1:'Les quantités sont calculées à partir de votre moyenne de ventes sur 7 jours (~35 couverts/jour).',
+    prep_guide_2:'Cliquez sur une quantité pour la modifier — votre modification est sauvegardée localement.',
+    prep_guide_3:'Imprimez ce guide avant chaque service avec le bouton Imprimer le guide.',
   }
 };
 
