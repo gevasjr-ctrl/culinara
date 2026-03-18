@@ -1592,11 +1592,20 @@ tr:last-child td { border-bottom: none; }
   <div class="section-header" style="margin-bottom:16px;">
     <div>
       <div class="section-title" data-i18n="sec_social_title">Social Media</div>
-      <div class="section-sub">Data-driven content planning — what to push, when to post, and what's happening in Hudson</div>
+      <div id="social-sub" class="section-sub">Data-driven content planning — what to push, when to post, and what's happening in Hudson</div>
     </div>
     <div class="ai-badge">✦ AI-powered</div>
   </div>
 
+  <!-- Arthur's placeholder -->
+  <div id="social-arthurs-placeholder" style="display:none;text-align:center;padding:60px 20px;">
+    <div style="font-size:36px;margin-bottom:16px;">📱</div>
+    <div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px;">No social data yet</div>
+    <div style="font-size:13px;color:var(--muted);max-width:400px;margin:0 auto;">Social content recommendations will appear once Arthur's POS sales data is connected. Connect Cluster POS to unlock push recommendations, post drafts, and local event tie-ins for Saint-Henri.</div>
+  </div>
+
+  <!-- Bottē social content -->
+  <div id="social-botte-content">
   <!-- Tab bar -->
   <div style="display:flex;gap:3px;margin-bottom:22px;background:rgba(255,255,255,0.04);padding:4px;border-radius:10px;width:fit-content;">
     <button class="stab stab-active" id="stab-push"   onclick="switchSocialTab('push')">📣 What to Push</button>
@@ -1675,6 +1684,7 @@ tr:last-child td { border-bottom: none; }
     </div>
     <div id="social-events-list" style="display:flex;flex-direction:column;gap:12px;"></div>
   </div>
+  </div><!-- /social-botte-content -->
 </div>
 
 <!-- ===== SECTION: INTEGRATIONS ===== -->
@@ -3195,6 +3205,12 @@ function loadRestaurantData(id) {
     const settingsArthurs2 = document.getElementById('settings-arthurs-content');
     if (settingsBotte2) settingsBotte2.style.display = '';
     if (settingsArthurs2) settingsArthurs2.style.display = 'none';
+    // Social Media
+    setEl('social-sub','textContent',"Data-driven content planning — what to push, when to post, and what's happening in Hudson");
+    const socialBotte2 = document.getElementById('social-botte-content');
+    const socialArthurs2 = document.getElementById('social-arthurs-placeholder');
+    if (socialBotte2) socialBotte2.style.display = '';
+    if (socialArthurs2) socialArthurs2.style.display = 'none';
     // Labels + values
     setEl('kpi-fc-label','textContent',t('kpi_food_cost'));
     setEl('kpi-fc-val','innerHTML','<span style="color:#dc2626;">39.1%</span>');
@@ -3267,6 +3283,12 @@ function loadRestaurantData(id) {
     const settingsArthurs = document.getElementById('settings-arthurs-content');
     if (settingsBotte) settingsBotte.style.display = 'none';
     if (settingsArthurs) settingsArthurs.style.display = '';
+    // Social Media section
+    setEl('social-sub','textContent',"Data-driven content planning — what to push, when to post, and what's happening in Saint-Henri");
+    const socialBotte = document.getElementById('social-botte-content');
+    const socialArthurs = document.getElementById('social-arthurs-placeholder');
+    if (socialBotte) socialBotte.style.display = 'none';
+    if (socialArthurs) socialArthurs.style.display = '';
     // Blank KPIs
     setEl('kpi-fc-label','textContent',t('kpi_food_cost'));
     setEl('kpi-fc-val','innerHTML','<span style="color:var(--muted);">—</span>');
