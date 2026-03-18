@@ -1388,7 +1388,7 @@ tr:last-child td { border-bottom: none; }
 <!-- ===== SECTION: INVOICES ===== -->
 <div id="section-invoices" class="section" style="padding:28px 32px;">
   <div class="section-header">
-    <div><div class="section-title">Invoice Inbox</div><div style="margin-top:5px;"><code id="invoice-inbox-header" style="font-family:monospace;font-size:12px;background:rgba(10,132,255,0.12);color:#3D9BFF;padding:3px 10px;border-radius:6px;">invoices@botte.culinaraos.com</code></div></div>
+    <div><div class="section-title">Invoice Inbox</div><div style="margin-top:5px;"><code id="invoice-inbox-header" style="font-family:monospace;font-size:12px;background:rgba(10,132,255,0.12);color:#3D9BFF;padding:3px 10px;border-radius:6px;">botte@culinaraos.com</code></div></div>
     <button class="btn-primary" onclick="alert('Upload a PDF invoice — AI extracts all line items, matches to QuickBooks, and flags variances.')">+ Upload Invoice</button>
   </div>
   <details style="margin-bottom:18px;background:rgba(6,182,212,0.05);border:1px solid rgba(6,182,212,0.2);border-radius:12px;padding:0;overflow:hidden;">
@@ -1414,7 +1414,7 @@ tr:last-child td { border-bottom: none; }
       <div class="card" style="padding:18px;margin-bottom:14px;">
         <div class="card-title" style="margin-bottom:14px;">How invoices flow</div>
         <div style="display:flex;flex-direction:column;gap:12px;">
-          <div style="display:flex;align-items:flex-start;gap:10px;"><div class="step-num">1</div><div><div style="font-size:13px;font-weight:600;">Supplier emails PDF to your inbox</div><div id="invoice-flow-email" style="font-size:12px;color:var(--muted);">invoices@botte.culinaraos.com</div></div></div>
+          <div style="display:flex;align-items:flex-start;gap:10px;"><div class="step-num">1</div><div><div style="font-size:13px;font-weight:600;">Supplier emails PDF to your inbox</div><div id="invoice-flow-email" style="font-size:12px;color:var(--muted);">botte@culinaraos.com</div></div></div>
           <div style="display:flex;align-items:flex-start;gap:10px;"><div class="step-num">2</div><div><div style="font-size:13px;font-weight:600;">AI extracts every line item</div><div style="font-size:12px;color:var(--muted);">Ingredient, qty, unit price, total — no manual entry</div></div></div>
           <div style="display:flex;align-items:flex-start;gap:10px;"><div class="step-num">3</div><div><div style="font-size:13px;font-weight:600;">Dashboard updates in real time</div><div style="font-size:12px;color:var(--muted);">Food cost, supplier trends, order history</div></div></div>
           <div style="display:flex;align-items:flex-start;gap:10px;"><div class="step-num" style="background:#059669;">4</div><div><div style="font-size:13px;font-weight:600;">Auto-pushed to QuickBooks as Bills</div><div style="font-size:12px;color:var(--muted);">Cross-reference &amp; variance alerts</div></div></div>
@@ -1669,7 +1669,7 @@ tr:last-child td { border-bottom: none; }
         <div><div style="font-size:14px;font-weight:700;">Invoice Email Inbox</div><div style="font-size:12px;color:var(--muted);">Suppliers email PDFs here</div></div>
         <div style="margin-left:auto;display:inline-flex;align-items:center;gap:5px;background:rgba(48,209,88,0.12);color:#30D158;padding:5px 12px;border-radius:7px;font-size:12.5px;font-weight:600;">✓ Active</div>
       </div>
-      <div class="setting-row"><div><div style="font-size:13px;font-weight:500;">Inbox address</div></div><code id="settings-inbox-addr" style="background:rgba(10,132,255,0.12);padding:5px 10px;border-radius:6px;font-size:12px;color:#3D9BFF;">invoices@botte.culinaraos.com</code></div>
+      <div class="setting-row"><div><div style="font-size:13px;font-weight:500;">Inbox address</div></div><code id="settings-inbox-addr" style="background:rgba(10,132,255,0.12);padding:5px 10px;border-radius:6px;font-size:12px;color:#3D9BFF;">botte@culinaraos.com</code></div>
       <div class="setting-row"><div><div style="font-size:13px;font-weight:500;">AI line-item extraction</div><div style="font-size:12px;color:var(--muted);">GFS, Farinex, Macchi, Les Jardins + any new supplier</div></div><input type="checkbox" checked style="width:18px;height:18px;accent-color:#2563eb;"></div>
     </div>
     <div class="card" style="padding:20px;">
@@ -2783,7 +2783,7 @@ function updateSidebarRestaurant(id) {
 
 function updateInboxEmails(id) {
   const slug = id === 'arthurs' ? 'arthurs' : 'botte';
-  const email = `invoices@${slug}.culinaraos.com`;
+  const email = `${slug}@culinaraos.com`;
   const h = document.getElementById('invoice-inbox-header');
   const f = document.getElementById('invoice-flow-email');
   const s = document.getElementById('settings-inbox-addr');
