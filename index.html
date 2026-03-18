@@ -2606,7 +2606,19 @@ async function doLogin() {
   const { data, error } = await sb.auth.signInWithPassword({ email, password: pass });
 
   if (error) {
-    if (err) { err.textContent = error.message; err.style.display = 'block'; }
+    // Fallback to local demo credentials
+    const localUser = USERS[email];
+    if (localUser && localUser.password === pass) {
+      currentUser = { ...localUser, email };
+      const displayName = localUser.firstName || email.split('@')[0];
+      const greetEl = document.getElementById('rest-greeting');
+      if (greetEl) greetEl.textContent = 'Good morning, ' + displayName + ' 👋';
+      if (btn) { btn.textContent = 'Sign in →'; btn.disabled = false; }
+      renderRestaurantSelector();
+      showScreen('restaurants');
+      return;
+    }
+    if (err) { err.textContent = 'Invalid email or password.'; err.style.display = 'block'; }
     if (btn) { btn.textContent = 'Sign in →'; btn.disabled = false; }
     return;
   }
