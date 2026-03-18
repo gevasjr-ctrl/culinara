@@ -87,8 +87,44 @@ body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color
 .rest-add { border: 1.5px dashed rgba(255,255,255,0.1); display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 200px; }
 .rest-add:hover { border-color: rgba(255,255,255,0.2); }
 
-.sidebar { width: 236px; height: 100vh; background: var(--sidebar); position: fixed; left: 0; top: 0; z-index: 40; display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.045); }
+.sidebar { width: 236px; height: 100vh; background: var(--sidebar); position: fixed; left: 0; top: 0; z-index: 40; display: flex; flex-direction: column; border-right: 1px solid rgba(255,255,255,0.045); transition: transform 0.25s ease; }
 .main { margin-left: 236px; min-height: 100vh; background: var(--bg); }
+.mob-topbar { display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 50; height: 54px; background: #111520; border-bottom: 1px solid rgba(255,255,255,0.07); align-items: center; padding: 0 16px; gap: 12px; }
+.mob-topbar .mob-logo { font-size: 15px; font-weight: 700; color: #fff; letter-spacing: -0.02em; flex: 1; }
+.mob-hamburger { background: none; border: none; cursor: pointer; padding: 8px; display: flex; flex-direction: column; gap: 4px; }
+.mob-hamburger span { display: block; width: 20px; height: 2px; background: #fff; border-radius: 2px; }
+.mob-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 39; }
+.mob-overlay.visible { display: block; }
+@media (max-width: 768px) {
+  .mob-topbar { display: flex; }
+  .mob-overlay { display: none; }
+  .sidebar { transform: translateX(-100%); top: 0; z-index: 45; }
+  .sidebar.mob-open { transform: translateX(0); }
+  .mob-overlay.visible { display: block; }
+  .main { margin-left: 0; padding-top: 54px; }
+  .topbar { display: none; }
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .section { padding: 0; }
+  .section-header { flex-direction: column; gap: 10px; align-items: flex-start; }
+  .section-header > div:last-child { align-self: flex-start; }
+  div[style*="padding:28px 32px"], div[style*="padding: 28px 32px"] { padding: 16px !important; }
+  div[style*="padding:24px 32px"], div[style*="padding: 24px 32px"] { padding: 16px !important; }
+  .savings-banner { flex-direction: column; gap: 14px; }
+  .alert-strip { flex-direction: column; }
+  table { font-size: 12px; }
+  div[style*="grid-template-columns:repeat(4"] { grid-template-columns: repeat(2,1fr) !important; }
+  div[style*="grid-template-columns: repeat(4"] { grid-template-columns: repeat(2,1fr) !important; }
+  div[style*="grid-template-columns:repeat(3"] { grid-template-columns: repeat(1,1fr) !important; }
+  div[style*="grid-template-columns: repeat(3"] { grid-template-columns: repeat(1,1fr) !important; }
+  .rest-grid { grid-template-columns: 1fr !important; }
+  .login-card { padding: 24px 20px; }
+  .section-title { font-size: 17px; }
+  .kpi-value { font-size: 1.6rem; }
+  .kpi { padding: 14px 16px; }
+  .topbar { padding: 10px 16px; }
+  div[style*="overflow-x:auto"] { overflow-x: auto; }
+  .card { border-radius: 10px; }
+}
 .nav-item { display: flex; align-items: center; gap: 10px; padding: 8.5px 14px; border-radius: 9px; cursor: pointer; color: #6C6C70; font-size: 13px; font-weight: 500; transition: all 0.12s; margin: 1px 10px; letter-spacing: -0.005em; }
 .nav-item:hover { background: var(--sidebar-hover); color: #AEAEB2; }
 .nav-item.active { background: rgba(79,142,247,0.13); color: #4F8EF7; font-weight: 600; }
@@ -307,6 +343,18 @@ tr:last-child td { border-bottom: none; }
 
 <!-- ==================== SCREEN: APP ==================== -->
 <div id="screen-app" style="display:none;">
+
+<!-- MOBILE TOP BAR -->
+<div class="mob-topbar">
+  <button class="mob-hamburger" onclick="toggleMobileMenu()" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="mob-logo">CulinaraOs</div>
+  <div style="background:rgba(99,102,241,0.18);color:#a5b4fc;padding:2px 7px;border-radius:5px;font-size:9px;font-weight:800;letter-spacing:0.04em;">PRO</div>
+</div>
+
+<!-- MOBILE OVERLAY -->
+<div class="mob-overlay" id="mob-overlay" onclick="toggleMobileMenu()"></div>
 
 <!-- SIDEBAR -->
 <div class="sidebar">
@@ -5704,6 +5752,35 @@ function filterFREN(val) {
       showScreen('restaurants');
     }
   }
+})();
+
+// ── Mobile Menu Toggle ───────────────────────────────────
+function toggleMobileMenu() {
+  const sidebar = document.querySelector('.sidebar');
+  const overlay = document.getElementById('mob-overlay');
+  if (!sidebar || !overlay) return;
+  const isOpen = sidebar.classList.contains('mob-open');
+  if (isOpen) {
+    sidebar.classList.remove('mob-open');
+    overlay.classList.remove('visible');
+  } else {
+    sidebar.classList.add('mob-open');
+    overlay.classList.add('visible');
+  }
+}
+
+// Close mobile menu after nav item click
+(function patchMobileNav() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.nav-item').forEach(function(el) {
+      el.addEventListener('click', function() {
+        const sidebar = document.querySelector('.sidebar');
+        const overlay = document.getElementById('mob-overlay');
+        if (sidebar) sidebar.classList.remove('mob-open');
+        if (overlay) overlay.classList.remove('visible');
+      });
+    });
+  });
 })();
 
 // Apply saved language preference on page load
