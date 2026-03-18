@@ -1394,7 +1394,7 @@ tr:last-child td { border-bottom: none; }
   <details style="margin-bottom:18px;background:rgba(6,182,212,0.05);border:1px solid rgba(6,182,212,0.2);border-radius:12px;padding:0;overflow:hidden;">
     <summary style="padding:13px 18px;cursor:pointer;font-size:13px;font-weight:700;color:#06B6D4;list-style:none;display:flex;align-items:center;gap:8px;">🇫🇷 French → English Invoice Translator <span style="font-size:11px;font-weight:500;color:var(--muted);margin-left:auto;">click to expand</span></summary>
     <div style="padding:0 18px 16px;" id="fr-en-translator-body">
-      <div style="font-size:12px;color:var(--muted);margin-bottom:14px;">Quebec supplier invoices arrive in French. Reference this dictionary when reviewing deliveries or entering invoice data.</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:14px;">Quebec supplier invoices arrive in French. Reference this dictionary (150+ terms) when reviewing deliveries or entering invoice data.</div>
       <div id="fr-en-search-row" style="margin-bottom:12px;display:flex;gap:10px;">
         <input id="fr-en-search" type="text" placeholder="Search term (e.g. farine, caisse, tomates...)" oninput="filterFREN(this.value)" style="flex:1;background:rgba(255,255,255,0.05);border:1px solid var(--border-strong);border-radius:8px;color:var(--text);font-size:13px;padding:8px 12px;outline:none;">
       </div>
@@ -2386,61 +2386,61 @@ const MENU_ITEMS = [...BASE_MENU_ITEMS, ...USER_ITEMS];
 
 const PREP_ITEMS = [
   // SOURDOUGH DOUGH PROGRAM (featured — 3-day fermentation)
-  { cat:"Sourdough Dough Program", name:"Sourdough pizza dough", qty:"~78 balls/sac", freq:"daily", note:"Organic 00 flour · Water · Salt · Sourdough starter. 320g per ball. 72hr cold ferment — plan 3 days ahead." },
+  { cat:"Sourdough Dough Program", subcat:"Dough", name:"Sourdough pizza dough", qty:"~78 balls/sac", freq:"daily", note:"Organic 00 flour · Water · Salt · Sourdough starter. 320g per ball. 72hr cold ferment — plan 3 days ahead." },
 
   // PIZZA BASES
-  { cat:"Pizza Bases", name:"Pizza tomato sauce base", qty:"~1 batch", numQty:1, qtyUnit:"batch", freq:"twice weekly", note:"6 cans Farinex pelées · ½ cup salt · ⅛ cup pepper · 2 cups oil. Food mill → follow video. Store: basement dry stock; once made, refrigerate." },
-  { cat:"Pizza Bases", name:"Gluten-free Neapolitan crust", qty:"par stock", numQty:6, qtyUnit:"crusts", freq:"as needed", note:"⚠ Comes frozen from GFS. Keep par stock in freezer. Always have some ready for service. +$4 surcharge (currently losing $1.34/sale — raise to +$6)." },
+  { cat:"Pizza Bases", subcat:"Sauces & Bases", name:"Pizza tomato sauce base", qty:"~1 batch", numQty:1, qtyUnit:"batch", freq:"twice weekly", note:"6 cans Farinex pelées · ½ cup salt · ⅛ cup pepper · 2 cups oil. Food mill → follow video. Store: basement dry stock; once made, refrigerate." },
+  { cat:"Pizza Bases", subcat:"Dough", name:"Gluten-free Neapolitan crust", qty:"par stock", numQty:6, qtyUnit:"crusts", freq:"as needed", note:"⚠ Comes frozen from GFS. Keep par stock in freezer. Always have some ready for service. +$4 surcharge (currently losing $1.34/sale — raise to +$6)." },
 
   // PREPARED PROTEINS
-  { cat:"Prepared Proteins", name:"House-smoked bacon (48hr brine + smoke)", qty:"~7 KG case", numQty:7, qtyUnit:"kg", freq:"twice weekly", note:"⚠ PLAN 2 DAYS AHEAD. Brine: 5.5L water · 275g salt · 183g brown sugar · 11 garlic cloves (smashed) · 7 bay leaves · 1 tbsp + 2 tsp black peppercorns · cider vinegar. Heat until dissolved, add herbs, cool fully. Submerge pork belly, fully covered. Brine 48hr walk-in. Smoke on oven smoking setting. Used: Brooklyn Pineapple, Heart-Tay-tack, Kale Caesar, Chicken Club." },
-  { cat:"Prepared Proteins", name:"Grilled chicken breast (marinated)", qty:"~5 KG case", numQty:5, qtyUnit:"kg", freq:"twice weekly", note:"BBQ Chicken pizza · Salad add-on · Chicken Club. Marinate minimum 4hr. Cook fully — 155°F internal." },
-  { cat:"Prepared Proteins", name:"Crumbled artisanal sausage (Terra Agri)", qty:"5 sausages/pizza", numQty:20, qtyUnit:"sausages", freq:"twice weekly", note:"Terra Agri sausages. Remove from bag, pull apart into bin. Flat top: preheat 10min, half heat, MAX 375°F — under-cook slightly (finishes in oven on pizza). Storage: freezer raw · cooked in inserts in fridge. Used: Heart-Tay-tack, Blue Sausage." },
-  { cat:"Prepared Proteins", name:"Prosciutto (Macchi ~6 KG leg)", qty:"per order", numQty:1, qtyUnit:"leg", freq:"weekly", note:"Slicer setting 0.8. Store: 4 slices per parchment paper in bin. Used: Prosciutto pizza, Italian Sandwich." },
+  { cat:"Prepared Proteins", subcat:"Meats", name:"House-smoked bacon (48hr brine + smoke)", qty:"~7 KG case", numQty:7, qtyUnit:"kg", freq:"twice weekly", note:"⚠ PLAN 2 DAYS AHEAD. Brine: 5.5L water · 275g salt · 183g brown sugar · 11 garlic cloves (smashed) · 7 bay leaves · 1 tbsp + 2 tsp black peppercorns · cider vinegar. Heat until dissolved, add herbs, cool fully. Submerge pork belly, fully covered. Brine 48hr walk-in. Smoke on oven smoking setting. Used: Brooklyn Pineapple, Heart-Tay-tack, Kale Caesar, Chicken Club." },
+  { cat:"Prepared Proteins", subcat:"Meats", name:"Grilled chicken breast (marinated)", qty:"~5 KG case", numQty:5, qtyUnit:"kg", freq:"twice weekly", note:"BBQ Chicken pizza · Salad add-on · Chicken Club. Marinate minimum 4hr. Cook fully — 155°F internal." },
+  { cat:"Prepared Proteins", subcat:"Meats", name:"Crumbled artisanal sausage (Terra Agri)", qty:"5 sausages/pizza", numQty:20, qtyUnit:"sausages", freq:"twice weekly", note:"Terra Agri sausages. Remove from bag, pull apart into bin. Flat top: preheat 10min, half heat, MAX 375°F — under-cook slightly (finishes in oven on pizza). Storage: freezer raw · cooked in inserts in fridge. Used: Heart-Tay-tack, Blue Sausage." },
+  { cat:"Prepared Proteins", subcat:"Meats", name:"Prosciutto (Macchi ~6 KG leg)", qty:"per order", numQty:1, qtyUnit:"leg", freq:"weekly", note:"Slicer setting 0.8. Store: 4 slices per parchment paper in bin. Used: Prosciutto pizza, Italian Sandwich." },
 
   // CHEESE PREPARATIONS
-  { cat:"Cheese Preparations", name:"Whipped ricotta", qty:"as needed", numQty:2, qtyUnit:"kg", freq:"twice weekly", note:"Ricotta — whip until smooth. Used: Funghi pizza, Italian Sandwich." },
+  { cat:"Cheese Preparations", subcat:"Dairy", name:"Whipped ricotta", qty:"as needed", numQty:2, qtyUnit:"kg", freq:"twice weekly", note:"Ricotta — whip until smooth. Used: Funghi pizza, Italian Sandwich." },
 
   // SAUCES & DRIZZLES
-  { cat:"Sauces & Drizzles", name:"House Caesar dressing ⚠ Raw egg", qty:"1 batch", numQty:1, qtyUnit:"batch", freq:"twice weekly", note:"⚠ RAW EGG — 48hr max shelf life. 16 egg yolks · 50g anchovies · 200g parm · 40g garlic · 80g dijon · 80g capers · 2L oil · 500ml water · 50ml lemon · 20g salt · 10g pepper. Robot coupe: blitz parm/anchovies/garlic/capers/salt/pepper → add yolks & dijon → slowly add oil → add water & lemon." },
-  { cat:"Sauces & Drizzles", name:"House BBQ sauce", qty:"1 batch", numQty:1, qtyUnit:"batch", freq:"weekly", note:"Ketchup · 1 cup Worcestershire · 1 cup teriyaki · 1 cup honey · 1 cup hot honey · 2 cups brown sugar · salt & pepper. Mix in metal bowl. Used: BBQ Chicken pizza." },
-  { cat:"Sauces & Drizzles", name:"Nduja-hot honey drizzle", qty:"1 batch", numQty:1, qtyUnit:"batch", freq:"weekly", note:"2L honey · 1 cup chili flakes · 1 ball nduja. Slow simmer in pot, 75°C — do NOT boil. Add nduja, stir slowly until mixed. Used: Smokin' Hot pizza." },
-  { cat:"Sauces & Drizzles", name:"Hot honey drizzle (plain)", qty:"1 batch", numQty:1, qtyUnit:"batch", freq:"weekly", note:"2L honey · 1 cup chili flakes. Slow simmer, 75°C — do NOT boil. Let sit. Base for BBQ sauce & nduja drizzle." },
-  { cat:"Sauces & Drizzles", name:"House tahini drizzle", qty:"2 bottles", numQty:2, qtyUnit:"bottles", freq:"weekly", note:"500g tahini · 50ml lemon juice (2 lemons) · 1 tsp cumin · 50g honey · 8g salt · 500g water. Small robot coupe: blend lemon/tahini/cumin/salt/honey → slowly add water while mixing. Yield: 2 bottles. Used: Mama G salad." },
-  { cat:"Sauces & Drizzles", name:"House garlic aioli", qty:"1 batch", numQty:1, qtyUnit:"batch", freq:"weekly", note:"4 egg yolks · 20g garlic · 20g lemon juice · 8g salt · 750ml oil · 125ml water. Used: Chicken Club sandwich." },
+  { cat:"Sauces & Drizzles", subcat:"Sauces", name:"House Caesar dressing ⚠ Raw egg", qty:"1 batch", numQty:1, qtyUnit:"batch", freq:"twice weekly", note:"⚠ RAW EGG — 48hr max shelf life. 16 egg yolks · 50g anchovies · 200g parm · 40g garlic · 80g dijon · 80g capers · 2L oil · 500ml water · 50ml lemon · 20g salt · 10g pepper. Robot coupe: blitz parm/anchovies/garlic/capers/salt/pepper → add yolks & dijon → slowly add oil → add water & lemon." },
+  { cat:"Sauces & Drizzles", subcat:"Sauces", name:"House BBQ sauce", qty:"1 batch", numQty:1, qtyUnit:"batch", freq:"weekly", note:"Ketchup · 1 cup Worcestershire · 1 cup teriyaki · 1 cup honey · 1 cup hot honey · 2 cups brown sugar · salt & pepper. Mix in metal bowl. Used: BBQ Chicken pizza." },
+  { cat:"Sauces & Drizzles", subcat:"Sauces", name:"Nduja-hot honey drizzle", qty:"1 batch", numQty:1, qtyUnit:"batch", freq:"weekly", note:"2L honey · 1 cup chili flakes · 1 ball nduja. Slow simmer in pot, 75°C — do NOT boil. Add nduja, stir slowly until mixed. Used: Smokin' Hot pizza." },
+  { cat:"Sauces & Drizzles", subcat:"Sauces", name:"Hot honey drizzle (plain)", qty:"1 batch", numQty:1, qtyUnit:"batch", freq:"weekly", note:"2L honey · 1 cup chili flakes. Slow simmer, 75°C — do NOT boil. Let sit. Base for BBQ sauce & nduja drizzle." },
+  { cat:"Sauces & Drizzles", subcat:"Sauces", name:"House tahini drizzle", qty:"2 bottles", numQty:2, qtyUnit:"bottles", freq:"weekly", note:"500g tahini · 50ml lemon juice (2 lemons) · 1 tsp cumin · 50g honey · 8g salt · 500g water. Small robot coupe: blend lemon/tahini/cumin/salt/honey → slowly add water while mixing. Yield: 2 bottles. Used: Mama G salad." },
+  { cat:"Sauces & Drizzles", subcat:"Sauces", name:"House garlic aioli", qty:"1 batch", numQty:1, qtyUnit:"batch", freq:"weekly", note:"4 egg yolks · 20g garlic · 20g lemon juice · 8g salt · 750ml oil · 125ml water. Used: Chicken Club sandwich." },
 
   // SPREADS & PASTES
-  { cat:"Spreads & Pastes", name:"House fig spread", qty:"1 batch", numQty:1, qtyUnit:"batch", freq:"weekly", note:"450g fig · 150g brown sugar · 50g apple cider vinegar · 50g honey · 750ml water. Simmer in pan 10min → robot coupe (add water if too thick). Used: Prosciutto pizza." },
-  { cat:"Spreads & Pastes", name:"Housemade nut-free pesto", qty:"1 batch", numQty:1, qtyUnit:"batch", freq:"weekly", note:"240g basil · 90g roasted sunflower seeds · 15g garlic · 95g parm · 30ml lemon juice · 12g salt · ½ tsp pepper · 500ml oil. Robot coupe: blitz everything except oil → slowly add oil. Used: Le Végétarien, Caprese Sandwich." },
-  { cat:"Spreads & Pastes", name:"Housemade hummus", qty:"1 batch", numQty:1, qtyUnit:"batch", freq:"weekly", note:"2kg chickpeas · 1 lemon juice · 15g cumin · 22g salt · 40g garlic · 250ml water · 125ml oil. Robot coupe: blitz all except oil → add oil slowly. Used: Mama G salad." },
+  { cat:"Spreads & Pastes", subcat:"Spreads", name:"House fig spread", qty:"1 batch", numQty:1, qtyUnit:"batch", freq:"weekly", note:"450g fig · 150g brown sugar · 50g apple cider vinegar · 50g honey · 750ml water. Simmer in pan 10min → robot coupe (add water if too thick). Used: Prosciutto pizza." },
+  { cat:"Spreads & Pastes", subcat:"Spreads", name:"Housemade nut-free pesto", qty:"1 batch", numQty:1, qtyUnit:"batch", freq:"weekly", note:"240g basil · 90g roasted sunflower seeds · 15g garlic · 95g parm · 30ml lemon juice · 12g salt · ½ tsp pepper · 500ml oil. Robot coupe: blitz everything except oil → slowly add oil. Used: Le Végétarien, Caprese Sandwich." },
+  { cat:"Spreads & Pastes", subcat:"Spreads", name:"Housemade hummus", qty:"1 batch", numQty:1, qtyUnit:"batch", freq:"weekly", note:"2kg chickpeas · 1 lemon juice · 15g cumin · 22g salt · 40g garlic · 250ml water · 125ml oil. Robot coupe: blitz all except oil → add oil slowly. Used: Mama G salad." },
 
   // DRESSINGS
-  { cat:"Dressings", name:"House Greek dressing", qty:"1 batch", numQty:1, qtyUnit:"batch", freq:"weekly", note:"650ml oil · 350ml red wine vinegar · 50ml lemon juice · 25g dijon · 10g garlic · 6g oregano · 10g salt · 4g pepper · 10g sugar. Robot coupe: blend everything → done. Used: Greek salad." },
-  { cat:"Dressings", name:"House red wine vinaigrette", qty:"1 batch", numQty:1, qtyUnit:"batch", freq:"weekly", note:"3 cups red wine vinegar · 1 tbsp dijon · 2 tbsp honey · 1L oil · salt & pepper. Robot coupe: blend all except oil → slowly add oil. Used: Caprese salad, Mama G salad." },
+  { cat:"Dressings", subcat:"Dressings", name:"House Greek dressing", qty:"1 batch", numQty:1, qtyUnit:"batch", freq:"weekly", note:"650ml oil · 350ml red wine vinegar · 50ml lemon juice · 25g dijon · 10g garlic · 6g oregano · 10g salt · 4g pepper · 10g sugar. Robot coupe: blend everything → done. Used: Greek salad." },
+  { cat:"Dressings", subcat:"Dressings", name:"House red wine vinaigrette", qty:"1 batch", numQty:1, qtyUnit:"batch", freq:"weekly", note:"3 cups red wine vinegar · 1 tbsp dijon · 2 tbsp honey · 1L oil · salt & pepper. Robot coupe: blend all except oil → slowly add oil. Used: Caprese salad, Mama G salad." },
 
   // INFUSED OILS
-  { cat:"Infused Oils", name:"Garlic-infused olive oil", qty:"~2L", numQty:2, qtyUnit:"litres", freq:"weekly", note:"2 cups garlic · 2L oil. Boil in pan, whisk together. Used: Funghi, Blue Sausage, Prosciutto pizzas." },
-  { cat:"Infused Oils", name:"Hot/spicy chili oil", qty:"~2L", numQty:2, qtyUnit:"litres", freq:"weekly", note:"½ cup chili flakes · 2L oil. Boil in pan, whisk together. Used: Funghi, Blue Sausage, Prosciutto pizzas." },
+  { cat:"Infused Oils", subcat:"Sauces", name:"Garlic-infused olive oil", qty:"~2L", numQty:2, qtyUnit:"litres", freq:"weekly", note:"2 cups garlic · 2L oil. Boil in pan, whisk together. Used: Funghi, Blue Sausage, Prosciutto pizzas." },
+  { cat:"Infused Oils", subcat:"Sauces", name:"Hot/spicy chili oil", qty:"~2L", numQty:2, qtyUnit:"litres", freq:"weekly", note:"½ cup chili flakes · 2L oil. Boil in pan, whisk together. Used: Funghi, Blue Sausage, Prosciutto pizzas." },
 
   // VEGETABLES & PRODUCE
-  { cat:"Vegetables & Produce", name:"Kale (massage & dress)", qty:"2 caisses", numQty:2, qtyUnit:"caisses", freq:"twice weekly", note:"Massage with lemon & salt 10min. Used: Kale Caesar salad." },
-  { cat:"Vegetables & Produce", name:"Crispy kale (Mama G)", qty:"as needed", numQty:1, qtyUnit:"caisse", freq:"twice weekly", note:"Pull kale bite-size. Lightly oil (1 tbsp per pan), salt & pepper lightly. Oven kale program — do NOT let go dark. Used: Mama G salad." },
-  { cat:"Vegetables & Produce", name:"Romaine (chop & wash)", qty:"24 heads/case", numQty:24, qtyUnit:"heads", freq:"twice weekly", note:"~⅓ head per Greek salad. Keep dry until service." },
-  { cat:"Vegetables & Produce", name:"Roasted pineapple", qty:"4 pineapples", numQty:4, qtyUnit:"pineapples", freq:"twice weekly", note:"Fresh pineapple cubed. Brown sugar. Pan on medium-high heat, sear slowly 5min. Used: Brooklyn Pineapple." },
-  { cat:"Vegetables & Produce", name:"Roasted sweet potatoes (Mama G)", qty:"4 sweet potatoes", numQty:4, qtyUnit:"sweet potatoes", freq:"twice weekly", note:"Peel, cut ½\" cubes, ensure dry. Oil 30ml · 1 tbsp salt & pepper. Baking sheet + parchment. 375°F fan high 15min — toss halfway through. Used: Mama G salad." },
-  { cat:"Vegetables & Produce", name:"Pickled red onion", qty:"1 batch", numQty:1, qtyUnit:"batch", freq:"weekly", note:"⚠ 24hr ahead. 1kg red onion (¼\" slices) · 650ml red wine vinegar · 315ml water · 100g sugar · 25g salt · 10 star anise · 2 tbsp whole peppercorns. Bring liquid to boil, pour over onions. Cool 24hr — NO lid. Then cover. Used: Mama G salad." },
-  { cat:"Vegetables & Produce", name:"Roasted sunflower seeds", qty:"as needed", numQty:2, qtyUnit:"cups", freq:"weekly", note:"Sunflower seeds · very little oil (toss to coat) · touch of salt & pepper. Fan 2, 375°F, 13min — toss at 6min. Used: Mama G salad, Nut-free pesto." },
+  { cat:"Vegetables & Produce", subcat:"Greens", name:"Kale (massage & dress)", qty:"2 caisses", numQty:2, qtyUnit:"caisses", freq:"twice weekly", note:"Massage with lemon & salt 10min. Used: Kale Caesar salad." },
+  { cat:"Vegetables & Produce", subcat:"Greens", name:"Crispy kale (Mama G)", qty:"as needed", numQty:1, qtyUnit:"caisse", freq:"twice weekly", note:"Pull kale bite-size. Lightly oil (1 tbsp per pan), salt & pepper lightly. Oven kale program — do NOT let go dark. Used: Mama G salad." },
+  { cat:"Vegetables & Produce", subcat:"Greens", name:"Romaine (chop & wash)", qty:"24 heads/case", numQty:24, qtyUnit:"heads", freq:"twice weekly", note:"~⅓ head per Greek salad. Keep dry until service." },
+  { cat:"Vegetables & Produce", subcat:"Fruits", name:"Roasted pineapple", qty:"4 pineapples", numQty:4, qtyUnit:"pineapples", freq:"twice weekly", note:"Fresh pineapple cubed. Brown sugar. Pan on medium-high heat, sear slowly 5min. Used: Brooklyn Pineapple." },
+  { cat:"Vegetables & Produce", subcat:"Roots", name:"Roasted sweet potatoes (Mama G)", qty:"4 sweet potatoes", numQty:4, qtyUnit:"sweet potatoes", freq:"twice weekly", note:"Peel, cut ½\" cubes, ensure dry. Oil 30ml · 1 tbsp salt & pepper. Baking sheet + parchment. 375°F fan high 15min — toss halfway through. Used: Mama G salad." },
+  { cat:"Vegetables & Produce", subcat:"Vegetables", name:"Pickled red onion", qty:"1 batch", numQty:1, qtyUnit:"batch", freq:"weekly", note:"⚠ 24hr ahead. 1kg red onion (¼\" slices) · 650ml red wine vinegar · 315ml water · 100g sugar · 25g salt · 10 star anise · 2 tbsp whole peppercorns. Bring liquid to boil, pour over onions. Cool 24hr — NO lid. Then cover. Used: Mama G salad." },
+  { cat:"Vegetables & Produce", subcat:"Vegetables", name:"Roasted sunflower seeds", qty:"as needed", numQty:2, qtyUnit:"cups", freq:"weekly", note:"Sunflower seeds · very little oil (toss to coat) · touch of salt & pepper. Fan 2, 375°F, 13min — toss at 6min. Used: Mama G salad, Nut-free pesto." },
 
   // BREADS & PACKAGING
-  { cat:"Breads & Packaging", name:"Sourdough sandwich bread", qty:"as needed", numQty:8, qtyUnit:"breads", freq:"twice weekly", note:"Stretch pizza dough balls to sandwich size on bin. 1 dough ball = 2 sandwich breads. Used: All sandwiches." },
-  { cat:"Breads & Packaging", name:"House croutons (Caesar)", qty:"1 batch = 2 baguettes + 3 loaves", numQty:1, qtyUnit:"batch", freq:"twice weekly", note:"14g yeast · 10g sugar · 650g lukewarm water · 1kg 00 flour · 20g salt. Whisk yeast/sugar/water. Add flour & salt. Mix with hook, speed 3, 5min. 1 batch: 2 baguettes (275g each) + 3 loaves (380g each). Used: Kale Caesar, Kids Caesar." },
-  { cat:"Breads & Packaging", name:"Dough-to-Go", qty:"~10/day", numQty:10, qtyUnit:"per day", freq:"daily", note:"⭐ 89% margin. Sourdough ball (320g) with instruction card. High priority item." },
+  { cat:"Breads & Packaging", subcat:"Dough", name:"Sourdough sandwich bread", qty:"as needed", numQty:8, qtyUnit:"breads", freq:"twice weekly", note:"Stretch pizza dough balls to sandwich size on bin. 1 dough ball = 2 sandwich breads. Used: All sandwiches." },
+  { cat:"Breads & Packaging", subcat:"Dough", name:"House croutons (Caesar)", qty:"1 batch = 2 baguettes + 3 loaves", numQty:1, qtyUnit:"batch", freq:"twice weekly", note:"14g yeast · 10g sugar · 650g lukewarm water · 1kg 00 flour · 20g salt. Whisk yeast/sugar/water. Add flour & salt. Mix with hook, speed 3, 5min. 1 batch: 2 baguettes (275g each) + 3 loaves (380g each). Used: Kale Caesar, Kids Caesar." },
+  { cat:"Breads & Packaging", subcat:"Dough", name:"Dough-to-Go", qty:"~10/day", numQty:10, qtyUnit:"per day", freq:"daily", note:"⭐ 89% margin. Sourdough ball (320g) with instruction card. High priority item." },
 
   // BAR & BEVERAGE SETUP
-  { cat:"Bar & Beverage Setup", name:"Wine glasses — polish & chill",    qty:"24 glasses", numQty:24, qtyUnit:"glasses", freq:"daily",        note:"Polish with clean cloth. Stack inverted in fridge. 24 service-ready before open." },
-  { cat:"Bar & Beverage Setup", name:"Draft beer lines — check & prime", qty:"2 taps",     numQty:2,  qtyUnit:"taps",    freq:"daily",        note:"Check keg pressure (10–12 PSI). Pour and discard first ~4oz. Lines clear with no foam burst." },
-  { cat:"Bar & Beverage Setup", name:"Ice bin — fill & sanitize",        qty:"1 bin",      numQty:1,  qtyUnit:"bin",     freq:"daily",        note:"Sanitize with approved solution, rinse, dry. Fill from ice machine. Always use scoop — never hands." },
-  { cat:"Bar & Beverage Setup", name:"Garnishes — slice citrus",         qty:"1 batch",    numQty:1,  qtyUnit:"batch",   freq:"daily",        note:"1 lemon, 1 lime. Slice rounds + wedges. Cover and refrigerate. For sparkling water and soft drink service." },
+  { cat:"Bar & Beverage Setup", subcat:"Equipment", name:"Wine glasses — polish & chill",    qty:"24 glasses", numQty:24, qtyUnit:"glasses", freq:"daily",        note:"Polish with clean cloth. Stack inverted in fridge. 24 service-ready before open." },
+  { cat:"Bar & Beverage Setup", subcat:"Beverages", name:"Draft beer lines — check & prime", qty:"2 taps",     numQty:2,  qtyUnit:"taps",    freq:"daily",        note:"Check keg pressure (10–12 PSI). Pour and discard first ~4oz. Lines clear with no foam burst." },
+  { cat:"Bar & Beverage Setup", subcat:"Equipment", name:"Ice bin — fill & sanitize",        qty:"1 bin",      numQty:1,  qtyUnit:"bin",     freq:"daily",        note:"Sanitize with approved solution, rinse, dry. Fill from ice machine. Always use scoop — never hands." },
+  { cat:"Bar & Beverage Setup", subcat:"Garnishes", name:"Garnishes — slice citrus",         qty:"1 batch",    numQty:1,  qtyUnit:"batch",   freq:"daily",        note:"1 lemon, 1 lime. Slice rounds + wedges. Cover and refrigerate. For sparkling water and soft drink service." },
 ];
 
 // User overrides for prep quantities (persists while page is open)
@@ -3108,36 +3108,59 @@ function renderPrep() {
   // ── All other prep categories ────────────────────────────────────────────────
   html += otherCats.map(cat => {
     const items = PREP_ITEMS.filter(i => i.cat === cat);
-    return `<div style="margin-bottom:22px;">
-      <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:10px;">${cat}</div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px;">
-        ${items.map(i=>{
-          const gIdx=PREP_ITEMS.indexOf(i);
-          const curVal=PREP_OVERRIDES[gIdx]!==undefined?PREP_OVERRIDES[gIdx]:i.numQty;
-          const isEdited=PREP_OVERRIDES[gIdx]!==undefined&&PREP_OVERRIDES[gIdx]!==i.numQty;
-          const badgeStyle=isEdited?'background:rgba(245,166,35,0.15);color:#F5A623;':'background:rgba(79,142,247,0.15);color:#4F8EF7;';
-          const badgeText=isEdited?'✏ edited':'✦ AI';
-          return `<div class="prep-card">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
-            <span class="freq-tag ${freqClass(i.freq)}">${freqLabel(i.freq)}</span>
-          </div>
-          <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:10px;">${i.name}</div>
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-            <input type="number" id="prep-qty-${gIdx}" value="${curVal}" min="0"
-              oninput="setPrepOverride(${gIdx},this.value)"
-              style="width:72px;background:rgba(79,142,247,0.1);border:1px solid rgba(79,142,247,0.3);border-radius:8px;color:var(--text);font-size:22px;font-weight:800;padding:5px 8px;text-align:center;outline:none;-moz-appearance:textfield;appearance:textfield;">
+    const subcats = [...new Set(items.map(i => i.subcat || 'General'))];
+    let catHtml = `<div style="margin-bottom:22px;">
+      <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:10px;">${cat}</div>`;
+    subcats.forEach(subcat => {
+      const subcatItems = items.filter(i => (i.subcat || 'General') === subcat);
+      const subcatId = 'subcat-' + cat.replace(/\s/g,'-') + '-' + subcat.replace(/\s/g,'-');
+      catHtml += `
+      <div style="margin-bottom:12px;">
+        <div onclick="toggleSubcat('${subcatId}')" style="display:flex;align-items:center;gap:8px;padding:7px 12px;background:rgba(255,255,255,0.04);border-radius:8px;cursor:pointer;margin-bottom:8px;user-select:none;" onmouseover="this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.background='rgba(255,255,255,0.04)'">
+          <span id="arr-${subcatId}" style="font-size:10px;color:var(--muted);transition:transform 0.2s;">▼</span>
+          <span style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;">${subcat}</span>
+          <span style="margin-left:auto;font-size:10px;color:var(--muted);">${subcatItems.length} item${subcatItems.length!==1?'s':''}</span>
+        </div>
+        <div id="${subcatId}" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px;">
+          ${subcatItems.map(i=>{
+            const gIdx=PREP_ITEMS.indexOf(i);
+            const curVal=PREP_OVERRIDES[gIdx]!==undefined?PREP_OVERRIDES[gIdx]:i.numQty;
+            const isEdited=PREP_OVERRIDES[gIdx]!==undefined&&PREP_OVERRIDES[gIdx]!==i.numQty;
+            const badgeStyle=isEdited?'background:rgba(245,166,35,0.15);color:#F5A623;':'background:rgba(79,142,247,0.15);color:#4F8EF7;';
+            const badgeText=isEdited?'✏ edited':'✦ AI';
+            return `<div class="prep-card">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+              <span class="freq-tag ${freqClass(i.freq)}">${freqLabel(i.freq)}</span>
+            </div>
+            <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:10px;">${i.name}</div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+              <input type="number" id="prep-qty-${gIdx}" value="${curVal}" min="0"
+                oninput="setPrepOverride(${gIdx},this.value)"
+                style="width:72px;background:rgba(79,142,247,0.1);border:1px solid rgba(79,142,247,0.3);border-radius:8px;color:var(--text);font-size:22px;font-weight:800;padding:5px 8px;text-align:center;outline:none;-moz-appearance:textfield;appearance:textfield;">
             <div>
               <div style="font-size:12px;font-weight:600;color:var(--muted);line-height:1.3;">${i.qtyUnit}</div>
               <div id="prep-badge-${gIdx}" style="font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;margin-top:4px;display:inline-block;${badgeStyle}">${badgeText}</div>
             </div>
           </div>
           <div style="font-size:11.5px;color:var(--muted);line-height:1.5;">${i.note}</div>
-        </div>`;}).join('')}
-      </div>
-    </div>`;
+            </div>`;}).join('')}
+        </div>
+      </div>`;
+    });
+    catHtml += `</div>`;
+    return catHtml;
   }).join('');
 
   document.getElementById('prep-content').innerHTML = html;
+}
+
+function toggleSubcat(id) {
+  const panel = document.getElementById(id);
+  const arr = document.getElementById('arr-' + id);
+  if (!panel) return;
+  const isOpen = panel.style.display !== 'none';
+  panel.style.display = isOpen ? 'none' : 'grid';
+  if (arr) arr.style.transform = isOpen ? 'rotate(-90deg)' : 'rotate(0deg)';
 }
 
 // ==================== ORDERS ====================
@@ -3413,29 +3436,50 @@ function recalcPrepNeeds() {
   });
 }
 
+function renderPrepBoardColumn(recipes, colId, emptyMsg) {
+  if (!recipes.length) {
+    document.getElementById(colId).innerHTML = '<div style="padding:20px;text-align:center;color:var(--text-3);font-size:12px;">' + emptyMsg + '</div>';
+    return;
+  }
+  const cats = [...new Set(recipes.map(r => r.cat))];
+  let html = '';
+  cats.forEach(cat => {
+    const catRecipes = recipes.filter(r => r.cat === cat);
+    const subcatId = 'pbsc-' + colId + '-' + cat.replace(/\s/g,'-');
+    html += `<div style="margin-bottom:10px;">
+      <div onclick="toggleSubcat('${subcatId}')" style="display:flex;align-items:center;gap:8px;padding:5px 10px;background:rgba(255,255,255,0.04);border-radius:7px;cursor:pointer;margin-bottom:6px;user-select:none;" onmouseover="this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.background='rgba(255,255,255,0.04)'">
+        <span id="arr-${subcatId}" style="font-size:9px;color:var(--muted);transition:transform 0.2s;">▼</span>
+        <span style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;">${cat}</span>
+        <span style="margin-left:auto;font-size:10px;color:var(--muted);">${catRecipes.length}</span>
+      </div>
+      <div id="${subcatId}" style="display:flex;flex-direction:column;gap:8px;">
+        ${catRecipes.map(r => {
+          const t = pbTasks[r.id];
+          return makePBCard(r, t, t.needed, t.done);
+        }).join('')}
+      </div>
+    </div>`;
+  });
+  document.getElementById(colId).innerHTML = html;
+}
+
 function renderPrepBoard() {
   const todo = [], inprog = [], done = [];
   PREP_RECIPES.forEach(r => {
     const t = pbTasks[r.id];
-    const needed = t.needed;
-    const madeTotal = t.done;
     if (t.status === 'done') {
-      done.push(makePBCard(r, t, needed, madeTotal));
+      done.push(r);
     } else if (t.status === 'inprog') {
-      inprog.push(makePBCard(r, t, needed, madeTotal));
-    } else if (needed > 0) {
-      todo.push(makePBCard(r, t, needed, madeTotal));
+      inprog.push(r);
+    } else if (t.needed > 0) {
+      todo.push(r);
     }
     // tasks with 0 needed stay hidden unless in-prog/done
   });
 
-  document.getElementById('col-todo').innerHTML = todo.length
-    ? todo.join('')
-    : '<div style="padding:20px;text-align:center;color:var(--text-3);font-size:12px;">All caught up ✓</div>';
-  document.getElementById('col-inprog').innerHTML = inprog.join('') ||
-    '<div style="padding:20px;text-align:center;color:var(--text-3);font-size:12px;">Nothing in progress</div>';
-  document.getElementById('col-done').innerHTML = done.join('') ||
-    '<div style="padding:20px;text-align:center;color:var(--text-3);font-size:12px;">Nothing done yet</div>';
+  renderPrepBoardColumn(todo, 'col-todo', 'All caught up ✓');
+  renderPrepBoardColumn(inprog, 'col-inprog', 'Nothing in progress');
+  renderPrepBoardColumn(done, 'col-done', 'Nothing done yet');
 
   document.getElementById('pb-todo-count').textContent = todo.length;
   document.getElementById('pb-inprog-count').textContent = inprog.length;
@@ -4757,6 +4801,65 @@ const T = {
     // Invoice translator labels
     inv_translator_title:'French → English Ingredient Translator',
     inv_translator_desc:'Quebec supplier invoices arrive in French. Common terms:',
+    // Extended labels
+    nav_recipe_costing: 'Recipe Costing',
+    nav_prep_board: 'Prep Board',
+    lbl_ingredient: 'Ingredient',
+    lbl_quantity: 'Quantity',
+    lbl_unit: 'Unit',
+    lbl_cost: 'Cost',
+    lbl_category: 'Category',
+    lbl_supplier: 'Supplier',
+    lbl_price: 'Price',
+    lbl_food_cost: 'Food Cost',
+    lbl_gross_margin: 'Gross Margin',
+    lbl_revenue: 'Revenue',
+    lbl_total: 'Total',
+    lbl_target: 'Target',
+    lbl_status: 'Status',
+    lbl_on_target: 'On Target',
+    lbl_over_target: 'Over Target',
+    lbl_save: 'Save',
+    lbl_cancel: 'Cancel',
+    lbl_add: 'Add',
+    lbl_edit: 'Edit',
+    lbl_delete: 'Delete',
+    lbl_import: 'Import',
+    lbl_export: 'Export',
+    lbl_download: 'Download',
+    lbl_upload: 'Upload',
+    lbl_search: 'Search',
+    lbl_filter: 'Filter',
+    lbl_all: 'All',
+    lbl_weekly: 'Weekly',
+    lbl_daily: 'Daily',
+    lbl_tonight: 'Tonight',
+    lbl_covers: 'Covers',
+    lbl_per_day: 'per day',
+    lbl_this_period: 'This Period',
+    lbl_vs_target: 'vs Target',
+    lbl_invoice: 'Invoice',
+    lbl_invoices: 'Invoices',
+    lbl_pending: 'Pending',
+    lbl_paid: 'Paid',
+    lbl_review: 'Review',
+    lbl_prep_today: 'Prep Today',
+    lbl_kitchen_mode: 'Kitchen Mode',
+    section_insights: 'Insights',
+    section_dashboard: 'Dashboard',
+    section_food_cost: 'Food Cost',
+    section_menu_analysis: 'Menu Analysis',
+    section_efficiency: 'Efficiency',
+    section_prep: 'Prep & Recipes',
+    section_yield: 'Yield Control',
+    section_orders: 'Order Guide',
+    section_staff: 'Staff & Tasks',
+    section_reports: 'Reports',
+    section_settings: 'Settings',
+    msg_no_data: 'No data yet',
+    msg_loading: 'Loading\u2026',
+    msg_saved: 'Saved',
+    msg_error: 'Error',
   },
   fr: {
     // Nav
@@ -4782,6 +4885,65 @@ const T = {
     // Invoice translator labels
     inv_translator_title:'Traducteur factures : Français → Anglais',
     inv_translator_desc:'Les factures des fournisseurs du Québec arrivent en français. Termes courants :',
+    // Extended labels
+    nav_recipe_costing: 'Co\u00fbt des Recettes',
+    nav_prep_board: 'Tableau de Prep',
+    lbl_ingredient: 'Ingr\u00e9dient',
+    lbl_quantity: 'Quantit\u00e9',
+    lbl_unit: 'Unit\u00e9',
+    lbl_cost: 'Co\u00fbt',
+    lbl_category: 'Cat\u00e9gorie',
+    lbl_supplier: 'Fournisseur',
+    lbl_price: 'Prix',
+    lbl_food_cost: 'Co\u00fbt Mati\u00e8re',
+    lbl_gross_margin: 'Marge Brute',
+    lbl_revenue: 'Revenu',
+    lbl_total: 'Total',
+    lbl_target: 'Cible',
+    lbl_status: 'Statut',
+    lbl_on_target: 'Dans la cible',
+    lbl_over_target: 'Hors cible',
+    lbl_save: 'Enregistrer',
+    lbl_cancel: 'Annuler',
+    lbl_add: 'Ajouter',
+    lbl_edit: 'Modifier',
+    lbl_delete: 'Supprimer',
+    lbl_import: 'Importer',
+    lbl_export: 'Exporter',
+    lbl_download: 'T\u00e9l\u00e9charger',
+    lbl_upload: 'T\u00e9l\u00e9verser',
+    lbl_search: 'Rechercher',
+    lbl_filter: 'Filtrer',
+    lbl_all: 'Tout',
+    lbl_weekly: 'Hebdomadaire',
+    lbl_daily: 'Quotidien',
+    lbl_tonight: 'Ce soir',
+    lbl_covers: 'Couverts',
+    lbl_per_day: 'par jour',
+    lbl_this_period: 'Cette p\u00e9riode',
+    lbl_vs_target: 'vs Cible',
+    lbl_invoice: 'Facture',
+    lbl_invoices: 'Factures',
+    lbl_pending: 'En attente',
+    lbl_paid: 'Pay\u00e9e',
+    lbl_review: '\u00c0 r\u00e9viser',
+    lbl_prep_today: "Prep d'aujourd'hui",
+    lbl_kitchen_mode: 'Mode Cuisine',
+    section_insights: 'Aper\u00e7us',
+    section_dashboard: 'Tableau de Bord',
+    section_food_cost: 'Co\u00fbt Mati\u00e8re',
+    section_menu_analysis: 'Analyse du Menu',
+    section_efficiency: 'Efficacit\u00e9',
+    section_prep: 'Prep & Recettes',
+    section_yield: 'Contr\u00f4le des Portions',
+    section_orders: 'Guide de Commande',
+    section_staff: 'Personnel & T\u00e2ches',
+    section_reports: 'Rapports',
+    section_settings: 'Param\u00e8tres',
+    msg_no_data: 'Pas de donn\u00e9es',
+    msg_loading: 'Chargement\u2026',
+    msg_saved: 'Enregistr\u00e9',
+    msg_error: 'Erreur',
   }
 };
 
@@ -4859,8 +5021,94 @@ const FR_EN_TERMS = [
   { fr:'Commande', en:'Order', category:'Invoice Terms' },
   { fr:'Date de livraison', en:'Delivery date', category:'Invoice Terms' },
   { fr:'Numéro de facture', en:'Invoice number', category:'Invoice Terms' },
-  { fr:'Crédit', en:'Credit', category:'Invoice Terms' },
+  { fr:'Cr\u00e9dit', en:'Credit', category:'Invoice Terms' },
   { fr:'Retour', en:'Return', category:'Invoice Terms' },
+  // More produce
+  { fr:'Aubergine', en:'Eggplant', category:'Produce' },
+  { fr:'Courgette', en:'Zucchini', category:'Produce' },
+  { fr:'Poivron rouge', en:'Red bell pepper', category:'Produce' },
+  { fr:'Poivron vert', en:'Green bell pepper', category:'Produce' },
+  { fr:'Champignon (g\u00e9n\u00e9rique)', en:'Mushroom', category:'Produce' },
+  { fr:'Oignon blanc', en:'White onion', category:'Produce' },
+  { fr:'\u00c9chalote', en:'Shallot', category:'Produce' },
+  { fr:'Tomate cerise', en:'Cherry tomato', category:'Produce' },
+  { fr:'\u00c9pinard', en:'Spinach', category:'Produce' },
+  { fr:'Roquette', en:'Arugula', category:'Produce' },
+  { fr:'Pomme de terre', en:'Potato', category:'Produce' },
+  { fr:'Brocoli', en:'Broccoli', category:'Produce' },
+  { fr:'Chou-fleur', en:'Cauliflower', category:'Produce' },
+  { fr:'Carotte', en:'Carrot', category:'Produce' },
+  { fr:'C\u00e9leri', en:'Celery', category:'Produce' },
+  { fr:'Avocat', en:'Avocado', category:'Produce' },
+  { fr:'Fraises', en:'Strawberries', category:'Produce' },
+  { fr:'Framboises', en:'Raspberries', category:'Produce' },
+  { fr:'Bleuets', en:'Blueberries', category:'Produce' },
+  { fr:'Pomme', en:'Apple', category:'Produce' },
+  { fr:'Poire', en:'Pear', category:'Produce' },
+  { fr:'Mangue', en:'Mango', category:'Produce' },
+  // More proteins
+  { fr:'B\u0153uf hach\u00e9', en:'Ground beef', category:'Proteins' },
+  { fr:'Poulet entier', en:'Whole chicken', category:'Proteins' },
+  { fr:'Filet de porc', en:'Pork tenderloin', category:'Proteins' },
+  { fr:"C\u00f4telettes d'agneau", en:'Lamb chops', category:'Proteins' },
+  { fr:'Saumon', en:'Salmon', category:'Proteins' },
+  { fr:'Thon', en:'Tuna', category:'Proteins' },
+  { fr:'Crevettes', en:'Shrimp', category:'Proteins' },
+  { fr:'Homard', en:'Lobster', category:'Proteins' },
+  { fr:'Palourdes', en:'Clams', category:'Proteins' },
+  { fr:'Moules', en:'Mussels', category:'Proteins' },
+  { fr:'Pancetta', en:'Pancetta', category:'Proteins' },
+  { fr:'Nduja', en:'Nduja (spicy spreadable salami)', category:'Proteins' },
+  // More dairy/cheese
+  { fr:'Burrata', en:'Burrata', category:'Dairy' },
+  { fr:'Ricotta (emball\u00e9e)', en:'Packaged Ricotta', category:'Dairy' },
+  { fr:'Parmesan (bloc)', en:'Parmesan block', category:'Dairy' },
+  { fr:'Fontina', en:'Fontina', category:'Dairy' },
+  { fr:'Taleggio', en:'Taleggio', category:'Dairy' },
+  { fr:'Cr\u00e8me fra\u00eeche', en:'Cr\u00e8me fra\u00eeche', category:'Dairy' },
+  { fr:'Cr\u00e8me 35%', en:'Heavy cream (35%)', category:'Dairy' },
+  { fr:'Beurre non sal\u00e9', en:'Unsalted butter', category:'Dairy' },
+  { fr:'\u0152ufs extra-larges', en:'Extra-large eggs', category:'Dairy' },
+  // More dry goods
+  { fr:'Huile de truffe', en:'Truffle oil', category:'Dry Goods' },
+  { fr:'Vinaigre balsamique', en:'Balsamic vinegar', category:'Dry Goods' },
+  { fr:'Olives noires', en:'Black olives', category:'Dry Goods' },
+  { fr:'Olives vertes', en:'Green olives', category:'Dry Goods' },
+  { fr:'Pignons de pin', en:'Pine nuts', category:'Dry Goods' },
+  { fr:'Noix', en:'Walnuts', category:'Dry Goods' },
+  { fr:'Pistaches', en:'Pistachios', category:'Dry Goods' },
+  { fr:'P\u00e2tes', en:'Pasta', category:'Dry Goods' },
+  { fr:'Riz Arborio', en:'Arborio rice', category:'Dry Goods' },
+  { fr:'Farine tout usage', en:'All-purpose flour', category:'Dry Goods' },
+  { fr:'Sucre', en:'Sugar', category:'Dry Goods' },
+  { fr:'Levure instantan\u00e9e', en:'Instant yeast', category:'Dry Goods' },
+  { fr:'Sel de mer', en:'Sea salt', category:'Dry Goods' },
+  { fr:'Poivre noir', en:'Black pepper', category:'Dry Goods' },
+  { fr:'Flocons de piment', en:'Chili flakes', category:'Dry Goods' },
+  { fr:'Origan s\u00e9ch\u00e9', en:'Dried oregano', category:'Dry Goods' },
+  // More invoice terms
+  { fr:'Num\u00e9ro de commande', en:'Purchase order number', category:'Invoice Terms' },
+  { fr:"Date d'\u00e9ch\u00e9ance", en:'Due date', category:'Invoice Terms' },
+  { fr:'Escompte', en:'Discount', category:'Invoice Terms' },
+  { fr:'Rabais', en:'Rebate', category:'Invoice Terms' },
+  { fr:'Net 30', en:'Net 30 days payment', category:'Invoice Terms' },
+  { fr:'Net 15', en:'Net 15 days payment', category:'Invoice Terms' },
+  { fr:'Frais de livraison', en:'Delivery charge', category:'Invoice Terms' },
+  { fr:'Surcharge carburant', en:'Fuel surcharge', category:'Invoice Terms' },
+  { fr:'Avoir', en:'Credit note', category:'Invoice Terms' },
+  // More quantities
+  { fr:'Gramme', en:'Gram (g)', category:'Quantities' },
+  { fr:'Kilogramme', en:'Kilogram (kg)', category:'Quantities' },
+  { fr:'Millilitre', en:'Millilitre (ml)', category:'Quantities' },
+  { fr:'Litre', en:'Litre (L)', category:'Quantities' },
+  { fr:'Once', en:'Ounce (oz)', category:'Quantities' },
+  { fr:'Livre', en:'Pound (lb)', category:'Quantities' },
+  { fr:'Gallon', en:'Gallon', category:'Quantities' },
+  { fr:'Portion', en:'Portion/Serving', category:'Quantities' },
+  { fr:'Plateau', en:'Tray', category:'Quantities' },
+  { fr:'Bouteille', en:'Bottle', category:'Quantities' },
+  { fr:'Cannette', en:'Can', category:'Quantities' },
+  { fr:'F\u00fbt', en:'Keg/Barrel', category:'Quantities' },
 ];
 
 function toggleLang() {
