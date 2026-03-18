@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CulinaraOs — Restaurant Intelligence Platform</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -271,28 +272,12 @@ tr:last-child td { border-bottom: none; }
       <h2>Welcome back</h2>
       <p>Sign in to your restaurant intelligence dashboard</p>
       <label class="login-label">Email address</label>
-      <input type="email" class="login-input" id="loginEmail" placeholder="you@restaurant.com" value="demo@culinara.app">
+      <input type="email" class="login-input" id="login-email" placeholder="you@restaurant.com">
       <label class="login-label">Password</label>
-      <input type="password" class="login-input" id="loginPass" placeholder="••••••••" value="demo1234">
+      <input type="password" class="login-input" id="login-password" placeholder="••••••••">
       <div id="login-error" style="display:none;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.25);border-radius:9px;padding:10px 14px;font-size:13px;color:#f87171;margin-bottom:12px;">Incorrect email or password. Try the demo accounts below.</div>
-      <button class="btn-login" onclick="doLogin()">Sign in →</button>
-      <div class="demo-hint" style="margin-top:16px;text-align:left;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:12px 14px;">
-        <div style="font-size:10.5px;font-weight:700;color:#334155;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px;">Demo accounts</div>
-        <div style="display:flex;flex-direction:column;gap:6px;">
-          <div onclick="fillLogin('demo@culinara.app','demo1234')" style="cursor:pointer;padding:6px 10px;border-radius:7px;transition:background 0.12s;" onmouseover="this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.background='transparent'">
-            <div style="font-size:12px;font-weight:600;color:#94a3b8;">Thomas Gevas <span style="color:#475569;font-weight:400;">· Admin</span></div>
-            <div style="font-size:11px;color:#334155;margin-top:1px;"><code style="background:rgba(255,255,255,0.06);padding:1px 6px;border-radius:4px;color:#64748b;">demo@culinara.app</code> / <code style="background:rgba(255,255,255,0.06);padding:1px 6px;border-radius:4px;color:#64748b;">demo1234</code></div>
-          </div>
-          <div onclick="fillLogin('botte@culinara.app','botte2024')" style="cursor:pointer;padding:6px 10px;border-radius:7px;transition:background 0.12s;" onmouseover="this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.background='transparent'">
-            <div style="font-size:12px;font-weight:600;color:#94a3b8;">Bottē Restaurant <span style="color:#475569;font-weight:400;">· Owner</span></div>
-            <div style="font-size:11px;color:#334155;margin-top:1px;"><code style="background:rgba(255,255,255,0.06);padding:1px 6px;border-radius:4px;color:#64748b;">botte@culinara.app</code> / <code style="background:rgba(255,255,255,0.06);padding:1px 6px;border-radius:4px;color:#64748b;">botte2024</code></div>
-          </div>
-          <div onclick="fillLogin('arthurs@culinara.app','arthurs2024')" style="cursor:pointer;padding:6px 10px;border-radius:7px;transition:background 0.12s;" onmouseover="this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.background='transparent'">
-            <div style="font-size:12px;font-weight:600;color:#94a3b8;">Arthur's Restaurant <span style="color:#475569;font-weight:400;">· Owner</span></div>
-            <div style="font-size:11px;color:#334155;margin-top:1px;"><code style="background:rgba(255,255,255,0.06);padding:1px 6px;border-radius:4px;color:#64748b;">arthurs@culinara.app</code> / <code style="background:rgba(255,255,255,0.06);padding:1px 6px;border-radius:4px;color:#64748b;">arthurs2024</code></div>
-          </div>
-        </div>
-      </div>
+      <button class="btn-login" id="login-btn" onclick="doLogin()">Sign in →</button>
+      <div style="font-size:12px;color:rgba(255,255,255,0.4);text-align:center;margin-top:8px;">Sign in with your Culinara account</div>
     </div>
     <div class="login-footer">Trusted by 12+ restaurants in Quebec</div>
   </div>
@@ -2351,6 +2336,15 @@ tr:last-child td { border-bottom: none; }
 </div><!-- /screen-app -->
 
 <script>
+// ── Supabase Client ──────────────────────────────────────
+const SUPABASE_URL = 'https://qexjxndommlfqzngxqym.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFleGp4bmRvbW1sZnF6bmd4cXltIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM3NzY1MTUsImV4cCI6MjA4OTM1MjUxNX0.4PVcxCAXCkLSsjr6mvtrlL_3zkJ8WIkfMl7K3E7vkP8';
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+let SB_USER = null;
+let SB_PROFILE = null;
+let SB_RESTAURANT = null;
+let ACTIVE_SLUG = 'botte'; // default
+
 // ==================== DATA ====================
 const BASE_MENU_ITEMS = [
   // Updated from Lightspeed CSV Jan 25–Mar 15 2026 (FH + OA combined)
@@ -2588,45 +2582,76 @@ function showScreen(id) {
 }
 
 function fillLogin(email, pass) {
-  document.getElementById('loginEmail').value = email;
-  document.getElementById('loginPass').value = pass;
-  document.getElementById('login-error').style.display = 'none';
+  const eEl = document.getElementById('login-email');
+  const pEl = document.getElementById('login-password');
+  if (eEl) eEl.value = email;
+  if (pEl) pEl.value = pass;
+  const errEl = document.getElementById('login-error');
+  if (errEl) errEl.style.display = 'none';
 }
 
-function doLogin() {
-  const email = document.getElementById('loginEmail').value.trim().toLowerCase();
-  const pass  = document.getElementById('loginPass').value;
-  const user  = USERS[email];
+async function doLogin() {
+  const email = document.getElementById('login-email')?.value?.trim();
+  const pass  = document.getElementById('login-password')?.value;
+  const btn   = document.getElementById('login-btn');
+  const err   = document.getElementById('login-error');
 
-  if (!user || user.password !== pass) {
-    document.getElementById('login-error').style.display = 'block';
+  if (!email || !pass) {
+    if (err) { err.textContent = 'Please enter your email and password.'; err.style.display = 'block'; }
+    return;
+  }
+  if (btn) { btn.textContent = 'Signing in…'; btn.disabled = true; }
+  if (err) err.style.display = 'none';
+
+  const { data, error } = await sb.auth.signInWithPassword({ email, password: pass });
+
+  if (error) {
+    if (err) { err.textContent = error.message; err.style.display = 'block'; }
+    if (btn) { btn.textContent = 'Sign in →'; btn.disabled = false; }
     return;
   }
 
-  document.getElementById('login-error').style.display = 'none';
-  currentUser = { ...user, email };
+  SB_USER = data.user;
 
-  // Single live restaurant → skip selector, go straight to app
-  if (currentUser.restaurants.length === 1 && RESTAURANTS[currentUser.restaurants[0]].status === 'live') {
-    activeRestaurant = currentUser.restaurants[0];
-    updateSidebarUser();
-    updateSidebarRestaurant(activeRestaurant);
-    showScreen('app');
-    navigate('dashboard');
-    return;
+  // Fetch profile + linked restaurant
+  const { data: profile, error: profErr } = await sb
+    .from('profiles')
+    .select('*, restaurants(*)')
+    .eq('id', data.user.id)
+    .single();
+
+  if (!profErr && profile) {
+    SB_PROFILE = profile;
+    SB_RESTAURANT = profile.restaurants;
+    ACTIVE_SLUG = profile.restaurants?.slug || 'botte';
   }
 
-  // Single setup restaurant → show onboarding message
-  if (currentUser.restaurants.length === 1 && RESTAURANTS[currentUser.restaurants[0]].status === 'setup') {
-    updateSidebarUser();
-    renderRestaurantSelector();
-    showScreen('restaurants');
-    return;
-  }
+  // Update UI with real name
+  const displayName = SB_PROFILE?.full_name || email.split('@')[0];
+  const greetEl = document.getElementById('rest-greeting');
+  if (greetEl) greetEl.textContent = 'Good morning, ' + displayName + ' 👋';
 
-  // Multi-restaurant → show selector
+  // Update currentUser for compatibility with existing selector/sidebar code
+  currentUser = {
+    name: SB_PROFILE?.full_name || displayName,
+    firstName: (SB_PROFILE?.full_name || displayName).split(' ')[0],
+    initials: (SB_PROFILE?.full_name || displayName).split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2),
+    email: email,
+    role: SB_PROFILE?.role || 'admin',
+    restaurants: ['botte', 'arthurs']
+  };
+
+  if (btn) { btn.textContent = 'Sign in →'; btn.disabled = false; }
+
   renderRestaurantSelector();
   showScreen('restaurants');
+}
+
+async function doLogout() {
+  await sb.auth.signOut();
+  SB_USER = null; SB_PROFILE = null; SB_RESTAURANT = null; ACTIVE_SLUG = 'botte';
+  currentUser = null;
+  showScreen('login');
 }
 
 function renderRestaurantSelector() {
@@ -2700,6 +2725,25 @@ function updateSidebarUser() {
 }
 
 function selectRestaurant(id) {
+  // Track active restaurant
+  ACTIVE_SLUG = id;
+
+  // If Arthur's — update sidebar with onboarding context
+  if (id === 'arthurs') {
+    const rnEl = document.getElementById('sidebar-rest-name');
+    if (rnEl) rnEl.textContent = "Arthur's Restaurant";
+    const rsEl = document.getElementById('sidebar-rest-loc');
+    if (rsEl) rsEl.textContent = 'Setting up · Cluster POS';
+    const uiEl = document.getElementById('sidebar-user-avatar');
+    if (uiEl) uiEl.textContent = currentUser?.initials || 'AR';
+    const unEl = document.getElementById('sidebar-user-name');
+    if (unEl) unEl.textContent = SB_PROFILE?.full_name || currentUser?.name || 'Arthur';
+  } else {
+    // Bottē - update with real user name if available
+    const unEl = document.getElementById('sidebar-user-name');
+    if (unEl && (SB_PROFILE?.full_name || currentUser?.name)) unEl.textContent = SB_PROFILE?.full_name || currentUser?.name;
+  }
+
   const r = RESTAURANTS[id];
   if (!r) return;
   if (r.status === 'setup') {
@@ -5115,6 +5159,38 @@ function filterFREN(val) {
     <span style="color:var(--muted);">${t.en} <span style="color:var(--text-3);font-size:10.5px;">(${t.category})</span></span>
   </div>`).join('')}</div>`;
 }
+
+// Restore session on page reload
+(async function restoreSession() {
+  const { data: { session } } = await sb.auth.getSession();
+  if (session) {
+    SB_USER = session.user;
+    const { data: profile } = await sb
+      .from('profiles')
+      .select('*, restaurants(*)')
+      .eq('id', session.user.id)
+      .single();
+    if (profile) {
+      SB_PROFILE = profile;
+      SB_RESTAURANT = profile.restaurants;
+      ACTIVE_SLUG = profile.restaurants?.slug || 'botte';
+      const displayName = profile.full_name || session.user.email.split('@')[0];
+      const greetEl = document.getElementById('rest-greeting');
+      if (greetEl) greetEl.textContent = 'Good morning, ' + displayName + ' 👋';
+      // Restore currentUser for selector compatibility
+      currentUser = {
+        name: profile.full_name || displayName,
+        firstName: (profile.full_name || displayName).split(' ')[0],
+        initials: (profile.full_name || displayName).split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2),
+        email: session.user.email,
+        role: profile.role || 'admin',
+        restaurants: ['botte', 'arthurs']
+      };
+      renderRestaurantSelector();
+      showScreen('restaurants');
+    }
+  }
+})();
 
 // Apply saved language preference on page load
 document.addEventListener('DOMContentLoaded', function() { applyLang(); });
