@@ -339,6 +339,22 @@ tr:last-child td { border-bottom: none; }
 .guideline-banner ul { margin:10px 0 2px 18px;padding:0;font-size:12px;color:var(--muted);line-height:1.9; }
 /* ── Inline edit ──────────────────────────────────────── */
 .inline-edit-input { background:rgba(79,142,247,0.1);border:1px solid rgba(79,142,247,0.35);border-radius:6px;color:var(--text);font-size:13px;font-weight:600;padding:3px 7px;width:70px;text-align:center;outline:none; }
+/* ===== RECIPE COSTING ===== */
+.recipe-tab-btn { padding:8px 16px;background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;transition:all 0.15s; }
+.recipe-tab-btn.active { border-bottom-color:#4F8EF7;color:#4F8EF7;font-weight:700; }
+.recipe-card-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:16px; }
+.recipe-card { background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;cursor:pointer;transition:all 0.15s; }
+.recipe-card:hover { border-color:rgba(79,142,247,0.4);transform:translateY(-1px); }
+.recipe-card.on-target { border-left:3px solid #34C97A; }
+.recipe-card.over-target { border-left:3px solid #F05252; }
+.ing-table { width:100%;border-collapse:collapse;font-size:13px; }
+.ing-table th { padding:8px 12px;text-align:left;font-size:10.5px;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;border-bottom:1px solid var(--border); }
+.ing-table td { padding:9px 12px;border-bottom:1px solid rgba(255,255,255,0.04); }
+.import-zone { border:2px dashed rgba(79,142,247,0.35);border-radius:14px;padding:40px;text-align:center;cursor:pointer;transition:all 0.2s;background:rgba(79,142,247,0.03); }
+.import-zone:hover,.import-zone.drag-over { border-color:#4F8EF7;background:rgba(79,142,247,0.08); }
+.pre-eng-output { background:rgba(52,201,122,0.07);border:1px solid rgba(52,201,122,0.2);border-radius:12px;padding:20px 24px;margin-top:16px; }
+.builder-row { display:grid;grid-template-columns:1fr 80px 70px 70px 28px;gap:8px;align-items:center;margin-bottom:8px; }
+.builder-summary { position:sticky;bottom:0;background:var(--bg-card);border-top:1px solid var(--border);padding:14px 24px;display:flex;gap:24px;align-items:center; }
 </style>
 </head>
 <body>
@@ -422,7 +438,7 @@ tr:last-child td { border-bottom: none; }
     <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:9px;padding:9px 12px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:background 0.12s;" onmouseover="this.style.background='rgba(255,255,255,0.07)'" onmouseout="this.style.background='rgba(255,255,255,0.04)'" onclick="showScreen('restaurants')">
       <div>
         <div id="sidebar-rest-name" style="color:#F2F2F7;font-size:12.5px;font-weight:600;letter-spacing:-0.01em;">Bottē Restaurant</div>
-        <div id="sidebar-rest-loc" style="color:#48484A;font-size:11px;margin-top:1px;">Hudson, QC</div>
+        <div id="sidebar-rest-loc" style="color:#48484A;font-size:11px;margin-top:1px;">St-Lazare, QC</div>
       </div>
       <div style="color:#48484A;font-size:14px;">⌄</div>
     </div>
@@ -448,6 +464,7 @@ tr:last-child td { border-bottom: none; }
       <span style="margin-left:auto;background:rgba(52,201,122,0.2);color:#34C97A;font-size:9px;font-weight:800;padding:1px 6px;border-radius:99px;letter-spacing:0.03em;animation:blink 2s infinite;">LIVE</span>
     </div>
     <div class="nav-item" onclick="navigate('yield')"><span class="nav-icon">⚖</span><span data-i18n="nav_yield">Yield Control</span></div>
+    <div class="nav-item" onclick="navigate('recipes')"><span class="nav-icon">📋</span><span data-i18n="nav_recipes">Recipe Costing</span></div>
     <div class="nav-item" onclick="navigate('inventory')"><span class="nav-icon">◫</span><span data-i18n="nav_inventory">Inventory</span></div>
     <div class="nav-item" onclick="navigate('orders')"><span class="nav-icon">◻</span><span data-i18n="nav_orders">Order Guide</span></div>
     <div class="nav-item" onclick="navigate('staff')"><span class="nav-icon">◯</span><span data-i18n="nav_staff">Staff &amp; Tasks</span></div>
@@ -487,7 +504,7 @@ tr:last-child td { border-bottom: none; }
   <div class="topbar">
     <div>
       <div style="font-size:15px;font-weight:700;letter-spacing:-0.02em;">AI Insights</div>
-      <div id="insights-subtitle" style="font-size:12px;color:var(--muted);margin-top:1px;">Bottē Restaurant · Jan 25 – Mar 15, 2026</div>
+      <div id="insights-subtitle" style="font-size:12px;color:var(--muted);margin-top:1px;">Bottē Restaurant · Jan 1 – Apr 13, 2026</div>
     </div>
     <div class="ai-badge">✦ AI-powered · updated 5 min ago</div>
   </div>
@@ -502,13 +519,13 @@ tr:last-child td { border-bottom: none; }
     <div style="background:linear-gradient(135deg,#111828,#141E32 50%,#111828);border:1px solid rgba(79,142,247,0.18);border-radius:14px;padding:24px 28px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;overflow:hidden;position:relative;">
       <div>
         <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#4F8EF7;margin-bottom:8px;">TOTAL RECOVERABLE VALUE THIS PERIOD</div>
-        <div style="font-size:3.2rem;font-weight:900;letter-spacing:-0.05em;color:#FF9F0A;line-height:1;">$3,550</div>
-        <div style="font-size:13px;color:#48484A;margin-top:8px;">Across 8 identified opportunities · 49 days</div>
+        <div style="font-size:3.2rem;font-weight:900;letter-spacing:-0.05em;color:#FF9F0A;line-height:1;">$3,750</div>
+        <div style="font-size:13px;color:#48484A;margin-top:8px;">Across 8 identified opportunities · 103 days</div>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <div style="font-size:10.5px;color:#4F8EF7;font-weight:700;letter-spacing:0.06em;text-align:right;margin-bottom:2px;">BREAKDOWN</div>
         <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.07);border-radius:9px;padding:9px 14px;">
-          <div style="font-size:12.5px;color:#AEAEB2;">Pricing fix → <b style="color:#FF9F0A;">+$84</b> immediately</div>
+          <div style="font-size:12.5px;color:#AEAEB2;">Pricing fix → <b style="color:#FF9F0A;">+$188</b> immediately</div>
         </div>
         <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.07);border-radius:9px;padding:9px 14px;">
           <div style="font-size:12.5px;color:#AEAEB2;">POS audit → <b style="color:#FF9F0A;">+$2,201</b> recoverable</div>
@@ -530,10 +547,10 @@ tr:last-child td { border-bottom: none; }
       <div class="insight-icon" style="background:rgba(255,69,58,0.12);">💸</div>
       <div class="insight-content">
         <div class="insight-title">GF Upgrade is losing money on every single sale</div>
-        <div class="insight-desc">The Oggi gluten-free crust costs $5.34 — but you only charge a +$4 surcharge. Every GF upgrade sold generates a <strong>-$1.34 loss</strong>. Over 9 sales this period, that's <strong>$12 out of pocket</strong>. Raise to +$6 to flip this to a profit.</div>
+        <div class="insight-desc">The Oggi gluten-free crust costs $5.34 — but you only charge a +$4 surcharge. Every GF upgrade sold generates a <strong>-$1.34 loss</strong>. Over 94 sales this period, that's <strong>$126 out of pocket</strong>. Raise to +$6 to flip this to a profit.</div>
         <div class="insight-action">
           <span class="impact-badge impact-critical">CRITICAL</span>
-          <span class="impact-dollar">Raise to +$6 surcharge → +$18/period instantly</span>
+          <span class="impact-dollar">Raise to +$6 surcharge → +$188/period instantly</span>
         </div>
       </div>
       <div class="insight-side">
@@ -566,7 +583,7 @@ tr:last-child td { border-bottom: none; }
       <div class="insight-icon" style="background:rgba(48,209,88,0.12);">⬆️</div>
       <div class="insight-content">
         <div class="insight-title">Dough-to-Go has an 89% margin — you're leaving money behind</div>
-        <div class="insight-desc">At $6 price with only $0.65 food cost, Dough-to-Go is your highest-margin product at 89%. You sold 64 units this period (1.4/day). Push it at every checkout — if volume doubles to <strong>128 units/period</strong>, gross profit grows by $342 with zero new overhead.</div>
+        <div class="insight-desc">At $6 price with only $0.65 food cost, Dough-to-Go is your highest-margin product at 89%. You sold 113 units this period (1.1/day). Push it at every checkout — if volume doubles to <strong>226 units/period</strong>, gross profit grows by $604 with zero new overhead.</div>
         <div class="insight-action">
           <span class="impact-badge impact-high">HIGH IMPACT</span>
           <span class="impact-dollar">Double volume → +$342 gross profit</span>
@@ -584,14 +601,14 @@ tr:last-child td { border-bottom: none; }
       <div class="insight-icon" style="background:rgba(10,132,255,0.12);">🎯</div>
       <div class="insight-content">
         <div class="insight-title">BBQ Chicken &amp; Blue Sausage are high-margin but underordered</div>
-        <div class="insight-desc">Both items are in the <em>Hidden Gems quadrant</em>: excellent contribution margins ($21.92 and $19.66/unit) but low volumes (60 and 55 units). These aren't menu problems — they're <strong>visibility problems</strong>. Better placement or a daily special could unlock significant volume growth.</div>
+        <div class="insight-desc">Both items are in the <em>Hidden Gems quadrant</em>: excellent contribution margins ($21.92 and $19.66/unit) but lower volumes (126 and 99 units). These aren't menu problems — they're <strong>visibility problems</strong>. Better placement or a daily special could unlock significant volume growth.</div>
         <div class="insight-action">
           <span class="impact-badge impact-medium">MEDIUM IMPACT</span>
-          <span class="impact-dollar">+20 units each → +$438 gross profit</span>
+          <span class="impact-dollar">+30 units each → +$624 gross profit</span>
         </div>
       </div>
       <div class="insight-side">
-        <div class="big-impact">+$438</div>
+        <div class="big-impact">+$624</div>
         <div style="font-size:11px;color:var(--muted);">potential</div>
         <button class="btn-ghost" style="font-size:12px;padding:7px 14px;" onclick="navigate('engineering')">Menu Matrix</button>
       </div>
@@ -602,7 +619,7 @@ tr:last-child td { border-bottom: none; }
       <div class="insight-icon" style="background:rgba(191,90,242,0.12);">✂️</div>
       <div class="insight-content">
         <div class="insight-title">Caprese Side is running at a 37% food cost</div>
-        <div class="insight-desc">At $8 price with $2.98 portion cost (37.25% FC), your Caprese Side is your highest food-cost salads item. A tightened recipe spec reducing to $2.50 portion cost brings it to 31.25% FC and saves <strong>$0.48 × 40 units = $19</strong> in food cost this period.</div>
+        <div class="insight-desc">At $8 price with $2.98 portion cost (37.25% FC), your Caprese Side is your highest food-cost salads item. A tightened recipe spec reducing to $2.50 portion cost brings it to 31.25% FC and saves <strong>$0.48 × 66 units = $32</strong> in food cost this period.</div>
         <div class="insight-action">
           <span class="impact-badge impact-medium">MEDIUM IMPACT</span>
           <span class="impact-dollar">Tighten spec → save $19/period in food cost</span>
@@ -619,8 +636,8 @@ tr:last-child td { border-bottom: none; }
     <div class="insight-card" style="border-color:rgba(6,182,212,0.25);">
       <div class="insight-icon" style="background:rgba(6,182,212,0.12);color:#06B6D4;font-size:20px;">🍺</div>
       <div class="insight-content">
-        <div class="insight-title">Drink attach rate is 33.7% — industry benchmark is 40%+</div>
-        <div class="insight-desc">You're serving 644 beverages across 1,911 covers. Closing the gap to 40% means ~120 additional drinks per period. At an average $7.64 with 78% GM, that's <strong>+$486 gross profit</strong> with zero new overhead — just verbal suggestive selling at the table.</div>
+        <div class="insight-title">Drink attach rate is 26.5% — industry benchmark is 40%+</div>
+        <div class="insight-desc">You're serving 644 beverages across 5,100 covers. Closing the gap to 40% means ~120 additional drinks per period. At an average $7.64 with 78% GM, that's <strong>+$486 gross profit</strong> with zero new overhead — just verbal suggestive selling at the table.</div>
         <div class="insight-action">
           <span class="impact-badge" style="background:rgba(6,182,212,0.12);color:#06B6D4;">REVENUE OPPORTUNITY</span>
           <span class="impact-dollar" style="color:#06B6D4;">+$486 potential / period</span>
@@ -637,7 +654,7 @@ tr:last-child td { border-bottom: none; }
       <div class="insight-icon" style="background:rgba(245,166,35,0.1);color:#F5A623;font-size:20px;">⬆️</div>
       <div class="insight-content">
         <div class="insight-title">Soft Drink is a plowhorse — upsell to Sparkling Water</div>
-        <div class="insight-desc">Soft Drink moves 156 units at $4 ($3.55 GM). Sparkling Water is $5 with $4.10 GM — an extra <strong>$0.55 per switch</strong>. Train servers to offer "still or sparkling?" first. At even 30% conversion (47 units), that's +$19/period with no added cost.</div>
+        <div class="insight-desc">Soft Drink moves 328 units at $4 ($3.55 GM). Sparkling Water is $5 with $4.10 GM — an extra <strong>$0.55 per switch</strong>. Train servers to offer "still or sparkling?" first. At even 30% conversion (47 units), that's +$19/period with no added cost.</div>
         <div class="insight-action">
           <span class="impact-badge" style="background:rgba(245,166,35,0.1);color:#F5A623;">UPSELL</span>
           <span class="impact-dollar" style="color:#F5A623;">+$0.55 GM per switch</span>
@@ -688,10 +705,10 @@ tr:last-child td { border-bottom: none; }
   <div class="topbar">
     <div>
       <div style="font-size:15px;font-weight:700;letter-spacing:-0.02em;" data-i18n="dash_title">Kitchen Intelligence Dashboard</div>
-      <div id="dash-subtitle" style="font-size:12px;color:var(--muted);margin-top:1px;">Bottē Restaurant · Jan 25 – Mar 15, 2026</div>
+      <div id="dash-subtitle" style="font-size:12px;color:var(--muted);margin-top:1px;">Bottē Restaurant · Jan 1 – Apr 13, 2026</div>
     </div>
     <div style="display:flex;align-items:center;gap:10px;">
-      <div id="dash-period-badge" class="period-badge">📅 Jan 25 – Mar 15, 2026</div>
+      <div id="dash-period-badge" class="period-badge">📅 Jan 1 – Apr 13, 2026</div>
       <button class="btn-primary" onclick="alert('Live version: Lightspeed syncs every 15 min automatically.')">↻ Sync Now</button>
     </div>
   </div>
@@ -712,13 +729,13 @@ tr:last-child td { border-bottom: none; }
     <div>
       <div style="font-size:13px;font-weight:600;color:#4F8EF7;margin-bottom:6px;letter-spacing:0.02em;"><span data-i18n="dash_opportunity">YOUR OPPORTUNITY THIS PERIOD</span></div>
       <div style="font-size:15px;font-weight:500;color:#AEAEB2;line-height:1.5;">If you hit the 25% food cost target, you keep an extra</div>
-      <div class="value-number">$5,156</div>
-      <div style="font-size:13px;color:#48484A;margin-top:6px;">across 49 days · $104/day left on the table</div>
+      <div class="value-number">$12,040</div>
+      <div style="font-size:13px;color:#48484A;margin-top:6px;">across 103 days · $117/day left on the table</div>
     </div>
     <div style="text-align:right;">
       <div style="font-size:12px;color:#4F8EF7;margin-bottom:8px;font-weight:600;"><span data-i18n="dash_top_fixes">TOP FIXES TO CLOSE THE GAP</span></div>
       <div style="display:flex;flex-direction:column;gap:6px;text-align:left;">
-        <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:8px 12px;font-size:12.5px;color:#AEAEB2;">Fix GF Upgrade pricing → +$84 instantly</div>
+        <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:8px 12px;font-size:12.5px;color:#AEAEB2;">Fix GF Upgrade pricing → +$188 instantly</div>
         <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:8px 12px;font-size:12.5px;color:#AEAEB2;">Audit POS rings → recover $2,201 gap</div>
         <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:8px 12px;font-size:12.5px;color:#AEAEB2;">Review portion costs on Sandwiches</div>
       </div>
@@ -729,7 +746,7 @@ tr:last-child td { border-bottom: none; }
   <div id="alert-strip" class="alert-strip">
     <div class="alert-pill alert-critical">
       <div class="alert-dot dot-red"></div>
-      <div><div class="alert-title">Food Cost Critical: 39.1% vs 25% target</div><div class="alert-desc">$5,156 behind over this period — purchasing &amp; portioning review needed</div></div>
+      <div><div class="alert-title">Food Cost Critical: 39.1% vs 25% target</div><div class="alert-desc">$12,040 behind over this period — purchasing &amp; portioning review needed</div></div>
     </div>
     <div class="alert-pill alert-warning">
       <div class="alert-dot dot-amber"></div>
@@ -754,17 +771,17 @@ tr:last-child td { border-bottom: none; }
     </div>
     <div class="card kpi">
       <div id="kpi-bt-label" class="kpi-label" data-i18n="kpi_behind_target">Behind Target</div>
-      <div id="kpi-bt-val" class="kpi-value" style="color:#dc2626;">$5,156</div>
-      <div id="kpi-bt-sub-text" class="kpi-sub">Net food cost $11,832 · target was $9,032</div>
+      <div id="kpi-bt-val" class="kpi-value" style="color:#dc2626;">$12,040</div>
+      <div id="kpi-bt-sub-text" class="kpi-sub">Est. food cost $15,419 · target is $21,347</div>
       <div id="kpi-bt-sub" style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
-        <div class="chip chip-red" style="margin:0;margin-top:8px;">$104 / day</div>
+        <div class="chip chip-red" style="margin:0;margin-top:8px;">$117 / day</div>
         <div class="wow wow-bad" style="margin-top:0;">↑ +$412 vs last wk</div>
       </div>
     </div>
     <div class="card kpi">
       <div id="kpi-rev-label" class="kpi-label" data-i18n="kpi_period_revenue">Period Revenue</div>
-      <div id="kpi-rev-val" class="kpi-value">$36,570</div>
-      <div id="kpi-rev-sub-text" class="kpi-sub">1,895 units · ~38.7 covers/day</div>
+      <div id="kpi-rev-val" class="kpi-value">$85,388</div>
+      <div id="kpi-rev-sub-text" class="kpi-sub">5,100 units · ~36.4 covers/day</div>
       <div id="kpi-rev-sub" style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
         <div class="chip chip-green" style="margin:0;margin-top:8px;">70.0% gross margin</div>
         <div class="wow wow-good" style="margin-top:0;">↑ +$187 vs last wk</div>
@@ -772,7 +789,7 @@ tr:last-child td { border-bottom: none; }
     </div>
     <div class="card kpi">
       <div id="kpi-gp-label" class="kpi-label" data-i18n="kpi_gross_profit">Gross Profit</div>
-      <div id="kpi-gp-val" class="kpi-value">$21,150</div>
+      <div id="kpi-gp-val" class="kpi-value">$69,969</div>
       <div id="kpi-gp-sub-text" class="kpi-sub">Before labour &amp; overhead</div>
       <div id="kpi-gp-sub" style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
         <div class="chip chip-blue" style="margin:0;margin-top:8px;">23 active items</div>
@@ -790,8 +807,8 @@ tr:last-child td { border-bottom: none; }
     </div>
     <div class="card" style="padding:16px 20px;border-color:rgba(245,166,35,0.2);">
       <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:#F5A623;margin-bottom:6px;"><span data-i18n="kpi_attach_rate">Drink Attach Rate</span></div>
-      <div style="font-size:2rem;font-weight:800;letter-spacing:-0.03em;color:#F5A623;line-height:1;">33.7%</div>
-      <div style="font-size:11px;color:var(--muted);margin-top:5px;">644 drinks / 1,911 covers · benchmark 40%+</div>
+      <div style="font-size:2rem;font-weight:800;letter-spacing:-0.03em;color:#F5A623;line-height:1;">26.5%</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:5px;">644 drinks / 5,100 covers · benchmark 40%+</div>
     </div>
     <div class="card" style="padding:16px 20px;border-color:rgba(240,82,82,0.2);">
       <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:#F05252;margin-bottom:6px;"><span data-i18n="kpi_prime_cost">Prime Cost</span></div>
@@ -857,7 +874,7 @@ tr:last-child td { border-bottom: none; }
       <div style="display:flex;flex-direction:column;gap:8px;">
         <div style="padding:11px 14px;border-radius:9px;background:rgba(255,69,58,0.08);border:1px solid rgba(255,69,58,0.18);display:flex;align-items:flex-start;gap:10px;">
           <div style="min-width:36px;text-align:center;font-size:11px;font-weight:800;color:#FF6B61;background:rgba(255,69,58,0.15);padding:3px 6px;border-radius:5px;">$84</div>
-          <div><div style="font-size:13px;font-weight:600;color:#FF6B61;">Raise GF Upgrade to +$6 surcharge</div><div style="font-size:12px;color:var(--muted);margin-top:1px;">Currently losing $1.34 × 9 sales = $12 in the hole</div></div>
+          <div><div style="font-size:13px;font-weight:600;color:#FF6B61;">Raise GF Upgrade to +$6 surcharge</div><div style="font-size:12px;color:var(--muted);margin-top:1px;">Currently losing $1.34 × 94 sales = $126 in the hole</div></div>
         </div>
         <div style="padding:11px 14px;border-radius:9px;background:rgba(255,159,10,0.08);border:1px solid rgba(255,159,10,0.18);display:flex;align-items:flex-start;gap:10px;">
           <div style="min-width:36px;text-align:center;font-size:11px;font-weight:800;color:#FF9F0A;background:rgba(255,159,10,0.15);padding:3px 6px;border-radius:5px;">$2.2k</div>
@@ -869,7 +886,7 @@ tr:last-child td { border-bottom: none; }
         </div>
         <div style="padding:11px 14px;border-radius:9px;background:rgba(48,209,88,0.08);border:1px solid rgba(48,209,88,0.18);display:flex;align-items:flex-start;gap:10px;">
           <div style="min-width:36px;text-align:center;font-size:11px;font-weight:800;color:#30D158;background:rgba(48,209,88,0.15);padding:3px 6px;border-radius:5px;">89%</div>
-          <div><div style="font-size:13px;font-weight:600;color:#30D158;">Push Dough-to-Go at every checkout</div><div style="font-size:12px;color:var(--muted);margin-top:1px;">89% margin · 64 units this period · pure upside</div></div>
+          <div><div style="font-size:13px;font-weight:600;color:#30D158;">Push Dough-to-Go at every checkout</div><div style="font-size:12px;color:var(--muted);margin-top:1px;">89% margin · 113 units this period · pure upside</div></div>
         </div>
       </div>
     </div>
@@ -882,7 +899,7 @@ tr:last-child td { border-bottom: none; }
 <!-- ===== SECTION: FOOD COST ===== -->
 <div id="section-profitability" class="section" style="padding:28px 32px;">
   <div class="section-header">
-    <div><div class="section-title" data-i18n="fc_title">Food Cost by Item</div><div id="fc-subtitle" class="section-sub">Bottē Restaurant · Jan 25 – Mar 15, 2026</div></div>
+    <div><div class="section-title" data-i18n="fc_title">Food Cost by Item</div><div id="fc-subtitle" class="section-sub">Bottē Restaurant · Jan 1 – Apr 13, 2026</div></div>
     <button class="btn-ghost" onclick="window.print()">↓ Export</button>
   </div>
   <details class="guideline-banner">
@@ -937,9 +954,9 @@ tr:last-child td { border-bottom: none; }
   </div>
   <div class="card" style="padding:16px 20px;">
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center;">
-      <div><div style="font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;" data-i18n="fc_total_rev">Total Revenue</div><div style="font-size:22px;font-weight:800;margin-top:4px;letter-spacing:-0.02em;">$36,570</div></div>
+      <div><div style="font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;" data-i18n="fc_total_rev">Total Revenue</div><div style="font-size:22px;font-weight:800;margin-top:4px;letter-spacing:-0.02em;">$85,388</div></div>
       <div><div style="font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;" data-i18n="fc_net_cost">Net Food Cost</div><div style="font-size:22px;font-weight:800;margin-top:4px;color:#FF453A;letter-spacing:-0.02em;">$11,832</div></div>
-      <div><div style="font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;" data-i18n="fc_gross_margin">Gross Margin</div><div style="font-size:22px;font-weight:800;margin-top:4px;color:#30D158;letter-spacing:-0.02em;">$21,150</div></div>
+      <div><div style="font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;" data-i18n="fc_gross_margin">Gross Margin</div><div style="font-size:22px;font-weight:800;margin-top:4px;color:#30D158;letter-spacing:-0.02em;">$69,969</div></div>
       <div><div style="font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;" data-i18n="fc_blended">Blended FC%</div><div style="font-size:22px;font-weight:800;margin-top:4px;color:#FF453A;letter-spacing:-0.02em;">39.1%</div></div>
     </div>
   </div>
@@ -983,13 +1000,13 @@ tr:last-child td { border-bottom: none; }
 <!-- ===== SECTION: PREP & RECIPES ===== -->
 <div id="section-prep" class="section" style="padding:28px 32px;">
   <div class="section-header">
-    <div><div class="section-title" data-i18n="sec_prep_title">Prep &amp; Recipes</div><div class="section-sub" data-i18n="sec_prep_sub">Weekly quantities based on ~35 covers/day</div></div>
+    <div><div class="section-title" data-i18n="sec_prep_title">Prep &amp; Recipes</div><div class="section-sub" data-i18n="sec_prep_sub">Weekly quantities based on ~36 covers/day</div></div>
     <button class="btn-ghost" onclick="window.print()"><span data-i18n="btn_print_guide">🖨 Print Guide</span></button>
   </div>
   <details class="guideline-banner">
     <summary>📋 How to use Prep &amp; Recipes</summary>
     <ul>
-      <li>Quantities are calculated from your 7-day sales average (~35 covers/day). Adjust the covers input if your week looks busier or slower.</li>
+      <li>Quantities are calculated from your 7-day sales average (~36 covers/day). Adjust the covers input if your week looks busier or slower.</li>
       <li>Click any quantity to edit it inline — your change is saved locally and persists until you reset.</li>
       <li>Print this guide before each shift using the <strong>Print Guide</strong> button. It formats cleanly on letter paper.</li>
       <li>Use the <strong>Quick Add</strong> button to add a new prep task (e.g., a seasonal special or catering item).</li>
@@ -1203,7 +1220,7 @@ tr:last-child td { border-bottom: none; }
         <span style="font-size:13px;color:var(--muted);">Expected covers</span>
         <input type="number" id="yieldCovers" value="50" min="1" max="300" oninput="renderYieldCalc()" style="width:70px;background:rgba(255,255,255,0.09);border:1px solid rgba(79,142,247,0.35);border-radius:7px;padding:5px 10px;font-size:15px;font-weight:700;color:var(--text);font-family:Inter,sans-serif;outline:none;text-align:center;">
       </div>
-      <div id="yield-pos-label" style="font-size:12px;color:var(--muted);">Based on your actual Lightspeed sales mix (Jan 25 – Mar 15)</div>
+      <div id="yield-pos-label" style="font-size:12px;color:var(--muted);">Based on your actual Lightspeed sales mix (Jan 1 – Apr 13)</div>
     </div>
     <div id="yield-calc-result" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:8px;"></div>
   </div>
@@ -1241,6 +1258,174 @@ tr:last-child td { border-bottom: none; }
     <div>
       <div style="font-size:13px;font-weight:600;color:#F5A623;margin-bottom:3px;">How to use this daily</div>
       <div style="font-size:12.5px;color:var(--muted);line-height:1.6;">When you open a new bag, note the yield number above. At end of service, compare to your POS rings. If a bag of pepperoni (61 pizzas) ran out after 40 rings — 21 portions are unaccounted for. That's $1.09 × 21 = <strong style="color:#F5A623;">$23 lost today</strong>. Catch it daily, not monthly.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION: RECIPE COSTING ===== -->
+<div id="section-recipes" class="section" style="padding:28px 32px;">
+  <div class="topbar">
+    <div>
+      <div style="font-size:15px;font-weight:700;letter-spacing:-0.02em;">Recipe Costing</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:1px;">Invoice prices → ingredient costs → dish margins · auto-updated when invoices arrive</div>
+    </div>
+  </div>
+
+  <!-- Info banner: invoice → costing flow -->
+  <div style="background:rgba(79,142,247,0.07);border:1px solid rgba(79,142,247,0.2);border-radius:12px;padding:14px 18px;margin-bottom:20px;display:flex;gap:12px;align-items:flex-start;">
+    <div style="font-size:18px;flex-shrink:0;">💡</div>
+    <div style="font-size:12.5px;color:var(--muted);line-height:1.6;">When an invoice arrives, Culinara updates ingredient prices automatically. Every recipe using that ingredient recalculates its cost, food cost %, and gross margin — in real time. No more spreadsheets.</div>
+  </div>
+
+  <!-- Tabs -->
+  <div style="display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:20px;">
+    <button class="recipe-tab-btn active" id="rtab-library"   onclick="switchRecipeTab('library')">📚 Ingredient Library</button>
+    <button class="recipe-tab-btn"        id="rtab-cards"     onclick="switchRecipeTab('cards')">🍕 Recipe Cards</button>
+    <button class="recipe-tab-btn"        id="rtab-preng"     onclick="switchRecipeTab('preng')">🧮 Pre-Engineer</button>
+    <button class="recipe-tab-btn"        id="rtab-import"    onclick="switchRecipeTab('import')">📤 Import Template</button>
+  </div>
+
+  <!-- Tab 1: Ingredient Library -->
+  <div id="rpanel-library">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+      <div style="font-size:13px;color:var(--muted);">All ingredients with invoice-verified prices. Updating a price here recalculates every recipe.</div>
+      <button onclick="openAddIngredient()" style="background:#4F8EF7;border:none;color:#fff;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">+ Add Ingredient</button>
+    </div>
+    <div id="ing-add-form" style="display:none;background:rgba(79,142,247,0.06);border:1px solid rgba(79,142,247,0.2);border-radius:10px;padding:16px;margin-bottom:16px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr 80px 90px 1fr 1fr;gap:10px;align-items:end;">
+        <div><label style="font-size:11px;color:var(--muted);font-weight:600;">NAME</label><input id="new-ing-name" placeholder="e.g. Arugula" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:7px;padding:7px 10px;color:var(--text);font-size:13px;margin-top:4px;"></div>
+        <div><label style="font-size:11px;color:var(--muted);font-weight:600;">CATEGORY</label><select id="new-ing-cat" style="width:100%;background:#1F2433;border:1px solid var(--border);border-radius:7px;padding:7px 10px;color:var(--text);font-size:13px;margin-top:4px;"><option>Dry Goods</option><option>Dairy</option><option>Proteins</option><option>Produce</option><option>Canned</option><option>Oils</option><option>Specialty</option><option>Beverages</option></select></div>
+        <div><label style="font-size:11px;color:var(--muted);font-weight:600;">PRICE ($)</label><input id="new-ing-price" type="number" step="0.01" placeholder="0.00" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:7px;padding:7px 10px;color:var(--text);font-size:13px;margin-top:4px;"></div>
+        <div><label style="font-size:11px;color:var(--muted);font-weight:600;">UNIT</label><select id="new-ing-unit" style="width:100%;background:#1F2433;border:1px solid var(--border);border-radius:7px;padding:7px 10px;color:var(--text);font-size:13px;margin-top:4px;"><option>kg</option><option>litre</option><option>each</option><option>can</option><option>glass</option></select></div>
+        <div><label style="font-size:11px;color:var(--muted);font-weight:600;">YIELD %</label><input id="new-ing-yield" type="number" step="0.01" min="0.1" max="1" placeholder="1.00" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:7px;padding:7px 10px;color:var(--text);font-size:13px;margin-top:4px;"></div>
+        <div><label style="font-size:11px;color:var(--muted);font-weight:600;">SUPPLIER</label><input id="new-ing-supplier" placeholder="e.g. GFS" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:7px;padding:7px 10px;color:var(--text);font-size:13px;margin-top:4px;"></div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:12px;justify-content:flex-end;">
+        <button onclick="document.getElementById('ing-add-form').style.display='none'" style="background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--text);padding:7px 16px;border-radius:7px;font-size:12px;cursor:pointer;">Cancel</button>
+        <button onclick="saveNewIngredient()" style="background:#34C97A;border:none;color:#fff;padding:7px 16px;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;">Save Ingredient</button>
+      </div>
+    </div>
+    <div id="ing-library-table"></div>
+  </div>
+
+  <!-- Tab 2: Recipe Cards -->
+  <div id="rpanel-cards" style="display:none;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+      <div style="font-size:13px;color:var(--muted);">Each card shows live cost, FC%, and margin — updates when ingredient prices change.</div>
+      <button onclick="openRecipeBuilder(null)" style="background:#4F8EF7;border:none;color:#fff;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">+ New Recipe</button>
+    </div>
+    <div id="recipe-card-grid" class="recipe-card-grid"></div>
+  </div>
+
+  <!-- Tab 3: Pre-Engineer -->
+  <div id="rpanel-preng" style="display:none;">
+    <div style="max-width:540px;">
+      <div style="font-size:13px;color:var(--muted);margin-bottom:20px;">Work backwards from your target food cost % to find your maximum allowable ingredient spend — or check if a sell price makes sense.</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+        <div>
+          <label style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:0.05em;">SELL PRICE ($)</label>
+          <input id="pe-sell" type="number" step="0.50" value="22.00" oninput="calcPreEngineer()" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(79,142,247,0.35);border-radius:8px;padding:9px 12px;color:var(--text);font-size:16px;font-weight:700;margin-top:6px;">
+        </div>
+        <div>
+          <label style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:0.05em;">TARGET FOOD COST %</label>
+          <div style="display:flex;align-items:center;gap:10px;margin-top:6px;">
+            <input id="pe-fc" type="range" min="10" max="50" value="28" oninput="calcPreEngineer()" style="flex:1;accent-color:#4F8EF7;">
+            <span id="pe-fc-label" style="font-size:14px;font-weight:700;color:#4F8EF7;min-width:36px;">28%</span>
+          </div>
+        </div>
+      </div>
+      <div class="pre-eng-output">
+        <div style="font-size:11px;color:#34C97A;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:12px;">📐 Pre-Engineering Results</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;">
+          <div><div style="font-size:11px;color:var(--muted);margin-bottom:4px;">Max Ingredient Cost</div><div id="pe-max-cost" style="font-size:22px;font-weight:800;color:#34C97A;">$6.16</div></div>
+          <div><div style="font-size:11px;color:var(--muted);margin-bottom:4px;">Min Gross Margin</div><div id="pe-gm" style="font-size:22px;font-weight:800;color:var(--text);">$15.84</div></div>
+          <div><div style="font-size:11px;color:var(--muted);margin-bottom:4px;">GM %</div><div id="pe-gm-pct" style="font-size:22px;font-weight:800;color:var(--text);">72%</div></div>
+        </div>
+        <div id="pe-benchmark" style="margin-top:14px;font-size:12px;color:var(--muted);padding-top:12px;border-top:1px solid rgba(255,255,255,0.07);"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab 4: Import Template -->
+  <div id="rpanel-import" style="display:none;">
+    <div style="display:flex;flex-direction:column;gap:16px;max-width:640px;">
+
+      <!-- Step 1 -->
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:20px 22px;">
+        <div style="font-size:12px;font-weight:700;color:#4F8EF7;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px;">📥 Step 1 — Download Template</div>
+        <div style="font-size:13px;color:var(--muted);margin-bottom:14px;">Fill in your recipes — each row = one ingredient. Add as many rows per recipe as needed.</div>
+        <button onclick="downloadRecipeTemplate()" style="background:#4F8EF7;border:none;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;">⬇ Download Portion Sheet Template (.csv)</button>
+      </div>
+
+      <!-- Step 2 -->
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:20px 22px;">
+        <div style="font-size:12px;font-weight:700;color:#4F8EF7;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px;">📤 Step 2 — Upload Completed Template</div>
+        <div class="import-zone" id="recipe-drop-zone" onclick="document.getElementById('recipe-csv-input').click()" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleRecipeDrop(event)">
+          <div style="font-size:28px;margin-bottom:8px;">📄</div>
+          <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px;">Drag & drop your CSV here</div>
+          <div style="font-size:12px;color:var(--muted);">or click to browse</div>
+          <input type="file" id="recipe-csv-input" accept=".csv" style="display:none" onchange="handleRecipeFile(this)">
+        </div>
+        <div id="recipe-import-preview" style="margin-top:14px;"></div>
+      </div>
+
+      <!-- Step 3 -->
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:20px 22px;">
+        <div style="font-size:12px;font-weight:700;color:#4F8EF7;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px;">📧 Step 3 (optional) — Email Submission</div>
+        <div style="font-size:13px;color:var(--muted);margin-bottom:14px;">Don't have time? Email your portion sheets — photos, PDFs, or hand-written cards. We'll digitize within 24hrs and they'll appear here automatically.</div>
+        <div style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:10px;padding:12px 16px;">
+          <span style="font-size:14px;font-weight:700;color:var(--text);flex:1;">recipes@botte.culinara.app</span>
+          <button onclick="copyRecipeEmail()" style="background:rgba(79,142,247,0.12);border:1px solid rgba(79,142,247,0.25);color:#4F8EF7;padding:6px 14px;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;">📋 Copy</button>
+        </div>
+        <div style="font-size:12px;color:var(--muted);margin-top:10px;">Attach photos, PDFs, or hand-written cards. We'll digitize within 24hrs → appears here automatically.</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===== RECIPE BUILDER MODAL ===== -->
+<div id="recipe-builder-modal" class="modal-overlay" style="display:none" onclick="if(event.target===this)closeRecipeBuilder()">
+  <div class="modal-box" style="max-width:700px;">
+    <div class="modal-header">
+      <div>
+        <div style="font-size:11px;font-weight:700;color:#4F8EF7;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">Recipe Builder</div>
+        <div id="builder-modal-title" style="font-size:17px;font-weight:700;">New Recipe</div>
+      </div>
+      <button onclick="closeRecipeBuilder()" style="background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--text);width:30px;height:30px;border-radius:8px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;">×</button>
+    </div>
+    <div class="modal-body">
+      <!-- Header fields -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 100px 100px;gap:12px;margin-bottom:20px;">
+        <div><label style="font-size:11px;color:var(--muted);font-weight:700;">ITEM NAME</label><input id="b-name" placeholder="e.g. Margherita" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:7px;padding:8px 10px;color:var(--text);font-size:13px;margin-top:5px;"></div>
+        <div><label style="font-size:11px;color:var(--muted);font-weight:700;">CATEGORY</label><select id="b-cat" style="width:100%;background:#1F2433;border:1px solid var(--border);border-radius:7px;padding:8px 10px;color:var(--text);font-size:13px;margin-top:5px;"><option>Pizza Rossa</option><option>Pizza Bianca</option><option>Very Veggie</option><option>Salads</option><option>Sandwiches</option><option>Beverages</option><option>Other</option></select></div>
+        <div><label style="font-size:11px;color:var(--muted);font-weight:700;">SELL ($)</label><input id="b-price" type="number" step="0.50" placeholder="18.00" oninput="updateBuilderSummary()" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:7px;padding:8px 10px;color:var(--text);font-size:13px;margin-top:5px;"></div>
+        <div><label style="font-size:11px;color:var(--muted);font-weight:700;">TARGET FC%</label><input id="b-target-fc" type="number" step="1" min="10" max="60" placeholder="28" oninput="updateBuilderSummary()" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:7px;padding:8px 10px;color:var(--text);font-size:13px;margin-top:5px;"></div>
+      </div>
+      <!-- Ingredient rows -->
+      <div style="font-size:11px;color:var(--muted);font-weight:700;letter-spacing:0.05em;margin-bottom:8px;">INGREDIENTS</div>
+      <div style="display:grid;grid-template-columns:1fr 80px 70px 70px 28px;gap:8px;margin-bottom:6px;padding:0 2px;">
+        <div style="font-size:10px;color:var(--muted);font-weight:700;">INGREDIENT</div>
+        <div style="font-size:10px;color:var(--muted);font-weight:700;">QTY</div>
+        <div style="font-size:10px;color:var(--muted);font-weight:700;">UNIT</div>
+        <div style="font-size:10px;color:var(--muted);font-weight:700;">COST</div>
+        <div></div>
+      </div>
+      <div id="builder-ing-rows"></div>
+      <button onclick="addBuilderRow()" style="background:none;border:1px dashed rgba(79,142,247,0.4);color:#4F8EF7;padding:7px 14px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;margin-top:8px;width:100%;">+ Add Ingredient</button>
+    </div>
+    <!-- Sticky summary -->
+    <div class="builder-summary">
+      <div style="flex:1;display:flex;gap:24px;">
+        <div><div style="font-size:10px;color:var(--muted);font-weight:700;">TOTAL COST</div><div id="b-total-cost" style="font-size:17px;font-weight:800;color:var(--text);">$0.00</div></div>
+        <div><div style="font-size:10px;color:var(--muted);font-weight:700;">FOOD COST %</div><div id="b-fc-pct" style="font-size:17px;font-weight:800;color:var(--text);">—</div></div>
+        <div><div style="font-size:10px;color:var(--muted);font-weight:700;">GM / PLATE</div><div id="b-gm" style="font-size:17px;font-weight:800;color:var(--text);">—</div></div>
+        <div id="b-status-badge"></div>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <button onclick="closeRecipeBuilder()" style="background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--text);padding:9px 18px;border-radius:8px;font-size:13px;cursor:pointer;">Cancel</button>
+        <button onclick="saveRecipeCard()" style="background:#4F8EF7;border:none;color:#fff;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;">Save Recipe</button>
+      </div>
     </div>
   </div>
 </div>
@@ -1586,7 +1771,7 @@ tr:last-child td { border-bottom: none; }
       <div id="invoice-period-card" class="card" style="padding:18px;">
         <div class="card-title" style="margin-bottom:12px;"><span data-i18n="inv_this_period">This period</span></div>
         <div style="display:flex;flex-direction:column;gap:9px;font-size:13px;">
-          <div style="display:flex;justify-content:space-between;"><span style="color:var(--muted);">Total invoices</span><span style="font-weight:700;">27</span></div>
+          <div style="display:flex;justify-content:space-between;"><span style="color:var(--muted);">Total invoices</span><span style="font-weight:700;">27+</span></div>
           <div style="display:flex;justify-content:space-between;"><span style="color:var(--muted);">Suppliers</span><span style="font-weight:700;">8</span></div>
           <div style="display:flex;justify-content:space-between;"><span style="color:var(--muted);">Gross food spend</span><span style="font-weight:700;">$12,169</span></div>
           <div style="display:flex;justify-content:space-between;"><span style="color:var(--muted);">Credits applied</span><span style="font-weight:700;color:#30D158;">-$337</span></div>
@@ -1631,7 +1816,7 @@ tr:last-child td { border-bottom: none; }
         <div>
           <div style="font-size:11px;font-weight:700;color:#A78BFA;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;">✦ Today's Push Recommendation</div>
           <div style="font-size:18px;font-weight:700;font-family:var(--font-display);margin-bottom:4px;">Post the BBQ Chicken pizza tonight</div>
-          <div style="font-size:13px;color:var(--muted);line-height:1.5;">Only 66 sales this period vs 143 for Smokin' Hot. Identical price point ($24.4) — you're leaving revenue on the table. A single story push typically adds 8–12 covers.</div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.5;">Only 126 sales this period vs 268 for Smokin' Hot. Identical price point ($24.4) — you're leaving revenue on the table. A single story push typically adds 8–12 covers.</div>
           <button onclick="switchSocialTab('drafts')" style="margin-top:10px;background:rgba(167,139,250,0.15);border:1px solid rgba(167,139,250,0.3);color:#A78BFA;padding:6px 14px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">✍ Write the post →</button>
         </div>
         <div style="text-align:right;flex-shrink:0;">
@@ -1652,7 +1837,7 @@ tr:last-child td { border-bottom: none; }
       <!-- Best timing -->
       <div class="card" style="padding:20px 22px;">
         <div class="card-title" style="margin-bottom:4px;"><span data-i18n="social_best_times">🕐 Best Times to Post</span></div>
-        <div class="card-sub" style="margin-bottom:14px;">Based on your 38.7 covers/day pattern and Quebec dining habits</div>
+        <div class="card-sub" style="margin-bottom:14px;">Based on your 36.4 covers/day pattern and Quebec dining habits</div>
         <div style="display:flex;flex-direction:column;gap:9px;">
           <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:rgba(52,201,122,0.07);border:1px solid rgba(52,201,122,0.18);border-radius:10px;">
             <div style="font-size:20px;">📱</div>
@@ -1866,7 +2051,7 @@ tr:last-child td { border-bottom: none; }
           <div style="font-size:12px;color:var(--muted);margin-bottom:18px;">Found 1 location in your Lightspeed account</div>
           <div onclick="selectLsLocation()" style="border:2px solid rgba(79,142,247,0.5);background:rgba(79,142,247,0.07);border-radius:11px;padding:14px 16px;cursor:pointer;margin-bottom:18px;">
             <div style="font-size:14px;font-weight:700;">Bottē Restaurant</div>
-            <div style="font-size:12px;color:var(--muted);margin-top:3px;">Hudson, QC · Location ID: bk_8f3a921c</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:3px;">St-Lazare, QC · Location ID: bk_8f3a921c</div>
             <div style="font-size:11px;color:#4F8EF7;margin-top:6px;">✓ Selected</div>
           </div>
           <button onclick="selectLsLocation()" style="width:100%;background:#4F8EF7;border:none;color:#fff;border-radius:9px;padding:11px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;">Connect this location →</button>
@@ -1878,7 +2063,7 @@ tr:last-child td { border-bottom: none; }
           <div style="font-size:12px;color:var(--muted);margin-bottom:18px;">Pulling your first batch of data…</div>
           <div style="background:rgba(52,201,122,0.08);border:1px solid rgba(52,201,122,0.2);border-radius:10px;padding:12px 16px;text-align:left;margin-bottom:18px;">
             <div style="font-size:11.5px;color:#34C97A;font-weight:700;margin-bottom:8px;">FIRST PULL COMPLETE</div>
-            <div style="font-size:12px;color:var(--muted);line-height:1.7;">• 1,911 sale lines imported<br>• 23 menu items matched<br>• Jan 25 – Mar 15, 2026 range detected<br>• Food cost calculated: <strong style="color:var(--text);">39.1%</strong></div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.7;">• 5,100 sale lines imported<br>• 23 menu items matched<br>• Jan 1 – Apr 13, 2026 range detected<br>• Food cost calculated: <strong style="color:var(--text);">39.1%</strong></div>
           </div>
           <button onclick="closeLsModal()" style="width:100%;background:#34C97A;border:none;color:#fff;border-radius:9px;padding:11px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;">Go to Dashboard →</button>
         </div>
@@ -1956,7 +2141,7 @@ tr:last-child td { border-bottom: none; }
     </div>
     <div class="card" style="padding:14px 18px;text-align:center;border-color:rgba(6,182,212,0.2);">
       <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:#06B6D4;margin-bottom:6px;">Bev Attach</div>
-      <div style="font-size:1.7rem;font-weight:800;letter-spacing:-0.03em;color:#F5A623;">33.7%</div>
+      <div style="font-size:1.7rem;font-weight:800;letter-spacing:-0.03em;color:#F5A623;">26.5%</div>
       <div style="font-size:11px;color:var(--muted);margin-top:4px;">target 40%+</div>
     </div>
   </div>
@@ -2120,7 +2305,7 @@ tr:last-child td { border-bottom: none; }
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
       <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px;">
         <div style="font-size:11px;color:#8B92A5;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;">Revenue</div>
-        <div style="font-size:1.8rem;font-weight:800;letter-spacing:-0.03em;">$36,570</div>
+        <div style="font-size:1.8rem;font-weight:800;letter-spacing:-0.03em;">$85,388</div>
         <div style="font-size:12px;color:var(--muted);margin-top:3px;">70.0% gross margin</div>
       </div>
       <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px;">
@@ -2130,12 +2315,12 @@ tr:last-child td { border-bottom: none; }
       </div>
       <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px;">
         <div style="font-size:11px;color:#8B92A5;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;">Gross Profit</div>
-        <div style="font-size:1.8rem;font-weight:800;letter-spacing:-0.03em;color:#34C97A;">$21,150</div>
+        <div style="font-size:1.8rem;font-weight:800;letter-spacing:-0.03em;color:#34C97A;">$69,969</div>
         <div style="font-size:12px;color:var(--muted);margin-top:3px;">Before labour & overhead</div>
       </div>
       <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px;">
         <div style="font-size:11px;color:#8B92A5;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;">Behind Target</div>
-        <div style="font-size:1.8rem;font-weight:800;letter-spacing:-0.03em;color:#F5A623;">$5,156</div>
+        <div style="font-size:1.8rem;font-weight:800;letter-spacing:-0.03em;color:#F5A623;">$12,040</div>
         <div style="font-size:12px;color:var(--muted);margin-top:3px;">vs 25% target</div>
       </div>
     </div>
@@ -2209,9 +2394,9 @@ tr:last-child td { border-bottom: none; }
   <div class="section-header">
     <div>
       <div class="section-title" data-i18n="sec_efficiency_title">Efficiency Score</div>
-      <div id="efficiency-sub" class="section-sub">How well Bottē is performing across prep, pricing, and sourcing · Jan 25 – Mar 15, 2026</div>
+      <div id="efficiency-sub" class="section-sub">How well Bottē is performing across prep, pricing, and sourcing · Jan 1 – Apr 13, 2026</div>
     </div>
-    <div id="efficiency-badge" class="ai-badge">✦ AI-scored · 49 days</div>
+    <div id="efficiency-badge" class="ai-badge">✦ AI-scored · 103 days</div>
   </div>
 
   <!-- Arthur's efficiency placeholder -->
@@ -2599,45 +2784,176 @@ let SB_USER = null;
 let SB_PROFILE = null;
 let SB_RESTAURANT = null;
 let ACTIVE_SLUG = 'botte'; // default
+let SB_MENU_LOADED = false; // track if we've loaded from Supabase
 
-// ==================== DATA ====================
+// ==================== SUPABASE DATA LOADER ====================
+async function loadMenuFromSupabase(restaurantId) {
+  try {
+    const { data, error } = await sb
+      .from('menu_items')
+      .select('*')
+      .eq('restaurant_id', restaurantId)
+      .eq('is_display_item', true);
+    if (error) throw error;
+    if (!data || data.length === 0) return null;
+
+    // Transform Supabase rows → app format
+    const items = data.map(row => {
+      const price = parseFloat(row.price) || 0;
+      const cost = parseFloat(row.portion_cost) || 0;
+      const units = row.units_sold || 0;
+      const rev = units * price;
+      const foodCost = Math.round(units * cost);
+      const gm = rev - foodCost;
+      return {
+        cat: row.display_category || row.category,
+        name: row.display_name || row.name,
+        units, price, cost,
+        fc: cost > 0 && price > 0 ? cost / price : 0,
+        rev, foodCost, gm,
+        gmUnit: price - cost,
+        gmPct: price > 0 ? (price - cost) / price : 0,
+        eng: row.eng_category || 'dog'
+      };
+    });
+
+    // Combine Le Végétarien Rossa + Bianca into one item
+    const vegR = items.find(i => i.name === 'Le Végétarien (Rossa)');
+    const vegB = items.find(i => i.name === 'Le Végétarien (Bianca)');
+    if (vegR && vegB) {
+      vegR.name = 'Le Végétarien';
+      vegR.units += vegB.units;
+      vegR.rev += vegB.rev;
+      vegR.foodCost += vegB.foodCost;
+      vegR.gm += vegB.gm;
+      const idx = items.indexOf(vegB);
+      if (idx > -1) items.splice(idx, 1);
+    }
+
+    console.log('[Supabase] Loaded ' + items.length + ' menu items for ' + restaurantId);
+    SB_MENU_LOADED = true;
+    return items;
+  } catch (err) {
+    console.warn('[Supabase] Failed to load menu items, using fallback:', err.message);
+    return null;
+  }
+}
+
+function computeKPIs(items) {
+  const food = items.filter(i => i.cat !== 'Beverages');
+  const bev = items.filter(i => i.cat === 'Beverages');
+  const totalRev = items.reduce((s, i) => s + i.rev, 0);
+  const totalFC = items.reduce((s, i) => s + i.foodCost, 0);
+  const totalUnits = items.reduce((s, i) => s + i.units, 0);
+  const foodRev = food.reduce((s, i) => s + i.rev, 0);
+  const foodFC = food.reduce((s, i) => s + i.foodCost, 0);
+  const fcPct = totalRev > 0 ? (totalFC / totalRev * 100).toFixed(1) : '0.0';
+  const gmTotal = totalRev - totalFC;
+  const target25 = Math.round(totalRev * 0.25);
+  const behind = totalFC - target25;
+  return { totalRev, totalFC, totalUnits, foodRev, foodFC, fcPct, gmTotal, target25, behind };
+}
+
+// ==================== DATA (FALLBACK) ====================
 const BASE_MENU_ITEMS = [
-  // Updated from Lightspeed CSV Jan 25–Mar 15 2026 (FH + OA combined)
-  { cat:"Pizza Rossa", name:"Pepperoni",         units:192, price:23, cost:3.42, fc:0.1488, rev:4416, foodCost:657,  gm:3759,  gmUnit:19.58, gmPct:0.8512, eng:"star" },
-  { cat:"Pizza Rossa", name:"Margarita",          units:190, price:20, cost:2.96, fc:0.1479, rev:3800, foodCost:562,  gm:3238,  gmUnit:17.04, gmPct:0.8521, eng:"star" },
-  { cat:"Pizza Rossa", name:"Heart-Tay-tack",     units:151, price:28, cost:5.28, fc:0.1886, rev:4228, foodCost:797,  gm:3431,  gmUnit:22.72, gmPct:0.8114, eng:"star" },
-  { cat:"Pizza Rossa", name:"Smokin' Hot",        units:143, price:26, cost:3.86, fc:0.1484, rev:3718, foodCost:552,  gm:3166,  gmUnit:22.14, gmPct:0.8516, eng:"star" },
-  { cat:"Pizza Rossa", name:"Brooklyn Pineapple", units:120, price:23, cost:3.42, fc:0.1486, rev:2760, foodCost:410,  gm:2350,  gmUnit:19.58, gmPct:0.8514, eng:"star" },
-  { cat:"Pizza Rossa", name:"BBQ Chicken",        units:66,  price:26, cost:4.08, fc:0.1568, rev:1716, foodCost:269,  gm:1447,  gmUnit:21.92, gmPct:0.8432, eng:"puzzle" },
-  { cat:"Pizza Rossa", name:"Pure Marinara",      units:25,  price:15, cost:1.15, fc:0.0773, rev:375,  foodCost:29,   gm:346,   gmUnit:13.85, gmPct:0.9227, eng:"dog" },
-  { cat:"Pizza Bianca", name:"Funghi",            units:104, price:23, cost:3.71, fc:0.1614, rev:2392, foodCost:386,  gm:2006,  gmUnit:19.29, gmPct:0.8386, eng:"star" },
-  { cat:"Pizza Bianca", name:"Prosciutto",        units:101, price:25, cost:3.61, fc:0.1446, rev:2525, foodCost:365,  gm:2160,  gmUnit:21.39, gmPct:0.8554, eng:"star" },
-  { cat:"Pizza Bianca", name:"Blue Sausage",      units:59,  price:25, cost:5.34, fc:0.2136, rev:1475, foodCost:315,  gm:1160,  gmUnit:19.66, gmPct:0.7864, eng:"puzzle" },
-  { cat:"Very Veggie", name:"Le Végétarien",      units:131, price:22, cost:3.84, fc:0.1745, rev:2882, foodCost:503,  gm:2379,  gmUnit:18.16, gmPct:0.8255, eng:"star" },
-  { cat:"Very Veggie", name:"Mama G",             units:104, price:19, cost:2.40, fc:0.1265, rev:1976, foodCost:250,  gm:1726,  gmUnit:16.60, gmPct:0.8734, eng:"star" },
-  { cat:"Salads", name:"Kale Caesar — Meal",      units:79,  price:18, cost:3.95, fc:0.2194, rev:1422, foodCost:312,  gm:1110,  gmUnit:14.05, gmPct:0.7806, eng:"plowhorse" },
-  { cat:"Salads", name:"Kale Caesar — Side",      units:62,  price:8,  cost:1.36, fc:0.1694, rev:496,  foodCost:84,   gm:412,   gmUnit:6.64,  gmPct:0.8306, eng:"plowhorse" },
-  { cat:"Salads", name:"Greek — Meal",            units:39,  price:18, cost:3.80, fc:0.2109, rev:702,  foodCost:148,  gm:554,   gmUnit:14.20, gmPct:0.7891, eng:"dog" },
-  { cat:"Salads", name:"Greek — Side",            units:45,  price:8,  cost:1.59, fc:0.2000, rev:360,  foodCost:72,   gm:288,   gmUnit:6.41,  gmPct:0.8000, eng:"dog" },
-  { cat:"Salads", name:"Caprese — Meal",          units:28,  price:17, cost:4.20, fc:0.2479, rev:476,  foodCost:118,  gm:358,   gmUnit:12.80, gmPct:0.7521, eng:"dog" },
-  { cat:"Salads", name:"Caprese — Side",          units:44,  price:8,  cost:2.98, fc:0.3722, rev:352,  foodCost:131,  gm:221,   gmUnit:5.02,  gmPct:0.6278, eng:"dog" },
-  { cat:"Sandwiches", name:"Chicken Club",        units:88,  price:16, cost:4.72, fc:0.2948, rev:1408, foodCost:415,  gm:993,   gmUnit:11.28, gmPct:0.7052, eng:"plowhorse" },
-  { cat:"Sandwiches", name:"Italian Sandwich",    units:28,  price:16, cost:4.28, fc:0.2679, rev:448,  foodCost:120,  gm:328,   gmUnit:11.72, gmPct:0.7321, eng:"dog" },
-  { cat:"Sandwiches", name:"Caprese Sandwich",    units:20,  price:14, cost:3.68, fc:0.2629, rev:280,  foodCost:74,   gm:206,   gmUnit:10.32, gmPct:0.7357, eng:"dog" },
-  { cat:"Other", name:"Dough-to-Go",              units:67,  price:6,  cost:0.65, fc:0.1083, rev:402,  foodCost:44,   gm:358,   gmUnit:5.35,  gmPct:0.8905, eng:"puzzle" },
-  { cat:"Other", name:"GF Upgrade",               units:9,   price:4,  cost:5.34, fc:1.3333, rev:36,   foodCost:48,   gm:-12,   gmUnit:-1.34, gmPct:-0.3333, eng:"dog" },
-  // BEVERAGES
-  { cat:"Beverages", name:"Draft Beer — Local",     units:142, price:8,  cost:1.80, fc:0.2250, rev:1136, foodCost:256, gm:880,  gmUnit:6.20, gmPct:0.7750, eng:"star" },
-  { cat:"Beverages", name:"Bottle Beer — Import",   units:87,  price:7,  cost:1.50, fc:0.2143, rev:609,  foodCost:131, gm:478,  gmUnit:5.50, gmPct:0.7857, eng:"star" },
-  { cat:"Beverages", name:"House Red — Glass",      units:112, price:11, cost:2.40, fc:0.2182, rev:1232, foodCost:269, gm:963,  gmUnit:8.60, gmPct:0.7818, eng:"star" },
-  { cat:"Beverages", name:"House White — Glass",    units:89,  price:11, cost:2.40, fc:0.2182, rev:979,  foodCost:214, gm:765,  gmUnit:8.60, gmPct:0.7818, eng:"star" },
-  { cat:"Beverages", name:"Soft Drink",             units:156, price:4,  cost:0.45, fc:0.1125, rev:624,  foodCost:70,  gm:554,  gmUnit:3.55, gmPct:0.8875, eng:"plowhorse" },
-  { cat:"Beverages", name:"Sparkling Water (500ml)",units:58,  price:5,  cost:0.90, fc:0.1800, rev:290,  foodCost:52,  gm:238,  gmUnit:4.10, gmPct:0.8200, eng:"puzzle" },
+  // Updated from Lightspeed CSV Jan 1 – Apr 13, 2026 (FH transactions, 103 days)
+  { cat:"Pizza Rossa", name:"Pepperoni",         units:420, price:23, cost:3.42, fc:0.1487, rev:9660,  foodCost:1436, gm:8224,  gmUnit:19.58, gmPct:0.8513, eng:"star" },
+  { cat:"Pizza Rossa", name:"Margarita",          units:402, price:20, cost:2.96, fc:0.1480, rev:8040,  foodCost:1190, gm:6850,  gmUnit:17.04, gmPct:0.8520, eng:"star" },
+  { cat:"Pizza Rossa", name:"Heart-Tay-tack",     units:286, price:28, cost:5.28, fc:0.1886, rev:8008,  foodCost:1510, gm:6498,  gmUnit:22.72, gmPct:0.8114, eng:"star" },
+  { cat:"Pizza Rossa", name:"Smokin' Hot",        units:268, price:26, cost:3.86, fc:0.1485, rev:6968,  foodCost:1035, gm:5933,  gmUnit:22.14, gmPct:0.8515, eng:"star" },
+  { cat:"Pizza Rossa", name:"Brooklyn Pineapple", units:200, price:23, cost:3.42, fc:0.1487, rev:4600,  foodCost:684,  gm:3916,  gmUnit:19.58, gmPct:0.8513, eng:"star" },
+  { cat:"Pizza Rossa", name:"BBQ Chicken",        units:126, price:26, cost:4.08, fc:0.1569, rev:3276,  foodCost:514,  gm:2762,  gmUnit:21.92, gmPct:0.8431, eng:"puzzle" },
+  { cat:"Pizza Rossa", name:"Pure Marinara",      units:38,  price:15, cost:1.15, fc:0.0767, rev:570,   foodCost:44,   gm:526,   gmUnit:13.85, gmPct:0.9233, eng:"dog" },
+  { cat:"Pizza Bianca", name:"Funghi",            units:185, price:23, cost:3.71, fc:0.1613, rev:4255,  foodCost:686,  gm:3569,  gmUnit:19.29, gmPct:0.8387, eng:"star" },
+  { cat:"Pizza Bianca", name:"Prosciutto",        units:211, price:25, cost:3.61, fc:0.1444, rev:5275,  foodCost:762,  gm:4513,  gmUnit:21.39, gmPct:0.8556, eng:"star" },
+  { cat:"Pizza Bianca", name:"Blue Sausage",      units:99,  price:25, cost:5.34, fc:0.2136, rev:2475,  foodCost:529,  gm:1946,  gmUnit:19.66, gmPct:0.7864, eng:"puzzle" },
+  { cat:"Very Veggie", name:"Le Végétarien",      units:229, price:22, cost:3.84, fc:0.1745, rev:5038,  foodCost:879,  gm:4159,  gmUnit:18.16, gmPct:0.8255, eng:"star" },
+  { cat:"Very Veggie", name:"Mama G",             units:183, price:19, cost:2.40, fc:0.1263, rev:3477,  foodCost:439,  gm:3038,  gmUnit:16.60, gmPct:0.8737, eng:"star" },
+  { cat:"Salads", name:"Kale Caesar — Meal",      units:166, price:18, cost:3.95, fc:0.2194, rev:2988,  foodCost:656,  gm:2332,  gmUnit:14.05, gmPct:0.7806, eng:"plowhorse" },
+  { cat:"Salads", name:"Kale Caesar — Side",      units:137, price:8,  cost:1.36, fc:0.1700, rev:1096,  foodCost:186,  gm:910,   gmUnit:6.64,  gmPct:0.8300, eng:"plowhorse" },
+  { cat:"Salads", name:"Greek — Meal",            units:101, price:18, cost:3.80, fc:0.2111, rev:1818,  foodCost:384,  gm:1434,  gmUnit:14.20, gmPct:0.7889, eng:"puzzle" },
+  { cat:"Salads", name:"Greek — Side",            units:88,  price:8,  cost:1.59, fc:0.1988, rev:704,   foodCost:140,  gm:564,   gmUnit:6.41,  gmPct:0.8012, eng:"dog" },
+  { cat:"Salads", name:"Caprese — Meal",          units:49,  price:17, cost:4.20, fc:0.2471, rev:833,   foodCost:206,  gm:627,   gmUnit:12.80, gmPct:0.7529, eng:"dog" },
+  { cat:"Salads", name:"Caprese — Side",          units:66,  price:8,  cost:2.98, fc:0.3725, rev:528,   foodCost:197,  gm:331,   gmUnit:5.02,  gmPct:0.6275, eng:"dog" },
+  { cat:"Sandwiches", name:"Chicken Club",        units:195, price:16, cost:4.72, fc:0.2950, rev:3120,  foodCost:920,  gm:2200,  gmUnit:11.28, gmPct:0.7050, eng:"plowhorse" },
+  { cat:"Sandwiches", name:"Italian Sandwich",    units:51,  price:16, cost:4.28, fc:0.2675, rev:816,   foodCost:218,  gm:598,   gmUnit:11.72, gmPct:0.7325, eng:"dog" },
+  { cat:"Sandwiches", name:"Caprese Sandwich",    units:40,  price:14, cost:3.68, fc:0.2629, rev:560,   foodCost:147,  gm:413,   gmUnit:10.32, gmPct:0.7371, eng:"dog" },
+  { cat:"Other", name:"Dough-to-Go",              units:113, price:6,  cost:0.65, fc:0.1083, rev:678,   foodCost:73,   gm:605,   gmUnit:5.35,  gmPct:0.8917, eng:"puzzle" },
+  { cat:"Other", name:"GF Upgrade",               units:94,  price:4,  cost:5.34, fc:1.3350, rev:376,   foodCost:502,  gm:-126,  gmUnit:-1.34, gmPct:-0.3350, eng:"dog" },
+  // BEVERAGES (scaled from POS data, Jan 1 – Apr 13)
+  { cat:"Beverages", name:"Draft Beer — Local",     units:298, price:8,  cost:1.80, fc:0.2250, rev:2384, foodCost:536, gm:1848, gmUnit:6.20, gmPct:0.7750, eng:"star" },
+  { cat:"Beverages", name:"Bottle Beer — Import",   units:183, price:7,  cost:1.50, fc:0.2143, rev:1281, foodCost:275, gm:1006, gmUnit:5.50, gmPct:0.7857, eng:"star" },
+  { cat:"Beverages", name:"House Red — Glass",      units:235, price:11, cost:2.40, fc:0.2182, rev:2585, foodCost:564, gm:2021, gmUnit:8.60, gmPct:0.7818, eng:"star" },
+  { cat:"Beverages", name:"House White — Glass",    units:187, price:11, cost:2.40, fc:0.2182, rev:2057, foodCost:449, gm:1608, gmUnit:8.60, gmPct:0.7818, eng:"star" },
+  { cat:"Beverages", name:"Soft Drink",             units:328, price:4,  cost:0.45, fc:0.1125, rev:1312, foodCost:148, gm:1164, gmUnit:3.55, gmPct:0.8875, eng:"plowhorse" },
+  { cat:"Beverages", name:"Sparkling Water (500ml)",units:122, price:5,  cost:0.90, fc:0.1800, rev:610,  foodCost:110, gm:500,  gmUnit:4.10, gmPct:0.8200, eng:"puzzle" },
+];
+
+// ==================== INGREDIENT LIBRARY ====================
+// Prices are invoice-verified (GFS Jan–Mar 2026). Updating a price here
+// recalculates ALL recipe costs instantly — no spreadsheet needed.
+let INGREDIENT_LIBRARY = JSON.parse(localStorage.getItem('culinara_ingredients') || 'null') || [
+  { id:'flour_00',   name:'Tipo 00 flour',             price:1.85,  unit:'kg',    yieldPct:1.00, supplier:'Farinex',              category:'Dry Goods'  },
+  { id:'mozz_fior',  name:'Fior di latte mozzarella',  price:20.81, unit:'kg',    yieldPct:1.00, supplier:'Gordon Food Service',   category:'Dairy'      },
+  { id:'tom_san',    name:'San Marzano tomatoes',       price:3.40,  unit:'can',   yieldPct:0.95, supplier:'Farinex',              category:'Canned'     },
+  { id:'pepp_sl',    name:'Pepperoni (sliced)',         price:15.46, unit:'kg',    yieldPct:1.00, supplier:'Gordon Food Service',   category:'Proteins'   },
+  { id:'basil_fr',   name:'Fresh basil',                price:24.50, unit:'kg',    yieldPct:0.85, supplier:'Les Jardins QS',        category:'Produce'    },
+  { id:'evoo',       name:'Extra virgin olive oil',     price:8.20,  unit:'litre', yieldPct:1.00, supplier:'Sysco',                category:'Oils'       },
+  { id:'mozz_shred', name:'Mozzarella shredded',        price:15.18, unit:'kg',    yieldPct:1.00, supplier:'Gordon Food Service',   category:'Dairy'      },
+  { id:'gorgonzola', name:'Gorgonzola',                 price:35.14, unit:'kg',    yieldPct:1.00, supplier:'Gordon Food Service',   category:'Dairy'      },
+  { id:'prosciutto', name:'Prosciutto',                 price:23.50, unit:'kg',    yieldPct:1.00, supplier:'Distributions Macchi',  category:'Proteins'   },
+  { id:'kale',       name:'Kale',                       price:42.00, unit:'kg',    yieldPct:0.80, supplier:'Les Jardins QS',        category:'Produce'    },
+  { id:'gf_crust',   name:'GF crust base',              price:5.34,  unit:'each',  yieldPct:1.00, supplier:'Gordon Food Service',   category:'Specialty'  },
+  { id:'draft_beer', name:'Draft beer (local keg)',     price:12.25, unit:'litre', yieldPct:1.00, supplier:'Boissons / SAQ',        category:'Beverages'  },
+  { id:'wine_red',   name:'House red wine',             price:7.00,  unit:'glass', yieldPct:1.00, supplier:'Boissons / SAQ',        category:'Beverages'  },
+  { id:'wine_white', name:'House white wine',           price:6.00,  unit:'glass', yieldPct:1.00, supplier:'Boissons / SAQ',        category:'Beverages'  },
+  { id:'soft_drink', name:'Soft drink (can)',            price:0.45,  unit:'each',  yieldPct:1.00, supplier:'Sysco',                category:'Beverages'  },
+  { id:'sparkling',  name:'Sparkling water 500ml',      price:0.90,  unit:'each',  yieldPct:1.00, supplier:'Sysco',                category:'Beverages'  },
+  { id:'pecorino',   name:'Pecorino Romano',             price:34.68, unit:'kg',    yieldPct:1.00, supplier:'Gordon Food Service',   category:'Dairy'      },
+  { id:'chicken',    name:'Chicken breast',              price:16.95, unit:'kg',    yieldPct:0.90, supplier:'Gordon Food Service',   category:'Proteins'   },
+  { id:'arugula',    name:'Arugula',                     price:32.00, unit:'kg',    yieldPct:0.95, supplier:'Les Jardins QS',        category:'Produce'    },
+];
+
+// ==================== RECIPE CARDS ====================
+// Each recipe links to INGREDIENT_LIBRARY. Cost recalculates live
+// when ingredient prices change (invoice update flow).
+let RECIPE_CARDS = JSON.parse(localStorage.getItem('culinara_recipe_cards') || 'null') || [
+  { id:'rc_marg', menuItem:'Margherita', category:'Pizza Rossa', sellPrice:18.00, targetFC:0.28,
+    ingredients:[
+      { ingredientId:'flour_00',  qty:280, unit:'g'  },
+      { ingredientId:'tom_san',   qty:80,  unit:'g'  },
+      { ingredientId:'mozz_fior', qty:110, unit:'g'  },
+      { ingredientId:'basil_fr',  qty:4,   unit:'g'  },
+      { ingredientId:'evoo',      qty:8,   unit:'ml' },
+    ]},
+  { id:'rc_pepp', menuItem:'Pepperoni', category:'Pizza Rossa', sellPrice:19.00, targetFC:0.28,
+    ingredients:[
+      { ingredientId:'flour_00',  qty:280, unit:'g'  },
+      { ingredientId:'mozz_fior', qty:100, unit:'g'  },
+      { ingredientId:'tom_san',   qty:80,  unit:'g'  },
+      { ingredientId:'pepp_sl',   qty:65,  unit:'g'  },
+      { ingredientId:'evoo',      qty:6,   unit:'ml' },
+    ]},
+  { id:'rc_prosciutto', menuItem:'Prosciutto', category:'Pizza Bianca', sellPrice:22.00, targetFC:0.28,
+    ingredients:[
+      { ingredientId:'flour_00',   qty:280, unit:'g'  },
+      { ingredientId:'mozz_fior',  qty:90,  unit:'g'  },
+      { ingredientId:'prosciutto', qty:55,  unit:'g'  },
+      { ingredientId:'arugula',    qty:30,  unit:'g'  },
+      { ingredientId:'pecorino',   qty:12,  unit:'g'  },
+      { ingredientId:'evoo',       qty:8,   unit:'ml' },
+    ]},
+  { id:'rc_kale_caesar', menuItem:'Kale Caesar — Meal', category:'Salads', sellPrice:17.00, targetFC:0.28,
+    ingredients:[
+      { ingredientId:'kale',      qty:150, unit:'g'  },
+      { ingredientId:'pecorino',  qty:20,  unit:'g'  },
+      { ingredientId:'chicken',   qty:120, unit:'g'  },
+    ]},
 ];
 
 // User-added items (from Quick-Add, persisted to localStorage)
 const USER_ITEMS = JSON.parse(localStorage.getItem('culinara_user_items') || '[]');
-const MENU_ITEMS = [...BASE_MENU_ITEMS, ...USER_ITEMS];
+let MENU_ITEMS = [...BASE_MENU_ITEMS, ...USER_ITEMS];
 
 // ==================== ARTHUR'S DATA ====================
 // Menu scraped from arthursmtl.com + third-party sources (Mar 2026)
@@ -2885,7 +3201,7 @@ const ORDER_DATA = [
 ];
 
 const INVOICES = [
-  // Real invoices — Jan 25–Mar 15, 2026
+  // Real invoices — Jan 1 – Apr 13, 2026
   { id:"9033232423", supplier:"Gordon Food Service", date:"Mar 12", amount:1091.57, status:"review",  note:"Fior di latte ×2 $124.86, Gorgonzola $140.54, Mozz shred ×2 $303.50, Pepperoni $105.12, GF crust $64.02" },
   { id:"F577879",    supplier:"Les Jardins QS",       date:"Mar 12", amount:121.00,  status:"review",  note:"Basilic $24.50, Kale $42.00, Citron case $49.00, Concombre ×2 $5.50" },
   { id:"CO00214328", supplier:"Farinex",               date:"Mar 12", amount:558.60,  status:"review",  note:"15 cases tomates pelées 100oz × $37.24 — verify receive count on delivery" },
@@ -2911,8 +3227,8 @@ const USERS = {
 const RESTAURANTS = {
   botte: {
     id:'botte', status:'live',
-    name:'Bottē Restaurant', location:'Hudson, Quebec · Artisanal Sourdough Pizza',
-    fc:'39.1%', revenue:'$36,570', target:'25.0%', alerts:3, sync:'Synced 5 min ago'
+    name:'Bottē Restaurant', location:'St-Lazare, Quebec · Artisanal Sourdough Pizza',
+    fc:'39.1%', revenue:'$85,388', target:'25.0%', alerts:3, sync:'Synced 5 min ago'
   },
   arthurs: {
     id: 'arthurs',
@@ -3101,9 +3417,21 @@ function updateSidebarUser() {
   document.getElementById('sidebar-user-email').textContent  = currentUser.email;
 }
 
-function selectRestaurant(id) {
+async function selectRestaurant(id) {
   // Track active restaurant
   ACTIVE_SLUG = id;
+
+  // Load menu data from Supabase
+  const sbItems = await loadMenuFromSupabase(id);
+  if (sbItems && sbItems.length > 0) {
+    if (id === 'arthurs') {
+      ARTHUR_MENU_ITEMS.length = 0;
+      ARTHUR_MENU_ITEMS.push(...sbItems);
+    } else {
+      MENU_ITEMS.length = 0;
+      MENU_ITEMS.push(...sbItems);
+    }
+  }
 
   // If Arthur's — update sidebar with onboarding context
   if (id === 'arthurs') {
@@ -3139,7 +3467,7 @@ function updateSidebarRestaurant(id) {
   const nameEl = document.getElementById('sidebar-rest-name');
   const locEl  = document.getElementById('sidebar-rest-loc');
   if (nameEl) nameEl.textContent = r.name;
-  if (locEl)  locEl.textContent  = id === 'botte' ? 'Hudson, QC' : 'Saint-Henri, QC';
+  if (locEl)  locEl.textContent  = id === 'botte' ? 'St-Lazare, QC' : 'Saint-Henri, QC';
 }
 
 function updateInboxEmails(id) {
@@ -3163,15 +3491,15 @@ function loadRestaurantData(id) {
   const setEl = (id, prop, val) => { const e = document.getElementById(id); if (e) e[prop] = val; };
 
   if (id === 'botte') {
-    if (subtitleEl)  subtitleEl.textContent   = 'Bottē Restaurant · Jan 25 – Mar 15, 2026';
-    if (periodBadge) periodBadge.textContent  = '📅 Jan 25 – Mar 15, 2026';
+    if (subtitleEl)  subtitleEl.textContent   = 'Bottē Restaurant · Jan 1 – Apr 13, 2026';
+    if (periodBadge) periodBadge.textContent  = '📅 Jan 1 – Apr 13, 2026';
     if (savBanner)   savBanner.style.display  = '';
     if (alertStrip)  alertStrip.style.display = '';
     if (profBanner)  profBanner.style.display = 'none';
     const secKpi = document.getElementById('secondary-kpis');
     if (secKpi) secKpi.style.display = '';
     const fcSub = document.getElementById('fc-subtitle');
-    if (fcSub) fcSub.textContent = 'Bottē Restaurant · Jan 25 – Mar 15, 2026';
+    if (fcSub) fcSub.textContent = 'Bottē Restaurant · Jan 1 – Apr 13, 2026';
     const frBotte2  = document.getElementById('fc-filter-row');
     const frArthur2 = document.getElementById('fc-filter-row-arthurs');
     const estBan2   = document.getElementById('fc-estimates-banner');
@@ -3179,7 +3507,7 @@ function loadRestaurantData(id) {
     if (frArthur2) frArthur2.style.display = 'none';
     if (estBan2)   estBan2.style.display   = 'none';
     const iSub = document.getElementById('insights-subtitle');
-    if (iSub) iSub.textContent = 'Bottē Restaurant · Jan 25 – Mar 15, 2026';
+    if (iSub) iSub.textContent = 'Bottē Restaurant · Jan 1 – Apr 13, 2026';
     const iPlaceholder = document.getElementById('insights-arthurs-placeholder');
     const iContent = document.getElementById('insights-botte-content');
     if (iPlaceholder) iPlaceholder.style.display = 'none';
@@ -3189,8 +3517,8 @@ function loadRestaurantData(id) {
     if (dashCharts) dashCharts.style.display = '';
     if (dashPlaceholder) dashPlaceholder.style.display = 'none';
     // Efficiency
-    setEl('efficiency-sub','textContent','How well Bottē is performing across prep, pricing, and sourcing · Jan 25 – Mar 15, 2026');
-    setEl('efficiency-badge','textContent','✦ AI-scored · 49 days');
+    setEl('efficiency-sub','textContent','How well Bottē is performing across prep, pricing, and sourcing · Jan 1 – Apr 13, 2026');
+    setEl('efficiency-badge','textContent','✦ AI-scored · 103 days');
     const effBotte2 = document.getElementById('efficiency-botte-content');
     const effArthurs2 = document.getElementById('efficiency-arthurs-placeholder');
     if (effBotte2) effBotte2.style.display = '';
@@ -3199,7 +3527,7 @@ function loadRestaurantData(id) {
     setEl('prepboard-pos-label','textContent','⚡ via Lightspeed');
     // Yield
     setEl('yield-sub','textContent','Pack → Portion → Pizzas — catch portioning losses the same day, not at month end');
-    setEl('yield-pos-label','textContent','Based on your actual Lightspeed sales mix (Jan 25 – Mar 15)');
+    setEl('yield-pos-label','textContent','Based on your actual Lightspeed sales mix (Jan 1 – Apr 13)');
     // Staff
     const staffBotte2 = document.getElementById('staff-botte-content');
     const staffArthurs2 = document.getElementById('staff-arthurs-placeholder');
@@ -3227,18 +3555,22 @@ function loadRestaurantData(id) {
     const invArthurs2 = document.getElementById('inventory-arthurs-placeholder');
     if (invBotte2) invBotte2.style.display = '';
     if (invArthurs2) invArthurs2.style.display = 'none';
-    // Labels + values
+    // Labels + values — computed from loaded data
+    const kpi = computeKPIs(MENU_ITEMS);
+    const fcColor = parseFloat(kpi.fcPct) > 25 ? '#dc2626' : '#30D158';
     setEl('kpi-fc-label','textContent',t('kpi_food_cost'));
-    setEl('kpi-fc-val','innerHTML','<span style="color:#dc2626;">39.1%</span>');
+    setEl('kpi-fc-val','innerHTML','<span style="color:'+fcColor+';">'+kpi.fcPct+'%</span>');
     setEl('kpi-bt-label','textContent',t('kpi_behind_target'));
-    setEl('kpi-bt-val','innerHTML','<span style="color:#dc2626;">$5,156</span>');
+    const behindAmt = Math.abs(kpi.behind);
+    const behindSign = kpi.behind > 0 ? '' : '-';
+    setEl('kpi-bt-val','innerHTML','<span style="color:'+(kpi.behind>0?'#dc2626':'#30D158')+';">'+behindSign+'$'+behindAmt.toLocaleString()+'</span>');
     setEl('kpi-rev-label','textContent',t('kpi_period_revenue'));
-    setEl('kpi-rev-val','innerHTML','$36,570');
+    setEl('kpi-rev-val','innerHTML','$'+kpi.totalRev.toLocaleString());
     setEl('kpi-gp-label','textContent',t('kpi_gross_profit'));
-    setEl('kpi-gp-val','innerHTML','$21,150');
+    setEl('kpi-gp-val','innerHTML','$'+kpi.gmTotal.toLocaleString());
     // Sub text
-    setEl('kpi-bt-sub-text','textContent','Net food cost $11,832 · target was $9,032');
-    setEl('kpi-rev-sub-text','textContent','1,895 units · ~38.7 covers/day');
+    setEl('kpi-bt-sub-text','textContent','Est. food cost $'+kpi.totalFC.toLocaleString()+' · target is $'+kpi.target25.toLocaleString());
+    setEl('kpi-rev-sub-text','textContent', kpi.totalUnits.toLocaleString()+' units · ~'+(kpi.totalUnits/103).toFixed(1)+' covers/day');
     setEl('kpi-gp-sub-text','textContent','Before labour & overhead');
     // Show sub-rows
     ['kpi-fc-prog','kpi-fc-sub','kpi-bt-sub','kpi-rev-sub','kpi-gp-sub'].forEach(id => {
@@ -3331,7 +3663,7 @@ function loadRestaurantData(id) {
 }
 
 // ==================== NAVIGATION ====================
-const NAV_MAP = { insights:0, ask:1, dashboard:2, snapshot:3, profitability:4, engineering:5, efficiency:6, prep:7, prepboard:8, yield:9, inventory:10, orders:11, staff:12, invoices:13, reports:14, social:15, settings:16 };
+const NAV_MAP = { insights:0, ask:1, dashboard:2, snapshot:3, profitability:4, engineering:5, efficiency:6, prep:7, prepboard:8, yield:9, recipes:10, inventory:11, orders:12, staff:13, invoices:14, reports:15, social:16, settings:17 };
 
 function navigate(id) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -3342,7 +3674,7 @@ function navigate(id) {
     const items = document.querySelectorAll('.nav-item');
     if (items[NAV_MAP[id]]) items[NAV_MAP[id]].classList.add('active');
   }
-  const fns = { dashboard: initCharts, snapshot: renderSnapshot, profitability: () => renderTable('all'), engineering: renderEngineering, prep: renderPrep, yield: renderYield, orders: renderOrders, invoices: () => { renderInvoices(); renderFRENTranslator(); }, social: renderSocialMedia, ask: renderAsk };
+  const fns = { dashboard: initCharts, snapshot: renderSnapshot, profitability: () => renderTable('all'), engineering: renderEngineering, prep: renderPrep, yield: renderYield, recipes: renderRecipes, orders: renderOrders, invoices: () => { renderInvoices(); renderFRENTranslator(); }, social: renderSocialMedia, ask: renderAsk };
   if (fns[id]) fns[id]();
   updateFABVisibility(id);
 }
@@ -3423,7 +3755,8 @@ function filterTable(cat, btn) {
 
 // ==================== MENU ENGINEERING ====================
 function renderEngineering() {
-  const items = ACTIVE_SLUG === 'arthurs' ? ARTHUR_MENU_ITEMS : MENU_ITEMS;
+  const allItems = ACTIVE_SLUG === 'arthurs' ? ARTHUR_MENU_ITEMS : MENU_ITEMS;
+  const items = allItems.filter(i => i.cat !== 'Beverages'); // exclude beverages from engineering
   if (ACTIVE_SLUG === 'arthurs') {
     // Show estimated quadrant with a note
     ['star','puzzle','plowhorse','dog'].forEach(eng => {
@@ -3453,7 +3786,7 @@ function renderEngineering() {
   ['star','puzzle','plowhorse','dog'].forEach(eng => {
     const el = document.getElementById(eng + '-list');
     if (!el) return;
-    el.innerHTML = MENU_ITEMS.filter(i => i.eng === eng).map(i => `
+    el.innerHTML = items.filter(i => i.eng === eng).map(i => `
       <div class="quad-item">
         <span style="font-weight:500;">${i.name}</span>
         <span style="font-size:12px;color:var(--muted);">${i.units} units · $${i.price} menu price</span>
@@ -3464,12 +3797,13 @@ function renderEngineering() {
 let _engChart;
 function renderEngChart() {
   if (_engChart) { _engChart.destroy(); }
+  const foodItems = MENU_ITEMS.filter(i => i.cat !== 'Beverages');
   const colors = { star:'#34C97A', puzzle:'#4F8EF7', plowhorse:'#F5A623', dog:'#F05252' };
   _engChart = new Chart(document.getElementById('chartEng').getContext('2d'), {
     type:'bubble',
     data: { datasets: Object.entries(colors).map(([eng, color]) => ({
       label: eng.charAt(0).toUpperCase()+eng.slice(1),
-      data: MENU_ITEMS.filter(i=>i.eng===eng&&i.gmUnit>-5).map(i=>({ x:i.units, y:i.gmUnit, r:Math.max(5,Math.sqrt(i.rev)/4), name:i.name })),
+      data: foodItems.filter(i=>i.eng===eng&&i.gmUnit>-5).map(i=>({ x:i.units, y:i.gmUnit, r:Math.max(5,Math.sqrt(i.rev)/4), name:i.name })),
       backgroundColor: color+'44', borderColor: color, borderWidth: 2
     }))},
     options: {
@@ -3585,8 +3919,8 @@ function renderYieldCalc() {
   const c = parseInt(document.getElementById('yieldCovers')?.value) || 50;
   const el = document.getElementById('yield-calc-result');
   if (!el) return;
-  // Ratios from actual Lightspeed data (1,911 items / 49 days / ~30 cover/day baseline)
-  // Pizzas: 1,337 of 1,911 items = 70% · Rossa: ~64% of covers · FdL pizzas: 36% of pizzas
+  // Ratios from actual Lightspeed data (5,100 items / 103 days / ~30 cover/day baseline)
+  // Pizzas: 1,337 of 5,100 items = 70% · Rossa: ~64% of covers · FdL pizzas: 36% of pizzas
   const pizzas  = Math.round(c * 0.91);
   const rossa   = Math.round(c * 0.64);
   const fdl     = Math.round(c * 0.33);
@@ -3891,7 +4225,7 @@ function renderInvoices() {
   const periodCard2 = document.getElementById('invoice-period-card');
   if (periodCard2) periodCard2.innerHTML = `<div class="card-title" style="margin-bottom:12px;"><span>This period</span></div>
     <div style="display:flex;flex-direction:column;gap:9px;font-size:13px;">
-      <div style="display:flex;justify-content:space-between;"><span style="color:var(--muted);">Total invoices</span><span style="font-weight:700;">27</span></div>
+      <div style="display:flex;justify-content:space-between;"><span style="color:var(--muted);">Total invoices</span><span style="font-weight:700;">27+</span></div>
       <div style="display:flex;justify-content:space-between;"><span style="color:var(--muted);">Suppliers</span><span style="font-weight:700;">8</span></div>
       <div style="display:flex;justify-content:space-between;"><span style="color:var(--muted);">Gross food spend</span><span style="font-weight:700;">$12,169</span></div>
       <div style="display:flex;justify-content:space-between;"><span style="color:var(--muted);">Credits applied</span><span style="font-weight:700;color:#30D158;">-$337</span></div>
@@ -4576,7 +4910,7 @@ function _restoreLsConnectedCard() {
     <div style="margin-top:14px;border-top:1px solid rgba(255,255,255,0.06);padding-top:12px;">
       <div style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px;">Recent Syncs</div>
       <div id="ls-sync-log" style="display:flex;flex-direction:column;gap:4px;">
-        <div style="display:flex;justify-content:space-between;font-size:11.5px;"><span style="color:#34C97A;">✓ First sync — 1,911 records</span><span style="color:var(--muted);">Mar 15 · just now</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:11.5px;"><span style="color:#34C97A;">✓ First sync — 5,100 records</span><span style="color:var(--muted);">Mar 15 · just now</span></div>
       </div>
     </div>`;
 }
@@ -5185,7 +5519,7 @@ function exportMenuCSV() {
 function exportMenuJSON() {
   const data = {
     restaurant: 'Bottē Restaurant',
-    period: 'Jan 25 – Mar 15, 2026',
+    period: 'Jan 1 – Apr 13, 2026',
     exportedAt: new Date().toISOString(),
     items: MENU_ITEMS
   };
@@ -5217,7 +5551,7 @@ function showReportModal(type) {
   const body  = document.getElementById('report-modal-body');
 
   const titles = {
-    foodcost:   'Food Cost Report — Jan 25 – Mar 15, 2026',
+    foodcost:   'Food Cost Report — Jan 1 – Apr 13, 2026',
     weekly:     'Weekly Summary Email Preview',
     operations: 'Daily Operations Report',
     monthly:    'Monthly Summary'
@@ -5237,6 +5571,378 @@ function showReportModal(type) {
 
 function closeReportModal() {
   document.getElementById('report-modal').style.display = 'none';
+}
+
+// ==================== RECIPE COSTING ====================
+
+// --- Core math (reusable — re-runs whenever ingredient prices change) ---
+function calcIngredientCost(ingId, qty, unit) {
+  const ing = INGREDIENT_LIBRARY.find(i => i.id === ingId);
+  if (!ing) return 0;
+  let qtyBase = qty;
+  if (unit === 'g')  qtyBase = qty / 1000;
+  if (unit === 'ml') qtyBase = qty / 1000;
+  return (ing.price * qtyBase) / ing.yieldPct;
+}
+
+function calcRecipeCost(recipe) {
+  const totalCost = recipe.ingredients.reduce((sum, row) =>
+    sum + calcIngredientCost(row.ingredientId, row.qty, row.unit), 0);
+  const fc  = recipe.sellPrice > 0 ? totalCost / recipe.sellPrice : 0;
+  const gm  = recipe.sellPrice - totalCost;
+  return { totalCost, fc, gm, onTarget: fc <= (recipe.targetFC || 0.30) };
+}
+
+function saveIngLib() {
+  localStorage.setItem('culinara_ingredients', JSON.stringify(INGREDIENT_LIBRARY));
+}
+function saveRecipeLib() {
+  localStorage.setItem('culinara_recipe_cards', JSON.stringify(RECIPE_CARDS));
+}
+
+// --- Tab switcher ---
+let activeRecipeTab = 'library';
+function switchRecipeTab(tab) {
+  activeRecipeTab = tab;
+  ['library','cards','preng','import'].forEach(t => {
+    document.getElementById('rtab-' + t).classList.toggle('active', t === tab);
+    document.getElementById('rpanel-' + t).style.display = t === tab ? '' : 'none';
+  });
+  if (tab === 'library') renderIngLibrary();
+  if (tab === 'cards')   renderRecipeCards();
+  if (tab === 'preng')   calcPreEngineer();
+}
+
+function renderRecipes() {
+  switchRecipeTab(activeRecipeTab);
+}
+
+// --- Tab 1: Ingredient Library ---
+function renderIngLibrary() {
+  const el = document.getElementById('ing-library-table');
+  if (!el) return;
+  const cats = [...new Set(INGREDIENT_LIBRARY.map(i => i.category))].sort();
+  let html = '';
+  cats.forEach(cat => {
+    const items = INGREDIENT_LIBRARY.filter(i => i.category === cat);
+    html += `<div style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin:16px 0 8px;">${cat}</div>`;
+    html += `<table class="ing-table"><thead><tr><th>Ingredient</th><th>Price</th><th>Unit</th><th>Yield %</th><th>Supplier</th><th>Last Invoice</th><th></th></tr></thead><tbody>`;
+    items.forEach(ing => {
+      html += `<tr>
+        <td style="font-weight:600;">${ing.name}</td>
+        <td style="color:#34C97A;font-weight:700;">$${ing.price.toFixed(2)}</td>
+        <td style="color:var(--muted);">/${ing.unit}</td>
+        <td style="color:var(--muted);">${(ing.yieldPct*100).toFixed(0)}%</td>
+        <td style="color:var(--muted);font-size:12px;">${ing.supplier}</td>
+        <td style="color:var(--muted);font-size:12px;">GFS Mar '26</td>
+        <td>
+          <button onclick="editIngPrice('${ing.id}')" style="background:none;border:none;color:#4F8EF7;font-size:12px;cursor:pointer;padding:2px 6px;">✏ Edit</button>
+          <button onclick="deleteIngredient('${ing.id}')" style="background:none;border:none;color:#F05252;font-size:12px;cursor:pointer;padding:2px 6px;">✕</button>
+        </td>
+      </tr>`;
+    });
+    html += `</tbody></table>`;
+  });
+  el.innerHTML = html;
+}
+
+function openAddIngredient() {
+  document.getElementById('ing-add-form').style.display = '';
+}
+
+function saveNewIngredient() {
+  const name     = document.getElementById('new-ing-name').value.trim();
+  const category = document.getElementById('new-ing-cat').value;
+  const price    = parseFloat(document.getElementById('new-ing-price').value) || 0;
+  const unit     = document.getElementById('new-ing-unit').value;
+  const yieldPct = parseFloat(document.getElementById('new-ing-yield').value) || 1;
+  const supplier = document.getElementById('new-ing-supplier').value.trim() || 'Manual';
+  if (!name || price <= 0) { alert('Please enter a name and price.'); return; }
+  const id = 'ing_' + Date.now();
+  INGREDIENT_LIBRARY.push({ id, name, price, unit, yieldPct, supplier, category });
+  saveIngLib();
+  document.getElementById('ing-add-form').style.display = 'none';
+  ['new-ing-name','new-ing-price','new-ing-yield','new-ing-supplier'].forEach(f =>
+    { const el = document.getElementById(f); if (el) el.value = ''; });
+  renderIngLibrary();
+  showToast('Ingredient saved!');
+}
+
+function editIngPrice(id) {
+  const ing = INGREDIENT_LIBRARY.find(i => i.id === id);
+  if (!ing) return;
+  const newPrice = parseFloat(prompt(`Update price for "${ing.name}" (current: $${ing.price.toFixed(2)}/${ing.unit}):`, ing.price.toFixed(2)));
+  if (!isNaN(newPrice) && newPrice > 0) {
+    ing.price = newPrice;
+    saveIngLib();
+    renderIngLibrary();
+    showToast(`${ing.name} updated to $${newPrice.toFixed(2)}/${ing.unit} — recipe costs recalculated.`);
+  }
+}
+
+function deleteIngredient(id) {
+  if (!confirm('Remove this ingredient from the library?')) return;
+  INGREDIENT_LIBRARY = INGREDIENT_LIBRARY.filter(i => i.id !== id);
+  saveIngLib();
+  renderIngLibrary();
+}
+
+// --- Tab 2: Recipe Cards ---
+function renderRecipeCards() {
+  const el = document.getElementById('recipe-card-grid');
+  if (!el) return;
+  if (!RECIPE_CARDS.length) {
+    el.innerHTML = `<div style="text-align:center;padding:40px;color:var(--muted);font-size:13px;">No recipes yet — click "+ New Recipe" to build your first.</div>`;
+    return;
+  }
+  el.innerHTML = RECIPE_CARDS.map(rc => {
+    const { totalCost, fc, gm, onTarget } = calcRecipeCost(rc);
+    const fcPct = (fc * 100).toFixed(1);
+    const statusColor = onTarget ? '#34C97A' : '#F05252';
+    const statusLabel = onTarget ? '✅ On Target' : '⚠ Over Target';
+    return `
+    <div class="recipe-card ${onTarget ? 'on-target' : 'over-target'}" onclick="openRecipeBuilder('${rc.id}')">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">
+        <div>
+          <div style="font-size:14px;font-weight:700;">${rc.menuItem}</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px;">${rc.category}</div>
+        </div>
+        <div style="font-size:11px;font-weight:700;color:${statusColor};background:${statusColor}1A;padding:3px 8px;border-radius:6px;">${statusLabel}</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px;">
+        <div><div style="font-size:10px;color:var(--muted);">RECIPE COST</div><div style="font-size:16px;font-weight:800;color:var(--text);">$${totalCost.toFixed(2)}</div></div>
+        <div><div style="font-size:10px;color:var(--muted);">FC %</div><div style="font-size:16px;font-weight:800;color:${statusColor};">${fcPct}%</div></div>
+        <div><div style="font-size:10px;color:var(--muted);">GM / PLATE</div><div style="font-size:16px;font-weight:800;color:#34C97A;">$${gm.toFixed(2)}</div></div>
+      </div>
+      <div style="margin-top:10px;font-size:11px;color:var(--muted);">Sell: $${rc.sellPrice.toFixed(2)} · Target FC: ${(rc.targetFC*100).toFixed(0)}% · ${rc.ingredients.length} ingredients</div>
+    </div>`;
+  }).join('');
+}
+
+// --- Recipe Builder Modal ---
+let builderEditId = null;
+
+function openRecipeBuilder(id) {
+  builderEditId = id;
+  const modal = document.getElementById('recipe-builder-modal');
+  const titleEl = document.getElementById('builder-modal-title');
+  const rowsEl = document.getElementById('builder-ing-rows');
+  if (id) {
+    const rc = RECIPE_CARDS.find(r => r.id === id);
+    if (!rc) return;
+    titleEl.textContent = rc.menuItem;
+    document.getElementById('b-name').value = rc.menuItem;
+    document.getElementById('b-cat').value = rc.category;
+    document.getElementById('b-price').value = rc.sellPrice;
+    document.getElementById('b-target-fc').value = (rc.targetFC * 100).toFixed(0);
+    rowsEl.innerHTML = rc.ingredients.map((row, i) => builderRowHTML(i, row.ingredientId, row.qty, row.unit)).join('');
+  } else {
+    titleEl.textContent = 'New Recipe';
+    ['b-name','b-price','b-target-fc'].forEach(f => document.getElementById(f).value = '');
+    document.getElementById('b-cat').value = 'Pizza Rossa';
+    rowsEl.innerHTML = builderRowHTML(0) + builderRowHTML(1);
+  }
+  modal.style.display = 'flex';
+  updateBuilderSummary();
+}
+
+function builderRowHTML(idx, ingId='', qty='', unit='g') {
+  const options = INGREDIENT_LIBRARY.map(i =>
+    `<option value="${i.id}" ${i.id === ingId ? 'selected' : ''}>${i.name} ($${i.price.toFixed(2)}/${i.unit})</option>`
+  ).join('');
+  return `<div class="builder-row" id="brow-${idx}">
+    <select onchange="updateBuilderSummary()" style="background:#1F2433;border:1px solid var(--border);border-radius:7px;padding:7px 8px;color:var(--text);font-size:12px;"><option value="">— select —</option>${options}</select>
+    <input type="number" step="0.1" value="${qty}" placeholder="qty" oninput="updateBuilderSummary()" style="background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:7px;padding:7px 8px;color:var(--text);font-size:12px;">
+    <select onchange="updateBuilderSummary()" style="background:#1F2433;border:1px solid var(--border);border-radius:7px;padding:7px 8px;color:var(--text);font-size:12px;">
+      <option value="g" ${unit==='g'?'selected':''}>g</option>
+      <option value="ml" ${unit==='ml'?'selected':''}>ml</option>
+      <option value="each" ${unit==='each'?'selected':''}>each</option>
+      <option value="kg" ${unit==='kg'?'selected':''}>kg</option>
+      <option value="litre" ${unit==='litre'?'selected':''}>litre</option>
+    </select>
+    <div id="brow-cost-${idx}" style="font-size:12px;color:#34C97A;font-weight:700;">$0.00</div>
+    <button onclick="this.closest('.builder-row').remove();updateBuilderSummary();" style="background:none;border:none;color:#F05252;cursor:pointer;font-size:16px;padding:0;">×</button>
+  </div>`;
+}
+
+function addBuilderRow() {
+  const rows = document.getElementById('builder-ing-rows');
+  const idx = rows.children.length;
+  rows.insertAdjacentHTML('beforeend', builderRowHTML(idx));
+}
+
+function updateBuilderSummary() {
+  const rows = document.querySelectorAll('#builder-ing-rows .builder-row');
+  let totalCost = 0;
+  rows.forEach((row, i) => {
+    const sel = row.querySelector('select');
+    const qtyInput = row.querySelectorAll('input')[0];
+    const unitSel = row.querySelectorAll('select')[1];
+    const costEl = document.getElementById('brow-cost-' + i);
+    if (!sel || !sel.value) { if (costEl) costEl.textContent = '$0.00'; return; }
+    const c = calcIngredientCost(sel.value, parseFloat(qtyInput?.value) || 0, unitSel?.value || 'g');
+    totalCost += c;
+    if (costEl) costEl.textContent = '$' + c.toFixed(2);
+  });
+  const sellPrice = parseFloat(document.getElementById('b-price')?.value) || 0;
+  const targetFC  = (parseFloat(document.getElementById('b-target-fc')?.value) || 28) / 100;
+  const fc  = sellPrice > 0 ? totalCost / sellPrice : 0;
+  const gm  = sellPrice - totalCost;
+  const onTarget = fc <= targetFC;
+  document.getElementById('b-total-cost').textContent = '$' + totalCost.toFixed(2);
+  document.getElementById('b-fc-pct').textContent = sellPrice > 0 ? (fc*100).toFixed(1)+'%' : '—';
+  document.getElementById('b-fc-pct').style.color = onTarget ? '#34C97A' : '#F05252';
+  document.getElementById('b-gm').textContent = sellPrice > 0 ? '$' + gm.toFixed(2) : '—';
+  const badge = document.getElementById('b-status-badge');
+  if (badge && sellPrice > 0) {
+    badge.innerHTML = onTarget
+      ? `<span style="font-size:12px;font-weight:700;color:#34C97A;background:rgba(52,201,122,0.12);padding:4px 10px;border-radius:6px;">✅ On Target</span>`
+      : `<span style="font-size:12px;font-weight:700;color:#F05252;background:rgba(240,82,82,0.12);padding:4px 10px;border-radius:6px;">⚠ Over Target</span>`;
+  }
+}
+
+function saveRecipeCard() {
+  const name = document.getElementById('b-name').value.trim();
+  if (!name) { alert('Please enter an item name.'); return; }
+  const rows = document.querySelectorAll('#builder-ing-rows .builder-row');
+  const ingredients = [];
+  rows.forEach((row, i) => {
+    const sel = row.querySelector('select');
+    const qtyInput = row.querySelectorAll('input')[0];
+    const unitSel = row.querySelectorAll('select')[1];
+    if (sel?.value) ingredients.push({ ingredientId: sel.value, qty: parseFloat(qtyInput?.value) || 0, unit: unitSel?.value || 'g' });
+  });
+  const sellPrice = parseFloat(document.getElementById('b-price').value) || 0;
+  const targetFC  = (parseFloat(document.getElementById('b-target-fc').value) || 28) / 100;
+  if (builderEditId) {
+    const idx = RECIPE_CARDS.findIndex(r => r.id === builderEditId);
+    if (idx >= 0) RECIPE_CARDS[idx] = { ...RECIPE_CARDS[idx], menuItem: name, category: document.getElementById('b-cat').value, sellPrice, targetFC, ingredients };
+  } else {
+    RECIPE_CARDS.push({ id: 'rc_' + Date.now(), menuItem: name, category: document.getElementById('b-cat').value, sellPrice, targetFC, ingredients });
+  }
+  saveRecipeLib();
+  closeRecipeBuilder();
+  switchRecipeTab('cards');
+  showToast('Recipe saved!');
+}
+
+function closeRecipeBuilder() {
+  document.getElementById('recipe-builder-modal').style.display = 'none';
+}
+
+// --- Tab 3: Pre-Engineer ---
+function calcPreEngineer() {
+  const sell   = parseFloat(document.getElementById('pe-sell')?.value) || 0;
+  const fcSlider = document.getElementById('pe-fc');
+  const fcPct  = parseFloat(fcSlider?.value) || 28;
+  if (document.getElementById('pe-fc-label')) document.getElementById('pe-fc-label').textContent = fcPct + '%';
+  const maxCost = sell * (fcPct / 100);
+  const gm      = sell - maxCost;
+  const gmPct   = sell > 0 ? ((gm / sell) * 100).toFixed(0) : 0;
+  if (document.getElementById('pe-max-cost')) document.getElementById('pe-max-cost').textContent = '$' + maxCost.toFixed(2);
+  if (document.getElementById('pe-gm'))      document.getElementById('pe-gm').textContent      = '$' + gm.toFixed(2);
+  if (document.getElementById('pe-gm-pct')) document.getElementById('pe-gm-pct').textContent  = gmPct + '%';
+  const bench = document.getElementById('pe-benchmark');
+  if (bench) {
+    const tip = fcPct <= 25 ? '🟢 Excellent — industry-leading margin.'
+      : fcPct <= 30 ? '🟡 Good — within industry benchmark (28–30%).'
+      : fcPct <= 38 ? '🟠 Caution — above benchmark. Review ingredient costs.'
+      : '🔴 High risk — re-engineer this dish or adjust sell price.';
+    bench.innerHTML = `${tip}<br><span style="color:var(--muted);">Industry benchmark for artisan pizza: 28–32% food cost.</span>`;
+  }
+}
+
+// --- Tab 4: Import Template ---
+function downloadRecipeTemplate() {
+  const csv = `Recipe Name,Category,Sell Price ($),Target FC%,Ingredient Name,Qty,Unit,Cost Per Unit ($),Supplier
+Margherita,Pizza Rossa,18.00,28,Tipo 00 flour,280,g,1.85,Farinex
+Margherita,Pizza Rossa,18.00,28,Fior di latte mozzarella,110,g,20.81,Gordon Food Service
+Margherita,Pizza Rossa,18.00,28,San Marzano tomatoes,80,g,3.40,Farinex
+Margherita,Pizza Rossa,18.00,28,Fresh basil,4,g,24.50,Les Jardins QS
+Margherita,Pizza Rossa,18.00,28,Extra virgin olive oil,8,ml,8.20,Sysco
+[Your Item],,[price],[target%],[ingredient],[qty],[unit],[cost],
+`;
+  downloadBlob(csv, 'culinara-portion-sheet-template.csv', 'text/csv');
+}
+
+function handleRecipeDrop(e) {
+  e.preventDefault();
+  document.getElementById('recipe-drop-zone').classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if (file) processRecipeCSVFile(file);
+}
+
+function handleRecipeFile(input) {
+  if (input.files[0]) processRecipeCSVFile(input.files[0]);
+}
+
+function processRecipeCSVFile(file) {
+  const reader = new FileReader();
+  reader.onload = e => {
+    const parsed = parseRecipeCSV(e.target.result);
+    previewImport(parsed);
+  };
+  reader.readAsText(file);
+}
+
+function parseRecipeCSV(text) {
+  const lines = text.trim().split('\n').slice(1); // skip header
+  const recipeMap = {};
+  const newIngredients = [];
+  lines.forEach(line => {
+    const cols = line.split(',').map(c => c.trim().replace(/^"|"$/g,''));
+    if (!cols[0] || cols[0].startsWith('[')) return;
+    const [recipeName, category, sellPriceStr, targetFCStr, ingName, qtyStr, unit, costStr, supplier] = cols;
+    if (!recipeMap[recipeName]) {
+      recipeMap[recipeName] = { menuItem: recipeName, category, sellPrice: parseFloat(sellPriceStr)||0, targetFC: (parseFloat(targetFCStr)||28)/100, ingredients: [] };
+    }
+    // Find or create ingredient
+    let ing = INGREDIENT_LIBRARY.find(i => i.name.toLowerCase() === ingName.toLowerCase());
+    if (!ing && ingName) {
+      ing = { id: 'ing_csv_' + Date.now() + Math.random().toString(36).slice(2,5), name: ingName, price: parseFloat(costStr)||0, unit: unit||'g', yieldPct:1.00, supplier: supplier||'Manual', category:'Dry Goods' };
+      newIngredients.push(ing);
+      INGREDIENT_LIBRARY.push(ing);
+    }
+    if (ing) recipeMap[recipeName].ingredients.push({ ingredientId: ing.id, qty: parseFloat(qtyStr)||0, unit: unit||'g' });
+  });
+  return { recipes: Object.values(recipeMap), newIngredients };
+}
+
+function previewImport(parsed) {
+  const el = document.getElementById('recipe-import-preview');
+  if (!el) return;
+  const { recipes, newIngredients } = parsed;
+  if (!recipes.length) { el.innerHTML = `<div style="color:#F05252;font-size:13px;">No valid recipes found in CSV. Check the format.</div>`; return; }
+  el.innerHTML = `
+    <div style="background:rgba(52,201,122,0.07);border:1px solid rgba(52,201,122,0.2);border-radius:10px;padding:16px;margin-top:8px;">
+      <div style="font-size:13px;font-weight:700;margin-bottom:10px;">Preview: ${recipes.length} recipe(s) · ${newIngredients.length} new ingredient(s)</div>
+      ${recipes.map(r => {
+        const { totalCost, fc } = calcRecipeCost(r);
+        return `<div style="padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:13px;">
+          <strong>${r.menuItem}</strong> (${r.category}) · Sell $${r.sellPrice.toFixed(2)} · Est. cost $${totalCost.toFixed(2)} · ${(fc*100).toFixed(1)}% FC
+        </div>`;
+      }).join('')}
+      <div style="display:flex;gap:10px;margin-top:14px;">
+        <button onclick="confirmImport(${JSON.stringify(parsed).replace(/"/g,"'")})" style="background:#34C97A;border:none;color:#fff;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;">✓ Confirm Import</button>
+        <button onclick="document.getElementById('recipe-import-preview').innerHTML=''" style="background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--text);padding:9px 18px;border-radius:8px;font-size:13px;cursor:pointer;">Cancel</button>
+      </div>
+    </div>`;
+}
+
+function confirmImport(parsed) {
+  const { recipes, newIngredients } = parsed;
+  recipes.forEach(r => {
+    const exists = RECIPE_CARDS.find(rc => rc.menuItem.toLowerCase() === r.menuItem.toLowerCase());
+    if (!exists) RECIPE_CARDS.push({ id: 'rc_' + Date.now() + Math.random().toString(36).slice(2,5), ...r });
+  });
+  saveIngLib();
+  saveRecipeLib();
+  showToast(`Imported ${recipes.length} recipe(s)!`);
+  switchRecipeTab('cards');
+}
+
+function copyRecipeEmail() {
+  navigator.clipboard.writeText('recipes@botte.culinara.app').then(() => showToast('Email address copied!'));
 }
 
 function buildFoodCostReportHTML() {
@@ -5648,9 +6354,9 @@ const T = {
     yield_yield:'Yield %', yield_cost_kg:'Cost/kg', yield_cost_portion:'Cost/Portion',
     yield_covers:'Expected covers tonight',
     // Section titles & subtitles
-    sec_insights_title:'AI Insights', sec_insights_sub:'Bottē Restaurant · Jan 25 – Mar 15, 2026',
+    sec_insights_title:'AI Insights', sec_insights_sub:'Bottē Restaurant · Jan 1 – Apr 13, 2026',
     sec_menuanalysis_title:'Menu Analysis', sec_menuanalysis_sub:'4-quadrant matrix: Volume vs Contribution Margin per unit',
-    sec_prep_title:'Prep & Recipes', sec_prep_sub:'Weekly quantities based on ~35 covers/day',
+    sec_prep_title:'Prep & Recipes', sec_prep_sub:'Weekly quantities based on ~36 covers/day',
     sec_prepboard_title:'Prep Board', sec_prepboard_sub:'Sales-driven prep tasks · updating as covers come in',
     sec_yield_title:'Yield Control', sec_yield_sub:'Pack → Portion → Pizzas — catch portioning losses the same day',
     sec_orders_title:'Order Guide', sec_orders_sub:'6 suppliers · weekly estimated costs',
@@ -5694,7 +6400,7 @@ const T = {
     social_push_title:'📣 Items to Push This Week',
     social_push_sub:'Low sellers with high margin — need visibility, not a price cut',
     social_best_times:'🕐 Best Times to Post',
-    social_best_sub:'Based on your 38.7 covers/day pattern and Quebec dining habits',
+    social_best_sub:'Based on your 36.4 covers/day pattern and Quebec dining habits',
     // Invoices
     inv_this_period:'This period', inv_credits:'Credits applied',
     // Sidebar
@@ -5706,7 +6412,7 @@ const T = {
     fc_guide_3:'Use the Quick Add button to add new menu items or log a price change in seconds.',
     // Prep guidelines
     prep_guide_title:'📋 How to use Prep & Recipes',
-    prep_guide_1:'Quantities are calculated from your 7-day sales average (~35 covers/day).',
+    prep_guide_1:'Quantities are calculated from your 7-day sales average (~36 covers/day).',
     prep_guide_2:'Click any quantity to edit it inline — your change is saved locally.',
     prep_guide_3:'Print this guide before each shift using the Print Guide button.',
   },
@@ -6066,6 +6772,7 @@ function applyLang() {
       prep: renderPrep,
       prepboard: renderPrepBoard,
       yield: renderYield,
+      recipes: renderRecipes,
       orders: renderOrders,
       invoices: () => { renderInvoices(); renderFRENTranslator(); },
       social: renderSocialMedia,
@@ -6208,8 +6915,8 @@ function generateAnswer(q) {
     const top5 = [...MENU_ITEMS].sort((a,b)=>b.units-a.units).slice(0,5);
     const rows = top5.map((i,n)=>`<strong>${n+1}. ${i.name}</strong> — ${i.units} ${LANG==='fr'?'unités':'units'} · $${i.rev.toLocaleString()} ${LANG==='fr'?'revenus':'rev'} · ${(i.gmPct*100).toFixed(0)}% GM`).join('<br>');
     return LANG==='fr'
-      ? `Vos 5 articles les plus vendus (Jan 25 – Mar 15) :<br><br>${rows}<br><br>La <strong>Margarita</strong> et le <strong>Pepperoni</strong> dominent le volume — deux étoiles solides avec >85% de marge brute.`
-      : `Your top 5 by units sold (Jan 25 – Mar 15):<br><br>${rows}<br><br><strong>Margarita</strong> and <strong>Pepperoni</strong> lead volume — both solid stars with >85% GM.`;
+      ? `Vos 5 articles les plus vendus (Jan 1 – Apr 13) :<br><br>${rows}<br><br>La <strong>Margarita</strong> et le <strong>Pepperoni</strong> dominent le volume — deux étoiles solides avec >85% de marge brute.`
+      : `Your top 5 by units sold (Jan 1 – Apr 13):<br><br>${rows}<br><br><strong>Margarita</strong> and <strong>Pepperoni</strong> lead volume — both solid stars with >85% GM.`;
   }
 
   // ── LOSING MONEY / DOGS ──────────────────────────────────────────────────────
@@ -6229,7 +6936,7 @@ function generateAnswer(q) {
     const topBev = [...bevs].sort((a,b)=>b.rev-a.rev)[0];
     return LANG==='fr'
       ? `Vos boissons représentent <strong>${bevUnits} unités</strong> et <strong>$${bevRev.toLocaleString()}</strong> de revenus — coût 20,4%, bien en dessous de la nourriture (39,1%).<br><br>Meilleur article : <strong>${topBev.name}</strong> avec $${topBev.rev} de revenus.<br><br>⚠️ Taux d'attachement boissons : <strong>33,7%</strong> (référence industrie : 40%+). Combler cet écart = +<strong>$486</strong> de marge brute sans coût supplémentaire. Suggérez activement les boissons à la table.`
-      : `Beverages are pulling <strong>${bevUnits} units</strong> and <strong>$${bevRev.toLocaleString()}</strong> in revenue — at a healthy 20.4% cost vs 39.1% for food.<br><br>Top performer: <strong>${topBev.name}</strong> at $${topBev.rev} revenue.<br><br>⚠️ Drink attach rate: <strong>33.7%</strong> vs 40%+ industry benchmark. Closing that gap = +<strong>$486</strong> GM with zero added cost. Train servers to suggest drinks at every table.`;
+      : `Beverages are pulling <strong>${bevUnits} units</strong> and <strong>$${bevRev.toLocaleString()}</strong> in revenue — at a healthy 20.4% cost vs 39.1% for food.<br><br>Top performer: <strong>${topBev.name}</strong> at $${topBev.rev} revenue.<br><br>⚠️ Drink attach rate: <strong>26.5%</strong> vs 40%+ industry benchmark. Closing that gap = +<strong>$486</strong> GM with zero added cost. Train servers to suggest drinks at every table.`;
   }
 
   // ── PREP TODAY ───────────────────────────────────────────────────────────────
@@ -6269,7 +6976,7 @@ function generateAnswer(q) {
   if (/prime cost|cout prime|labour|labor|travail|71|payroll/.test(ql)) {
     return LANG==='fr'
       ? `Votre coût prime est de <strong style="color:#F05252;">71,5%</strong> (coût aliments 39,1% + main-d'oeuvre 32,4%).<br><br>La cible industrie est <strong>&lt;65%</strong>. Vous êtes à <strong>6,5 points au-dessus</strong> — ce qui représente ~$2,362 de trop sur cette période.<br><br>Pour améliorer :<br>• Réduire le coût des aliments → corriger le GF Upgrade, vérifier les prix des fournisseurs<br>• Optimiser les horaires → aligner les heures de travail avec les couverts<br>• Augmenter les revenus → pousser les boissons (attach rate 33,7% vs 40% cible)`
-      : `Your prime cost is <strong style="color:#F05252;">71.5%</strong> (food 39.1% + labour 32.4%).<br><br>Industry target is <strong>&lt;65%</strong> — you're <strong>6.5 points over</strong>, costing ~$2,362 extra this period.<br><br>To improve:<br>• Lower food cost → fix GF Upgrade surcharge, renegotiate supplier prices<br>• Optimise scheduling → align labour hours to cover counts<br>• Grow revenue → push beverages (33.7% attach vs 40% benchmark)`;
+      : `Your prime cost is <strong style="color:#F05252;">71.5%</strong> (food 39.1% + labour 32.4%).<br><br>Industry target is <strong>&lt;65%</strong> — you're <strong>6.5 points over</strong>, costing ~$2,362 extra this period.<br><br>To improve:<br>• Lower food cost → fix GF Upgrade surcharge, renegotiate supplier prices<br>• Optimise scheduling → align labour hours to cover counts<br>• Grow revenue → push beverages (26.5% attach vs 40% benchmark)`;
   }
 
   // ── PROFITABLE ITEM ──────────────────────────────────────────────────────────
@@ -6285,8 +6992,8 @@ function generateAnswer(q) {
   if (/supplier|fournisseur|spend|depens|how much.*spend|combien.*depens/.test(ql)) {
     const totalFC = MENU_ITEMS.reduce((s,i)=>s+i.foodCost,0);
     return LANG==='fr'
-      ? `Dépenses fournisseurs estimées sur la période (Jan 25 – Mar 15) :<br><br><strong>Gordon Food Service</strong> — ~$1,067/sem · Mozzarella, poulet, romaine<br><strong>Farinex</strong> — ~$509/sem · Farine 00, tomates pelées<br><strong>Les Jardins Quatre Saisons</strong> — ~$243/sem · Basilic, kale, légumes frais<br><strong>Distributions Macchi</strong> — ~$104/sem · Prosciutto, spianata<br><strong>Boissons / SAQ</strong> — ~$113/sem · Bière pression, vins<br><br>Total coût des aliments et boissons : <strong>$${totalFC.toLocaleString()}</strong> sur 49 jours.`
-      : `Estimated supplier spend for the period (Jan 25 – Mar 15):<br><br><strong>Gordon Food Service</strong> — ~$1,067/wk · Mozzarella, chicken, romaine<br><strong>Farinex</strong> — ~$509/wk · 00 flour, peeled tomatoes<br><strong>Les Jardins Quatre Saisons</strong> — ~$243/wk · Basil, kale, fresh produce<br><strong>Distributions Macchi</strong> — ~$104/wk · Prosciutto, spianata<br><strong>Boissons / SAQ</strong> — ~$113/wk · Draft beer, wines<br><br>Total food & bev cost tracked: <strong>$${totalFC.toLocaleString()}</strong> over 49 days.`;
+      ? `Dépenses fournisseurs estimées sur la période (Jan 1 – Apr 13) :<br><br><strong>Gordon Food Service</strong> — ~$1,067/sem · Mozzarella, poulet, romaine<br><strong>Farinex</strong> — ~$509/sem · Farine 00, tomates pelées<br><strong>Les Jardins Quatre Saisons</strong> — ~$243/sem · Basilic, kale, légumes frais<br><strong>Distributions Macchi</strong> — ~$104/sem · Prosciutto, spianata<br><strong>Boissons / SAQ</strong> — ~$113/sem · Bière pression, vins<br><br>Total coût des aliments et boissons : <strong>$${totalFC.toLocaleString()}</strong> sur 49 jours.`
+      : `Estimated supplier spend for the period (Jan 1 – Apr 13):<br><br><strong>Gordon Food Service</strong> — ~$1,067/wk · Mozzarella, chicken, romaine<br><strong>Farinex</strong> — ~$509/wk · 00 flour, peeled tomatoes<br><strong>Les Jardins Quatre Saisons</strong> — ~$243/wk · Basil, kale, fresh produce<br><strong>Distributions Macchi</strong> — ~$104/wk · Prosciutto, spianata<br><strong>Boissons / SAQ</strong> — ~$113/wk · Draft beer, wines<br><br>Total food & bev cost tracked: <strong>$${totalFC.toLocaleString()}</strong> over 103 days.`;
   }
 
   // ── ITEMS TO CUT / DOGS ──────────────────────────────────────────────────────
