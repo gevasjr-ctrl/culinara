@@ -374,15 +374,48 @@ tr:last-child td { border-bottom: none; }
       <div class="login-tagline">Restaurant Intelligence Platform</div>
     </div>
     <div class="login-card">
-      <h2 data-i18n="login_welcome">Welcome back</h2>
-      <p data-i18n="login_subtitle">Sign in to your restaurant intelligence dashboard</p>
-      <label class="login-label" data-i18n="login_email">Email address</label>
-      <input type="email" class="login-input" id="login-email" placeholder="you@restaurant.com">
-      <label class="login-label" data-i18n="login_password">Password</label>
-      <input type="password" class="login-input" id="login-password" placeholder="••••••••">
-      <div id="login-error" style="display:none;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.25);border-radius:9px;padding:10px 14px;font-size:13px;color:#f87171;margin-bottom:12px;" data-i18n="login_error">Incorrect email or password.</div>
-      <button class="btn-login" id="login-btn" onclick="doLogin()" data-i18n="login_btn">Sign in →</button>
-      <div style="font-size:12px;color:rgba(255,255,255,0.4);text-align:center;margin-top:8px;" data-i18n="login_with">Sign in with your CulinaraOs account</div>
+      <!-- Sign In Form -->
+      <div id="login-form">
+        <h2 data-i18n="login_welcome">Welcome back</h2>
+        <p data-i18n="login_subtitle">Sign in to your restaurant intelligence dashboard</p>
+        <label class="login-label" data-i18n="login_email">Email address</label>
+        <input type="email" class="login-input" id="login-email" placeholder="you@restaurant.com">
+        <label class="login-label" data-i18n="login_password">Password</label>
+        <input type="password" class="login-input" id="login-password" placeholder="••••••••">
+        <div id="login-error" style="display:none;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.25);border-radius:9px;padding:10px 14px;font-size:13px;color:#f87171;margin-bottom:12px;" data-i18n="login_error">Incorrect email or password.</div>
+        <button class="btn-login" id="login-btn" onclick="doLogin()" data-i18n="login_btn">Sign in →</button>
+        <div style="font-size:12px;color:rgba(255,255,255,0.4);text-align:center;margin-top:12px;">Don't have an account? <a href="#" onclick="toggleAuthForm('signup');return false;" style="color:#4F8EF7;text-decoration:none;font-weight:600;">Create one →</a></div>
+      </div>
+      <!-- Sign Up Form -->
+      <div id="signup-form" style="display:none;">
+        <h2>Get started</h2>
+        <p style="color:#505058;font-size:13.5px;margin-bottom:28px;line-height:1.5;">Create your account and add your first restaurant</p>
+        <label class="login-label">Full name</label>
+        <input type="text" class="login-input" id="signup-name" placeholder="e.g. Marc Dubois">
+        <label class="login-label">Email address</label>
+        <input type="email" class="login-input" id="signup-email" placeholder="you@restaurant.com">
+        <label class="login-label">Password</label>
+        <input type="password" class="login-input" id="signup-password" placeholder="Min 6 characters">
+        <label class="login-label">Restaurant name</label>
+        <input type="text" class="login-input" id="signup-restaurant" placeholder="e.g. Chez Marie">
+        <label class="login-label">Location</label>
+        <input type="text" class="login-input" id="signup-location" placeholder="e.g. Montreal, QC">
+        <label class="login-label">POS system</label>
+        <select class="login-input" id="signup-pos" style="appearance:auto;">
+          <option value="">Select your POS...</option>
+          <option value="Lightspeed">Lightspeed</option>
+          <option value="Cluster">Cluster</option>
+          <option value="Square">Square</option>
+          <option value="Toast">Toast</option>
+          <option value="Clover">Clover</option>
+          <option value="TouchBistro">TouchBistro</option>
+          <option value="Other">Other</option>
+          <option value="None">No POS yet</option>
+        </select>
+        <div id="signup-error" style="display:none;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.25);border-radius:9px;padding:10px 14px;font-size:13px;color:#f87171;margin-bottom:12px;"></div>
+        <button class="btn-login" id="signup-btn" onclick="doSignup()">Create account →</button>
+        <div style="font-size:12px;color:rgba(255,255,255,0.4);text-align:center;margin-top:12px;">Already have an account? <a href="#" onclick="toggleAuthForm('login');return false;" style="color:#4F8EF7;text-decoration:none;font-weight:600;">Sign in →</a></div>
+      </div>
     </div>
     <div class="login-footer" data-i18n="login_footer">Trusted by 12+ restaurants in Quebec</div>
   </div>
@@ -3222,6 +3255,123 @@ function showScreen(id) {
   target.style.display = id === 'app' ? 'block' : 'flex';
 }
 
+function toggleAuthForm(mode) {
+  const loginForm = document.getElementById('login-form');
+  const signupForm = document.getElementById('signup-form');
+  if (mode === 'signup') {
+    loginForm.style.display = 'none';
+    signupForm.style.display = '';
+  } else {
+    loginForm.style.display = '';
+    signupForm.style.display = 'none';
+  }
+}
+
+async function doSignup() {
+  const name = document.getElementById('signup-name')?.value?.trim();
+  const email = document.getElementById('signup-email')?.value?.trim();
+  const pass = document.getElementById('signup-password')?.value;
+  const restName = document.getElementById('signup-restaurant')?.value?.trim();
+  const restLoc = document.getElementById('signup-location')?.value?.trim();
+  const posName = document.getElementById('signup-pos')?.value;
+  const btn = document.getElementById('signup-btn');
+  const err = document.getElementById('signup-error');
+
+  if (!name || !email || !pass || !restName) {
+    if (err) { err.textContent = 'Please fill in all required fields.'; err.style.display = 'block'; }
+    return;
+  }
+  if (pass.length < 6) {
+    if (err) { err.textContent = 'Password must be at least 6 characters.'; err.style.display = 'block'; }
+    return;
+  }
+
+  if (btn) { btn.textContent = 'Creating account…'; btn.disabled = true; }
+  if (err) err.style.display = 'none';
+
+  // 1. Create auth user
+  const { data: authData, error: authErr } = await sb.auth.signUp({ email, password: pass });
+  if (authErr) {
+    if (err) { err.textContent = authErr.message; err.style.display = 'block'; }
+    if (btn) { btn.textContent = 'Create account →'; btn.disabled = false; }
+    return;
+  }
+
+  const userId = authData.user?.id;
+  if (!userId) {
+    if (err) { err.textContent = 'Account created — check email to confirm, then sign in.'; err.style.display = 'block'; }
+    if (btn) { btn.textContent = 'Create account →'; btn.disabled = false; }
+    return;
+  }
+
+  // 2. Create user profile
+  const initials = name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+  await sb.from('user_profiles').upsert({ id: userId, email, full_name: name, initials, role: 'owner' });
+
+  // 3. Create restaurant
+  const slug = restName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '').slice(0, 30);
+  const restId = slug + '-' + Date.now().toString(36);
+  await sb.from('restaurants').insert({
+    id: restId,
+    name: restName,
+    location: restLoc || '',
+    status: 'setup',
+    pos_name: posName || null,
+    pos_connected: false,
+    qbo_connected: false,
+    fc_target: 25.0,
+    onboarding_pct: 5,
+    invoice_email: slug + '@invoices.culinaraos.com'
+  });
+
+  // 4. Link user to restaurant
+  await sb.from('user_restaurants').insert({ user_id: userId, restaurant_id: restId });
+
+  // 5. Log in and show restaurant selector
+  currentUser = {
+    name, firstName: name.split(' ')[0], initials, email, role: 'owner',
+    restaurants: [restId]
+  };
+
+  // Add to local RESTAURANTS so selector can render it
+  RESTAURANTS[restId] = {
+    id: restId, name: restName, location: restLoc || '',
+    status: 'setup', pos: posName || 'Not set', onboarding: 5,
+    fc: '—', revenue: '—', target: '25.0%', alerts: 0, sync: 'Not connected'
+  };
+
+  if (btn) { btn.textContent = 'Create account →'; btn.disabled = false; }
+  renderRestaurantSelector();
+  showScreen('restaurants');
+}
+
+// Load restaurants from Supabase for authenticated user
+async function loadRestaurantsFromSupabase(userId) {
+  try {
+    const { data: urData } = await sb.from('user_restaurants').select('restaurant_id').eq('user_id', userId);
+    if (!urData || urData.length === 0) return;
+    const ids = urData.map(r => r.restaurant_id);
+    const { data: rests } = await sb.from('restaurants').select('*').in('id', ids);
+    if (!rests) return;
+    rests.forEach(r => {
+      RESTAURANTS[r.id] = {
+        id: r.id,
+        name: r.name,
+        location: r.location || '',
+        status: r.status || 'setup',
+        pos: r.pos_name || 'Not set',
+        onboarding: r.onboarding_pct || 0,
+        fc: r.food_cost_pct ? r.food_cost_pct + '%' : '—',
+        revenue: r.revenue_period ? '$' + Number(r.revenue_period).toLocaleString() : '—',
+        target: r.fc_target ? r.fc_target + '%' : '25.0%',
+        alerts: 0,
+        sync: r.pos_connected ? 'Connected' : 'Not connected'
+      };
+    });
+    currentUser.restaurants = ids;
+  } catch (e) { console.warn('Failed to load restaurants from Supabase:', e); }
+}
+
 function fillLogin(email, pass) {
   const eEl = document.getElementById('login-email');
   const pEl = document.getElementById('login-password');
@@ -3303,6 +3453,9 @@ async function doLogin() {
     restaurants: userRestaurants
   };
 
+  // Load restaurant data from Supabase (replaces hardcoded RESTAURANTS)
+  await loadRestaurantsFromSupabase(data.user.id);
+
   if (btn) { btn.textContent = 'Sign in →'; btn.disabled = false; }
 
   renderRestaurantSelector();
@@ -3368,14 +3521,12 @@ function renderRestaurantSelector() {
     }
   });
 
-  // Admin only: Add Restaurant card
-  if (currentUser.role === 'admin') {
-    html += `<div class="rest-card rest-add" onclick="alert('Contact info@culinaraos.com to add a new restaurant.')">
-      <div style="font-size:28px;color:#1e293b;margin-bottom:8px;">+</div>
-      <div style="color:#334155;font-size:13px;font-weight:600;">Add Restaurant</div>
-      <div style="color:#1e293b;font-size:11px;margin-top:4px;">Connect POS &amp; invoices</div>
-    </div>`;
-  }
+  // Add Restaurant card (available to all users)
+  html += `<div class="rest-card rest-add" onclick="showAddRestaurantModal()">
+    <div style="font-size:28px;color:#1e293b;margin-bottom:8px;">+</div>
+    <div style="color:#334155;font-size:13px;font-weight:600;">Add Restaurant</div>
+    <div style="color:#1e293b;font-size:11px;margin-top:4px;">Connect POS &amp; invoices</div>
+  </div>`;
 
   document.getElementById('rest-grid').innerHTML = html;
 }
@@ -7091,6 +7242,94 @@ function toggleMobileMenu() {
 
 // Apply saved language preference on page load
 document.addEventListener('DOMContentLoaded', function() { applyLang(); });
+
+// ==================== ADD RESTAURANT MODAL ====================
+function showAddRestaurantModal() {
+  document.getElementById('add-rest-modal').style.display = 'flex';
+}
+function closeAddRestaurantModal() {
+  document.getElementById('add-rest-modal').style.display = 'none';
+}
+async function doAddRestaurant() {
+  const name = document.getElementById('add-rest-name')?.value?.trim();
+  const loc = document.getElementById('add-rest-location')?.value?.trim();
+  const pos = document.getElementById('add-rest-pos')?.value;
+  const btn = document.getElementById('add-rest-btn');
+  const err = document.getElementById('add-rest-error');
+
+  if (!name) {
+    if (err) { err.textContent = 'Restaurant name is required.'; err.style.display = 'block'; }
+    return;
+  }
+  if (btn) { btn.textContent = 'Adding…'; btn.disabled = true; }
+  if (err) err.style.display = 'none';
+
+  const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '').slice(0, 30);
+  const restId = slug + '-' + Date.now().toString(36);
+  const userId = SB_USER?.id;
+
+  // Insert restaurant
+  const { error: restErr } = await sb.from('restaurants').insert({
+    id: restId, name, location: loc || '', status: 'setup',
+    pos_name: pos || null, pos_connected: false, qbo_connected: false,
+    fc_target: 25.0, onboarding_pct: 5,
+    invoice_email: slug + '@invoices.culinaraos.com'
+  });
+
+  if (restErr) {
+    if (err) { err.textContent = restErr.message; err.style.display = 'block'; }
+    if (btn) { btn.textContent = 'Add Restaurant →'; btn.disabled = false; }
+    return;
+  }
+
+  // Link to user
+  if (userId) {
+    await sb.from('user_restaurants').insert({ user_id: userId, restaurant_id: restId });
+  }
+
+  // Update local state
+  RESTAURANTS[restId] = {
+    id: restId, name, location: loc || '', status: 'setup',
+    pos: pos || 'Not set', onboarding: 5,
+    fc: '—', revenue: '—', target: '25.0%', alerts: 0, sync: 'Not connected'
+  };
+  if (!currentUser.restaurants.includes(restId)) currentUser.restaurants.push(restId);
+
+  if (btn) { btn.textContent = 'Add Restaurant →'; btn.disabled = false; }
+  closeAddRestaurantModal();
+  renderRestaurantSelector();
+}
 </script>
+
+<!-- Add Restaurant Modal -->
+<div id="add-rest-modal" class="modal-overlay" style="display:none" onclick="if(event.target===this)closeAddRestaurantModal()">
+  <div class="modal-box" style="max-width:480px;">
+    <div class="modal-header">
+      <div style="font-size:16px;font-weight:700;font-family:var(--font-display);">Add a Restaurant</div>
+      <button class="modal-close-btn" onclick="closeAddRestaurantModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <label class="login-label">Restaurant name *</label>
+      <input type="text" class="login-input" id="add-rest-name" placeholder="e.g. Chez Marie">
+      <label class="login-label">Location</label>
+      <input type="text" class="login-input" id="add-rest-location" placeholder="e.g. Montreal, QC">
+      <label class="login-label">POS system</label>
+      <select class="login-input" id="add-rest-pos" style="appearance:auto;">
+        <option value="">Select your POS...</option>
+        <option value="Lightspeed">Lightspeed</option>
+        <option value="Cluster">Cluster</option>
+        <option value="Square">Square</option>
+        <option value="Toast">Toast</option>
+        <option value="Clover">Clover</option>
+        <option value="TouchBistro">TouchBistro</option>
+        <option value="Other">Other</option>
+        <option value="None">No POS yet</option>
+      </select>
+      <div id="add-rest-error" style="display:none;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.25);border-radius:9px;padding:10px 14px;font-size:13px;color:#f87171;margin-bottom:12px;"></div>
+      <button class="btn-login" id="add-rest-btn" onclick="doAddRestaurant()">Add Restaurant →</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
