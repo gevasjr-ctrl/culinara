@@ -852,10 +852,46 @@ tr:last-child td { border-bottom: none; }
   </div>
 
   <!-- Arthur's placeholder for dashboard charts area -->
-  <div id="dashboard-arthurs-placeholder" style="display:none;padding:48px 20px;text-align:center;">
-    <div style="font-size:38px;margin-bottom:14px;">📊</div>
-    <div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px;">Dashboard ready — waiting for data</div>
-    <div style="font-size:13px;color:var(--muted);max-width:360px;margin:0 auto;line-height:1.6;">Connect Arthur's POS and start sending invoices to arthurs@culinaraos.com to see live charts and KPIs here.</div>
+  <div id="dashboard-arthurs-placeholder" style="display:none;padding:32px 20px;">
+    <div style="text-align:center;margin-bottom:32px;">
+      <div style="font-size:38px;margin-bottom:14px;">🚀</div>
+      <div style="font-size:20px;font-weight:700;color:var(--text);margin-bottom:8px;font-family:var(--font-display);">Let's get you set up</div>
+      <div style="font-size:13px;color:var(--muted);max-width:400px;margin:0 auto;line-height:1.6;">Complete these steps to start seeing your kitchen intelligence. Each step takes under 5 minutes.</div>
+    </div>
+    <div style="max-width:520px;margin:0 auto;display:flex;flex-direction:column;gap:12px;" id="onboarding-checklist">
+      <div style="background:var(--bg-card);border:1px solid rgba(79,142,247,0.25);border-radius:12px;padding:18px 20px;display:flex;align-items:center;gap:14px;cursor:pointer;" onclick="showCSVUploadModal()">
+        <div class="step-num">1</div>
+        <div style="flex:1;">
+          <div style="font-size:14px;font-weight:600;color:var(--text);">Import your POS data</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px;">Upload a CSV export from your POS, or connect live sync</div>
+        </div>
+        <div style="color:#4F8EF7;font-size:13px;font-weight:600;">Upload CSV →</div>
+      </div>
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:18px 20px;display:flex;align-items:center;gap:14px;opacity:0.7;">
+        <div class="step-num" style="background:#334155;">2</div>
+        <div style="flex:1;">
+          <div style="font-size:14px;font-weight:600;color:var(--text);">Set up invoice inbox</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px;">Forward supplier invoices to your CulinaraOs email address</div>
+        </div>
+        <div style="color:var(--muted);font-size:12px;">Coming soon</div>
+      </div>
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:18px 20px;display:flex;align-items:center;gap:14px;opacity:0.7;">
+        <div class="step-num" style="background:#334155;">3</div>
+        <div style="flex:1;">
+          <div style="font-size:14px;font-weight:600;color:var(--text);">Add your first recipes</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px;">Input portion weights so we can calculate your real food cost</div>
+        </div>
+        <div style="color:var(--muted);font-size:12px;">After import</div>
+      </div>
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:18px 20px;display:flex;align-items:center;gap:14px;opacity:0.5;">
+        <div class="step-num" style="background:#334155;">4</div>
+        <div style="flex:1;">
+          <div style="font-size:14px;font-weight:600;color:var(--text);">Review your first report</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:2px;">Auto-generates once data is loaded</div>
+        </div>
+        <div style="color:var(--muted);font-size:12px;">Auto</div>
+      </div>
+    </div>
   </div>
 
   <!-- Charts area (Bottē only) -->
@@ -7299,7 +7335,161 @@ async function doAddRestaurant() {
   closeAddRestaurantModal();
   renderRestaurantSelector();
 }
+
+// ==================== CSV UPLOAD ====================
+function showCSVUploadModal() {
+  document.getElementById('csv-upload-modal').style.display = 'flex';
+  document.getElementById('csv-preview').innerHTML = '';
+  document.getElementById('csv-status').textContent = '';
+  const fileInput = document.getElementById('csv-file-input');
+  if (fileInput) fileInput.value = '';
+}
+function closeCSVUploadModal() {
+  document.getElementById('csv-upload-modal').style.display = 'none';
+}
+
+let csvParsedRows = [];
+
+function handleCSVFile(file) {
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const text = e.target.result;
+    const lines = text.split('\n').filter(l => l.trim());
+    if (lines.length < 2) {
+      document.getElementById('csv-status').textContent = 'File appears empty.';
+      return;
+    }
+
+    const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
+    const rows = [];
+    for (let i = 1; i < lines.length; i++) {
+      const vals = lines[i].split(',').map(v => v.trim().replace(/"/g, ''));
+      if (vals.length >= 2) {
+        const obj = {};
+        headers.forEach((h, idx) => { obj[h] = vals[idx] || ''; });
+        rows.push(obj);
+      }
+    }
+
+    csvParsedRows = rows;
+
+    // Auto-detect POS format
+    const hStr = headers.join('|').toLowerCase();
+    let format = 'unknown';
+    if (hStr.includes('transaction amount') && hStr.includes('transaction quantity')) format = 'lightspeed';
+    else if (hStr.includes('net sales') || hStr.includes('gross sales')) format = 'square';
+    else if (hStr.includes('item name') && hStr.includes('quantity sold')) format = 'generic';
+
+    // Show preview
+    const preview = document.getElementById('csv-preview');
+    const statusEl = document.getElementById('csv-status');
+    statusEl.innerHTML = `<span style="color:#34C97A;font-weight:600;">Detected: ${format === 'lightspeed' ? 'Lightspeed' : format === 'square' ? 'Square' : 'Generic CSV'}</span> · ${rows.length} rows · ${headers.length} columns`;
+
+    let tableHTML = '<div style="overflow-x:auto;margin-top:12px;max-height:300px;overflow-y:auto;"><table><thead><tr>';
+    const showCols = headers.slice(0, 6);
+    showCols.forEach(h => { tableHTML += '<th>' + h + '</th>'; });
+    if (headers.length > 6) tableHTML += '<th>...</th>';
+    tableHTML += '</tr></thead><tbody>';
+    rows.slice(0, 8).forEach(row => {
+      tableHTML += '<tr>';
+      showCols.forEach(h => { tableHTML += '<td>' + (row[h] || '') + '</td>'; });
+      if (headers.length > 6) tableHTML += '<td>...</td>';
+      tableHTML += '</tr>';
+    });
+    if (rows.length > 8) tableHTML += '<tr><td colspan="' + (showCols.length + 1) + '" style="text-align:center;color:var(--muted);">... ' + (rows.length - 8) + ' more rows</td></tr>';
+    tableHTML += '</tbody></table></div>';
+    tableHTML += '<button class="btn-primary" style="margin-top:16px;width:100%;" onclick="importCSVToSupabase()">Import ' + rows.length + ' items →</button>';
+    preview.innerHTML = tableHTML;
+  };
+  reader.readAsText(file);
+}
+
+async function importCSVToSupabase() {
+  if (!csvParsedRows.length) return;
+  const statusEl = document.getElementById('csv-status');
+  statusEl.innerHTML = '<span style="color:#4F8EF7;">Importing...</span>';
+
+  const restId = ACTIVE_SLUG;
+  const headers = Object.keys(csvParsedRows[0]);
+  const hStr = headers.join('|').toLowerCase();
+
+  // Map columns based on detected format
+  let nameCol, qtyCol, amtCol, priceCol;
+  if (hStr.includes('transaction amount')) {
+    // Lightspeed format
+    nameCol = headers[0]; // first column is item name
+    qtyCol = headers.find(h => h.toLowerCase().includes('transaction quantity'));
+    amtCol = headers.find(h => h.toLowerCase().includes('transaction amount'));
+    priceCol = null; // compute from amount/qty
+  } else {
+    nameCol = headers.find(h => /item|name|product/i.test(h)) || headers[0];
+    qtyCol = headers.find(h => /qty|quantity|units|sold/i.test(h));
+    amtCol = headers.find(h => /amount|revenue|sales|total/i.test(h));
+    priceCol = headers.find(h => /price/i.test(h));
+  }
+
+  const items = csvParsedRows.map(row => {
+    const name = row[nameCol] || 'Unknown';
+    const qty = parseInt(row[qtyCol]) || 0;
+    const amt = parseFloat(row[amtCol]) || 0;
+    const price = priceCol ? parseFloat(row[priceCol]) : (qty > 0 ? Math.round(amt / qty * 100) / 100 : 0);
+    return {
+      restaurant_id: restId,
+      name: name,
+      category: 'Imported',
+      price: price,
+      units_sold: qty,
+      revenue: amt,
+      status: 'active',
+      display_name: name.replace(/\s*\(FH\)\s*/g, '').replace(/\s*\(included\)\s*/g, '').trim(),
+      display_category: 'Imported',
+      is_display_item: qty > 0 && amt > 0
+    };
+  }).filter(i => i.name && i.name !== 'Unknown');
+
+  // Insert into Supabase
+  const { error } = await sb.from('menu_items').insert(items);
+  if (error) {
+    statusEl.innerHTML = '<span style="color:#F05252;">Error: ' + error.message + '</span>';
+    return;
+  }
+
+  statusEl.innerHTML = '<span style="color:#34C97A;font-weight:700;">' + items.length + ' items imported successfully!</span>';
+
+  // Update onboarding progress
+  await sb.from('restaurants').update({ onboarding_pct: 40 }).eq('id', restId);
+
+  // Reload menu data
+  const sbItems = await loadMenuFromSupabase(restId);
+  if (sbItems && sbItems.length > 0) {
+    MENU_ITEMS.length = 0;
+    MENU_ITEMS.push(...sbItems);
+  }
+
+  setTimeout(() => { closeCSVUploadModal(); navigate('profitability'); }, 1500);
+}
 </script>
+
+<!-- CSV Upload Modal -->
+<div id="csv-upload-modal" class="modal-overlay" style="display:none" onclick="if(event.target===this)closeCSVUploadModal()">
+  <div class="modal-box" style="max-width:640px;">
+    <div class="modal-header">
+      <div style="font-size:16px;font-weight:700;font-family:var(--font-display);">Import POS Data (CSV)</div>
+      <button class="modal-close-btn" onclick="closeCSVUploadModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.6;">Upload a CSV export from your POS system. Supports Lightspeed, Square, Cluster, and generic CSV formats. We auto-detect the format and import your menu items.</p>
+      <div class="import-zone" onclick="document.getElementById('csv-file-input').click()" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="event.preventDefault();this.classList.remove('drag-over');handleCSVFile(event.dataTransfer.files[0])">
+        <div style="font-size:32px;margin-bottom:8px;">📄</div>
+        <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px;">Drop your CSV file here</div>
+        <div style="font-size:12px;color:var(--muted);">or click to browse</div>
+        <input type="file" id="csv-file-input" accept=".csv,.tsv,.txt" style="display:none" onchange="if(this.files[0])handleCSVFile(this.files[0])">
+      </div>
+      <div id="csv-status" style="font-size:13px;margin-top:12px;"></div>
+      <div id="csv-preview"></div>
+    </div>
+  </div>
+</div>
 
 <!-- Add Restaurant Modal -->
 <div id="add-rest-modal" class="modal-overlay" style="display:none" onclick="if(event.target===this)closeAddRestaurantModal()">
