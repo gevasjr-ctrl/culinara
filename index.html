@@ -742,7 +742,15 @@ tr:last-child td { border-bottom: none; }
       <div id="dash-subtitle" style="font-size:12px;color:var(--muted);margin-top:1px;">Bottē Restaurant · Jan 1 – Apr 13, 2026</div>
     </div>
     <div style="display:flex;align-items:center;gap:10px;">
-      <div id="dash-period-badge" class="period-badge">📅 Jan 1 – Apr 13, 2026</div>
+      <select id="period-selector" onchange="changePeriod(this.value)" style="background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--text);padding:7px 12px;border-radius:8px;font-size:12.5px;font-weight:500;font-family:'Inter',sans-serif;cursor:pointer;appearance:auto;">
+        <option value="all">Full Period (Jan 1 – Apr 13)</option>
+        <option value="this-week">This Week</option>
+        <option value="last-week">Last Week</option>
+        <option value="this-month">This Month</option>
+        <option value="last-month">Last Month</option>
+        <option value="last-30">Last 30 Days</option>
+        <option value="last-90">Last 90 Days</option>
+      </select>
       <button class="btn-primary" onclick="alert('Live version: Lightspeed syncs every 15 min automatically.')">↻ Sync Now</button>
     </div>
   </div>
@@ -970,7 +978,10 @@ tr:last-child td { border-bottom: none; }
 <div id="section-profitability" class="section" style="padding:28px 32px;">
   <div class="section-header">
     <div><div class="section-title" data-i18n="fc_title">Food Cost by Item</div><div id="fc-subtitle" class="section-sub">Bottē Restaurant · Jan 1 – Apr 13, 2026</div></div>
-    <button class="btn-ghost" onclick="window.print()">↓ Export</button>
+    <div style="display:flex;gap:8px;">
+      <select onchange="changePeriod(this.value)" style="background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--text);padding:7px 12px;border-radius:8px;font-size:12px;font-weight:500;font-family:'Inter',sans-serif;cursor:pointer;appearance:auto;"><option value="all">Full Period</option><option value="this-week">This Week</option><option value="last-week">Last Week</option><option value="this-month">This Month</option><option value="last-month">Last Month</option><option value="last-30">Last 30 Days</option><option value="last-90">Last 90 Days</option></select>
+      <button class="btn-ghost" onclick="window.print()">↓ Export</button>
+    </div>
   </div>
   <details class="guideline-banner">
     <summary>📋 Keeping this accurate</summary>
@@ -1036,6 +1047,7 @@ tr:last-child td { border-bottom: none; }
 <div id="section-engineering" class="section" style="padding:28px 32px;">
   <div class="section-header">
     <div><div class="section-title" data-i18n="sec_menuanalysis_title">Menu Analysis</div><div class="section-sub" data-i18n="sec_menuanalysis_sub">4-quadrant matrix: Volume vs Contribution Margin per unit</div></div>
+    <select onchange="changePeriod(this.value)" style="background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--text);padding:7px 12px;border-radius:8px;font-size:12px;font-weight:500;font-family:'Inter',sans-serif;cursor:pointer;appearance:auto;"><option value="all">Full Period</option><option value="this-week">This Week</option><option value="last-week">Last Week</option><option value="this-month">This Month</option><option value="last-month">Last Month</option><option value="last-30">Last 30 Days</option><option value="last-90">Last 90 Days</option></select>
   </div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;">
     <div class="quad-box quad-star-bg">
@@ -2173,7 +2185,7 @@ tr:last-child td { border-bottom: none; }
 <!-- ===== SECTION: WEEKLY SNAPSHOT ===== -->
 <div id="section-snapshot" class="section" style="padding:28px 32px;">
   <div class="section-header">
-    <div><div class="section-title" data-i18n="sec_snapshot_title">Weekly Snapshot</div><div class="section-sub" data-i18n="sec_snapshot_sub">Week of Mar 8–12, 2026 · 5 days</div></div>
+    <div><div class="section-title" data-i18n="sec_snapshot_title">Weekly Snapshot</div><div class="section-sub" data-i18n="sec_snapshot_sub">Week of Apr 7–13, 2026 · 7 days</div></div>
     <div style="display:flex;gap:8px;">
       <button class="btn-ghost" style="font-size:12px;">← Prev Week</button>
       <button class="btn-ghost" style="font-size:12px;color:#4F8EF7;border-color:rgba(79,142,247,0.3);">This Week</button>
@@ -3032,56 +3044,11 @@ let MENU_ITEMS = [...BASE_MENU_ITEMS, ...USER_ITEMS];
 let ARTHUR_MENU_ITEMS = [];
 const ARTHUR_AVG_FC_EST = '—';
 
-const ARTHUR_ORDER_DATA = [
-  { supplier:"GFS Canada", schedule:"Order Mon for Wed delivery", color:"#4F8EF7", items:[
-    { name:"Large eggs (Burnbrae Farms)",       pack:"15 doz case",    qty:"2 CS/wk est", period:0, weekly:48.00 },
-    { name:"Beef bacon (Montfort)",             pack:"2 KG pack",      qty:"2 CS/wk est", period:0, weekly:44.00 },
-    { name:"Chicken breast boneless (fresh)",   pack:"6 KG box",       qty:"2 CS/wk est", period:0, weekly:56.00 },
-    { name:"Salami",                            pack:"2 KG roll",      qty:"1 CS/wk est", period:0, weekly:26.00 },
-    { name:"Tuna (flaked, drained)",            pack:"12×170g cans",   qty:"1 CS/wk est", period:0, weekly:18.00 },
-  ]},
-  { supplier:"Hof Kelsten Bakery", schedule:"Order Thu for Fri–Sat delivery", color:"#F5A623", items:[
-    { name:"Challah loaf (sliced, ~800g)",      pack:"Per loaf",       qty:"30/wk est",   period:0, weekly:90.00 },
-    { name:"Challah rolls",                     pack:"Per roll",       qty:"60/wk est",   period:0, weekly:60.00 },
-    { name:"Babka (chocolate / cinnamon)",      pack:"Per loaf",       qty:"6/wk est",    period:0, weekly:48.00 },
-    { name:"Black Russian toast bread",         pack:"Per loaf",       qty:"10/wk est",   period:0, weekly:30.00 },
-  ]},
-  { supplier:"Fumoir Atkins", schedule:"Order Fri for Mon delivery", color:"#34C97A", items:[
-    { name:"Gravlax side (house-cured)",        pack:"1.5–2 KG side",  qty:"3/wk est",    period:0, weekly:165.00 },
-    { name:"Smoked salmon sliced",              pack:"400g pack",      qty:"6/wk est",    period:0, weekly:84.00 },
-  ]},
-  { supplier:"Sysco Montréal", schedule:"Order Wed for Fri delivery", color:"#A78BFA", items:[
-    { name:"Cream cheese (Philadelphia 2 KG)",  pack:"2 KG block",     qty:"4/wk est",    period:0, weekly:52.00 },
-    { name:"Cottage cheese 2% (2 KG tub)",      pack:"2 KG tub",       qty:"4/wk est",    period:0, weekly:32.00 },
-    { name:"Ricotta (Saputo 1 KG)",             pack:"1 KG tub",       qty:"4/wk est",    period:0, weekly:24.00 },
-    { name:"Sour cream (Liberté 3%, 4L)",       pack:"4 L bucket",     qty:"2/wk est",    period:0, weekly:18.00 },
-    { name:"Capers (Krinos 1L jar)",            pack:"1 L jar",        qty:"1/wk est",    period:0, weekly:8.50  },
-    { name:"Canned chickpeas",                  pack:"12×540ml CS",    qty:"1 CS/wk est", period:0, weekly:15.00 },
-    { name:"Tahini",                            pack:"500g jar",       qty:"2/wk est",    period:0, weekly:14.00 },
-    { name:"Russet potatoes",                   pack:"22.7 KG bag",    qty:"1/wk est",    period:0, weekly:19.00 },
-  ]},
-  { supplier:"Marché Jean-Talon Produce", schedule:"2× per week (Tue & Fri)", color:"#F05252", items:[
-    { name:"Avocados (Hass ripe)",              pack:"Case 48ct",      qty:"1/wk est",    period:0, weekly:42.00 },
-    { name:"Tomatoes (cluster)",                pack:"10 KG box",      qty:"1/wk est",    period:0, weekly:22.00 },
-    { name:"Fresh dill, chives, parsley",       pack:"Bunch each",     qty:"6 bunches est",period:0,weekly:18.00 },
-    { name:"Baby greens / micro (local)",       pack:"1 KG bag",       qty:"2/wk est",    period:0, weekly:24.00 },
-    { name:"Mango (Ataulfo, seasonal)",         pack:"Per kg",         qty:"3 KG/wk est", period:0, weekly:9.00  },
-    { name:"Lebanese cucumbers",               pack:"Bunch",          qty:"15/wk est",   period:0, weekly:9.00  },
-  ]},
-];
+// Arthur's order data — empty until POS connected and suppliers added
+const ARTHUR_ORDER_DATA = [];
 
-const ARTHUR_YIELD_ITEMS = [
-  { cat:'Proteins',    emoji:'🥚', name:'Large eggs (Burnbrae)', pack:'15 doz case', packAmt:180, portionAmt:3, portionLabel:'3 eggs per dish', costBag:38.00, note:'Primary protein — track waste from cracks. Beat with fork, not whisk, for silky curds.', usedIn:'All egg dishes, Shakshuka, pancake batter' },
-  { cat:'Proteins',    emoji:'🍗', name:'Chicken breast (fresh, 6 KG box)', pack:'6 KG box', packAmt:6000, portionAmt:180, portionLabel:'180g per schnitzel (pounded thin)', costBag:56.00, note:'Pound to 1cm even thickness — consistency key for McArthur', usedIn:'McArthur Chicken Schnitzel' },
-  { cat:'Fish',        emoji:'🐟', name:'Gravlax / smoked salmon (Fumoir Atkins)', pack:'1.5–2 KG side', packAmt:1700, portionAmt:80, portionLabel:'80g per plate (weigh every order)', costBag:55.00, note:'HIGH COST — slice to order, weigh portions. Day 1–3 fresh, day 4+ tartare only.', usedIn:'Salmon Tower, Gravlax plate, Salmon Bagel' },
-  { cat:'Fish',        emoji:'🐠', name:'Fresh salmon for tartar (sushi-grade)', pack:'Per KG (order 3×/wk)', packAmt:1000, portionAmt:120, portionLabel:'120g per plate', costBag:32.00, note:'Use within 24h of delivery — inspect colour & smell on arrival', usedIn:'Salmon Tartar' },
-  { cat:'Dairy',       emoji:'🧀', name:'Cream cheese (Philadelphia 2 KG block)', pack:'2 KG block', packAmt:2000, portionAmt:50, portionLabel:'50g per portion (bagel / smoked salmon)', costBag:13.00, note:'Soften daily — over-spreading is the #1 cream cheese waste vector', usedIn:'Salmon bagel, Salmon Tower, spread' },
-  { cat:'Dairy',       emoji:'🥛', name:'Cottage cheese 2% (2 KG tub)', pack:'2 KG tub', packAmt:2000, portionAmt:200, portionLabel:'200g per syrniki batch (6 pancakes)', costBag:8.00, note:'Signature item base — drain excess whey before mixing or pancakes fall apart', usedIn:'Syrniki' },
-  { cat:'Dairy',       emoji:'🧀', name:'Ricotta (Saputo 1 KG tub)', pack:'1 KG tub', packAmt:1000, portionAmt:150, portionLabel:'150g per ricotta pancake batch', costBag:6.00, note:'Drain overnight if too wet — batter consistency controls texture', usedIn:'Ricotta Pancakes' },
-  { cat:'Baked Goods', emoji:'🍞', name:'Challah loaf (Hof Kelsten, ~800g)', pack:'Per loaf', packAmt:800, portionAmt:60, portionLabel:'60g (2 thick slices) per portion', costBag:3.00, note:'Order fresh daily — day-old → French toast only. Do NOT freeze. Central to multiple dishes.', usedIn:'Challah & Butter, Latke Smorgasbord, Moroccan Toast, Eggs & Salami' },
-  { cat:'Produce',     emoji:'🥑', name:'Avocados (Hass, case 48ct)', pack:'Case 48ct', packAmt:48, portionAmt:1, portionLabel:'½–¾ avocado per toast (weigh, not eyeball)', costBag:42.00, note:'Check daily ripeness — rotate front to back. Brown spots: trim and use same day.', usedIn:'Avocado Toast, garnish' },
-  { cat:'Produce',     emoji:'🥔', name:'Potatoes (russet, 22.7 KG bag)', pack:'22.7 KG bag', packAmt:22700, portionAmt:300, portionLabel:'300g peeled per latke portion (3 latkes)', costBag:19.00, note:'Grate fresh, squeeze dry in cloth — oxidize within 30 min. Par-cook at start of shift.', usedIn:'Latkes, Latke Smorgasbord, egg plates' },
-];
+// Arthur's yield data — empty until recipes and portions are input
+const ARTHUR_YIELD_ITEMS = [];
 
 const PREP_ITEMS = [
   // SOURDOUGH DOUGH PROGRAM (featured — 3-day fermentation)
@@ -3251,7 +3218,7 @@ const INVOICES = [
 const USERS = {
   'demo@culinaraos.com':    { password:'demo1234',    name:'Thomas Gevas',  firstName:'Thomas',  initials:'TG', role:'admin',  restaurants:['botte','arthurs'] },
   'botte@culinaraos.com':   { password:'botte2024',   name:'Marc Dubois',   firstName:'Marc',    initials:'MD', role:'owner',  restaurants:['botte'] },
-  'arthurs@culinaraos.com': { password:'arthurs2024', name:'Arthur Martin', firstName:'Arthur',  initials:'AM', role:'owner',  restaurants:['arthurs'] },
+  'arthurs@culinaraos.com': { password:'arthurs2024', name:"Arthur's Nosh Bar", firstName:'Arthur',  initials:'AN', role:'owner',  restaurants:['arthurs'] },
 };
 
 const RESTAURANTS = {
@@ -3406,6 +3373,106 @@ async function loadRestaurantsFromSupabase(userId) {
     });
     currentUser.restaurants = ids;
   } catch (e) { console.warn('Failed to load restaurants from Supabase:', e); }
+}
+
+// ==================== PERIOD SELECTOR ====================
+let CURRENT_PERIOD = 'all';
+
+function getPeriodDates(period) {
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  let from, to, label, days;
+
+  switch (period) {
+    case 'this-week': {
+      const dow = today.getDay();
+      from = new Date(today); from.setDate(today.getDate() - dow);
+      to = today;
+      days = dow + 1;
+      label = 'This Week';
+      break;
+    }
+    case 'last-week': {
+      const dow = today.getDay();
+      to = new Date(today); to.setDate(today.getDate() - dow - 1);
+      from = new Date(to); from.setDate(to.getDate() - 6);
+      days = 7;
+      label = 'Last Week';
+      break;
+    }
+    case 'this-month': {
+      from = new Date(today.getFullYear(), today.getMonth(), 1);
+      to = today;
+      days = today.getDate();
+      label = today.toLocaleString('en', { month: 'long' });
+      break;
+    }
+    case 'last-month': {
+      from = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+      to = new Date(today.getFullYear(), today.getMonth(), 0);
+      days = to.getDate();
+      label = from.toLocaleString('en', { month: 'long' });
+      break;
+    }
+    case 'last-30': {
+      from = new Date(today); from.setDate(today.getDate() - 30);
+      to = today;
+      days = 30;
+      label = 'Last 30 Days';
+      break;
+    }
+    case 'last-90': {
+      from = new Date(today); from.setDate(today.getDate() - 90);
+      to = today;
+      days = 90;
+      label = 'Last 90 Days';
+      break;
+    }
+    default: { // 'all'
+      from = new Date(2026, 0, 1);
+      to = new Date(2026, 3, 13);
+      days = 103;
+      label = 'Full Period';
+      break;
+    }
+  }
+
+  const fmt = d => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  const range = fmt(from) + ' – ' + fmt(to) + ', ' + to.getFullYear();
+  return { from, to, days, label, range };
+}
+
+function changePeriod(period) {
+  CURRENT_PERIOD = period;
+  const p = getPeriodDates(period);
+
+  // Update all period displays across sections
+  const periodEls = [
+    'dash-subtitle', 'fc-subtitle', 'insights-subtitle'
+  ];
+  const restName = RESTAURANTS[ACTIVE_SLUG]?.name || 'Restaurant';
+  periodEls.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = restName + ' · ' + p.range;
+  });
+
+  // Update topbar period badge
+  const badge = document.getElementById('dash-period-badge');
+  if (badge) badge.textContent = '📅 ' + p.range;
+
+  // Update snapshot subtitle
+  const snapSub = document.getElementById('snap-subtitle');
+  if (snapSub) snapSub.textContent = p.label + ' · ' + p.days + ' days';
+
+  // Update efficiency badge
+  const effBadge = document.getElementById('efficiency-badge');
+  if (effBadge) effBadge.textContent = '✦ AI-scored · ' + p.days + ' days';
+
+  // Note: When time-series data is available from POS API,
+  // this function will also filter MENU_ITEMS by date range
+  // and recompute KPIs. For now it updates the display labels.
+
+  console.log('[Period] Changed to:', period, p.range, p.days + ' days');
 }
 
 function fillLogin(email, pass) {
@@ -6520,7 +6587,7 @@ const T = {
     sec_staff_title:'Staff & Tasks', sec_staff_sub:'Today\'s team and daily task board',
     sec_social_title:'Social Media', sec_social_sub:'Data-driven content planning — what to push, when to post',
     sec_settings_title:'Integrations', sec_settings_sub:'Connect your POS, accounting, and invoice systems',
-    sec_snapshot_title:'Weekly Snapshot', sec_snapshot_sub:'Week of Mar 8–12, 2026 · 5 days',
+    sec_snapshot_title:'Weekly Snapshot', sec_snapshot_sub:'Week of Apr 7–13, 2026 · 7 days',
     sec_reports_title:'Reports', sec_reports_sub:'Generate and export period summaries for ownership and staff',
     sec_efficiency_title:'Efficiency Score', sec_efficiency_sub:'How well Bottē is performing across prep, pricing, and sourcing',
     // Dashboard secondary
