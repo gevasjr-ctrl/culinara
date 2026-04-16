@@ -3283,6 +3283,15 @@ async function doLogin() {
   const greetEl = document.getElementById('rest-greeting');
   if (greetEl) greetEl.textContent = 'Good morning, ' + displayName + ' 👋';
 
+  // Fetch user's linked restaurants from Supabase
+  let userRestaurants = ['botte']; // default fallback
+  try {
+    const { data: urData } = await sb.from('user_restaurants').select('restaurant_id').eq('user_id', data.user.id);
+    if (urData && urData.length > 0) {
+      userRestaurants = urData.map(r => r.restaurant_id);
+    }
+  } catch (e) { console.warn('Failed to load user restaurants:', e); }
+
   // Update currentUser for compatibility with existing selector/sidebar code
   currentUser = {
     name: SB_PROFILE?.full_name || displayName,
@@ -3290,7 +3299,7 @@ async function doLogin() {
     initials: (SB_PROFILE?.full_name || displayName).split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2),
     email: email,
     role: SB_PROFILE?.role || 'admin',
-    restaurants: ['botte', 'arthurs']
+    restaurants: userRestaurants
   };
 
   if (btn) { btn.textContent = 'Sign in →'; btn.disabled = false; }
@@ -7037,8 +7046,13 @@ function filterFREN(val) {
         initials: (profile.full_name || displayName).split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2),
         email: session.user.email,
         role: profile.role || 'admin',
-        restaurants: ['botte', 'arthurs']
+        restaurants: ['botte'] // default, updated below
       };
+      // Fetch user's linked restaurants
+      try {
+        const { data: urData } = await sb.from('user_restaurants').select('restaurant_id').eq('user_id', session.user.id);
+        if (urData && urData.length > 0) currentUser.restaurants = urData.map(r => r.restaurant_id);
+      } catch (e) { console.warn('Failed to load user restaurants:', e); }
       renderRestaurantSelector();
       showScreen('restaurants');
     }
