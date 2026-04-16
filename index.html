@@ -399,6 +399,7 @@ tr:last-child td { border-bottom: none; }
       <div class="user-avatar" id="rest-user-avatar">TG</div>
       <span style="color:#94a3b8;font-size:13px;font-weight:500;" id="rest-user-name">Thomas G.</span>
       <span style="background:rgba(99,102,241,0.15);color:#a5b4fc;padding:3px 10px;border-radius:6px;font-size:10px;font-weight:800;letter-spacing:0.04em;">PRO</span>
+      <button onclick="doLogout()" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:#94a3b8;padding:6px 14px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.12s;" onmouseover="this.style.background='rgba(255,255,255,0.12)'" onmouseout="this.style.background='rgba(255,255,255,0.06)'">Sign out</button>
     </div>
   </div>
   <div class="rest-wrap fade-up">
@@ -486,13 +487,12 @@ tr:last-child td { border-bottom: none; }
     <div style="padding:0 0 8px 0;">
       <button id="lang-toggle-btn" onclick="toggleLang()" style="width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:var(--muted);font-size:11.5px;font-weight:700;padding:7px;border-radius:8px;cursor:pointer;letter-spacing:0.08em;transition:all 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">FR</button>
     </div>
-    <div style="display:flex;align-items:center;gap:9px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:9px;padding:10px 11px;cursor:pointer;" onclick="doLogout()">
+    <div style="display:flex;align-items:center;gap:9px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:9px;padding:10px 11px;cursor:pointer;">
       <div class="user-avatar" id="sidebar-user-avatar">TG</div>
       <div style="flex:1;overflow:hidden;">
         <div style="color:#e2e8f0;font-size:12.5px;font-weight:600;white-space:nowrap;" id="sidebar-user-name">Thomas Gevas</div>
         <div style="color:#48484A;font-size:10.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" id="sidebar-user-email">team@culinaraos.com</div>
       </div>
-      <div style="color:#48484A;font-size:11px;font-weight:600;flex-shrink:0;" title="Sign out">↪</div>
     </div>
   </div>
 </div>
