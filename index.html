@@ -3886,6 +3886,53 @@ function loadRestaurantData(id) {
   }
 }
 
+// ==================== RESTAURANT GUARD ====================
+// Single global function that controls visibility for ALL sections based on active restaurant.
+// Instead of checking ACTIVE_SLUG in every render function, this runs once on navigate().
+function applyRestaurantGuard() {
+  const isBotte = ACTIVE_SLUG === 'botte';
+  const hasData = isBotte; // only Bottē has real data for now
+
+  // Pairs: [bottē-content-id, placeholder-id]
+  const pairs = [
+    ['insights-botte-content', 'insights-arthurs-placeholder'],
+    ['dashboard-charts-area', 'dashboard-arthurs-placeholder'],
+    ['efficiency-botte-content', 'efficiency-arthurs-placeholder'],
+    ['staff-botte-content', 'staff-arthurs-placeholder'],
+    ['reports-botte-content', 'reports-arthurs-placeholder'],
+    ['settings-botte-content', 'settings-arthurs-content'],
+    ['social-botte-content', 'social-arthurs-placeholder'],
+    ['inventory-botte-content', 'inventory-arthurs-placeholder'],
+  ];
+
+  pairs.forEach(([botteId, placeholderId]) => {
+    const botteEl = document.getElementById(botteId);
+    const placeholderEl = document.getElementById(placeholderId);
+    if (botteEl) botteEl.style.display = hasData ? '' : 'none';
+    if (placeholderEl) placeholderEl.style.display = hasData ? 'none' : '';
+  });
+
+  // Filter rows: show Bottē or Arthur's filter buttons
+  const frBotte = document.getElementById('fc-filter-row');
+  const frArthurs = document.getElementById('fc-filter-row-arthurs');
+  if (frBotte) frBotte.style.display = isBotte ? '' : 'none';
+  if (frArthurs) frArthurs.style.display = isBotte ? 'none' : '';
+
+  // Estimates banner for non-Bottē
+  const estBan = document.getElementById('fc-estimates-banner');
+  if (estBan) estBan.style.display = isBotte ? 'none' : 'none'; // hidden for both now (no estimates)
+
+  // Savings banner + alerts (only for restaurants with data)
+  const savBanner = document.getElementById('savings-banner');
+  const alertStrip = document.getElementById('alert-strip');
+  if (savBanner) savBanner.style.display = hasData ? '' : 'none';
+  if (alertStrip) alertStrip.style.display = hasData ? '' : 'none';
+
+  // Secondary KPIs
+  const secKpi = document.getElementById('secondary-kpis');
+  if (secKpi) secKpi.style.display = hasData ? '' : 'none';
+}
+
 // ==================== NAVIGATION ====================
 const NAV_MAP = { insights:0, ask:1, dashboard:2, snapshot:3, profitability:4, engineering:5, efficiency:6, prep:7, prepboard:8, yield:9, recipes:10, inventory:11, orders:12, staff:13, invoices:14, reports:15, social:16, settings:17 };
 
@@ -3898,6 +3945,9 @@ function navigate(id) {
     const items = document.querySelectorAll('.nav-item');
     if (items[NAV_MAP[id]]) items[NAV_MAP[id]].classList.add('active');
   }
+  // Global guard: apply restaurant-specific visibility before rendering
+  applyRestaurantGuard();
+
   const fns = { dashboard: initCharts, snapshot: renderSnapshot, profitability: () => renderTable('all'), engineering: renderEngineering, prep: renderPrep, yield: renderYield, recipes: renderRecipes, orders: renderOrders, invoices: () => { renderInvoices(); renderFRENTranslator(); }, social: renderSocialMedia, ask: renderAsk };
   if (fns[id]) fns[id]();
   updateFABVisibility(id);
