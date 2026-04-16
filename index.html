@@ -2957,50 +2957,10 @@ let MENU_ITEMS = [...BASE_MENU_ITEMS, ...USER_ITEMS];
 
 // ==================== ARTHUR'S DATA ====================
 // Menu scraped from arthursmtl.com + third-party sources (Mar 2026)
-// Food costs are ESTIMATES based on industry benchmarks — actuals will
-// populate automatically once invoices are connected.
-const ARTHUR_MENU_ITEMS = [
-  // --- Eggs & Plates ---
-  { cat:"Eggs & Plates",      name:"Shakshuka",                         units:0, price:16, cost:4.00,  fc:0.2500, rev:0, foodCost:0, gm:0, gmUnit:12.00, gmPct:0.7500, eng:"star"      },
-  { cat:"Eggs & Plates",      name:"Eggs & Salami",                     units:0, price:16, cost:4.48,  fc:0.2800, rev:0, foodCost:0, gm:0, gmUnit:11.52, gmPct:0.7200, eng:"plowhorse" },
-  { cat:"Eggs & Plates",      name:"Soft Scrambled + Beef Bacon",       units:0, price:16, cost:4.48,  fc:0.2800, rev:0, foodCost:0, gm:0, gmUnit:11.52, gmPct:0.7200, eng:"plowhorse" },
-  // --- Pancakes ---
-  { cat:"Pancakes",           name:"Syrniki (Cottage Cheese Pancakes)", units:0, price:16, cost:3.84,  fc:0.2400, rev:0, foodCost:0, gm:0, gmUnit:12.16, gmPct:0.7600, eng:"star"      },
-  { cat:"Pancakes",           name:"Ricotta Pancakes",                  units:0, price:16, cost:3.52,  fc:0.2200, rev:0, foodCost:0, gm:0, gmUnit:12.48, gmPct:0.7800, eng:"star"      },
-  // --- Latkes ---
-  { cat:"Latkes",             name:"Latkes",                            units:0, price:10, cost:2.00,  fc:0.2000, rev:0, foodCost:0, gm:0, gmUnit:8.00,  gmPct:0.8000, eng:"star"      },
-  { cat:"Latkes",             name:"Latke Smorgasbord",                 units:0, price:18, cost:5.40,  fc:0.3000, rev:0, foodCost:0, gm:0, gmUnit:12.60, gmPct:0.7000, eng:"puzzle"    },
-  // --- Sandwiches & Bagels ---
-  { cat:"Sandwiches & Bagels",name:"McArthur Chicken Schnitzel",        units:0, price:20, cost:6.00,  fc:0.3000, rev:0, foodCost:0, gm:0, gmUnit:14.00, gmPct:0.7000, eng:"star"      },
-  { cat:"Sandwiches & Bagels",name:"Classic Salmon & Cream Cheese Bagel",units:0,price:16, cost:5.76, fc:0.3600, rev:0, foodCost:0, gm:0, gmUnit:10.24, gmPct:0.6400, eng:"plowhorse" },
-  { cat:"Sandwiches & Bagels",name:"Deluxe Breakfast Sandwich",         units:0, price:16, cost:4.48,  fc:0.2800, rev:0, foodCost:0, gm:0, gmUnit:11.52, gmPct:0.7200, eng:"plowhorse" },
-  { cat:"Sandwiches & Bagels",name:"Tuna Melt",                         units:0, price:16, cost:4.48,  fc:0.2800, rev:0, foodCost:0, gm:0, gmUnit:11.52, gmPct:0.7200, eng:"puzzle"    },
-  { cat:"Sandwiches & Bagels",name:"Salami Sandwich",                   units:0, price:12, cost:3.36,  fc:0.2800, rev:0, foodCost:0, gm:0, gmUnit:8.64,  gmPct:0.7200, eng:"dog"       },
-  // --- Toast ---
-  { cat:"Toast",              name:"Avocado Toast",                     units:0, price:17, cost:4.25,  fc:0.2500, rev:0, foodCost:0, gm:0, gmUnit:12.75, gmPct:0.7500, eng:"star"      },
-  { cat:"Toast",              name:"Moroccan Toast",                    units:0, price:20, cost:5.80,  fc:0.2900, rev:0, foodCost:0, gm:0, gmUnit:14.20, gmPct:0.7100, eng:"puzzle"    },
-  // --- Salads ---
-  { cat:"Salads",             name:"Greek Salad",                       units:0, price:20, cost:5.40,  fc:0.2700, rev:0, foodCost:0, gm:0, gmUnit:14.60, gmPct:0.7300, eng:"plowhorse" },
-  { cat:"Salads",             name:"Winter Salad",                      units:0, price:20, cost:5.20,  fc:0.2600, rev:0, foodCost:0, gm:0, gmUnit:14.80, gmPct:0.7400, eng:"puzzle"    },
-  { cat:"Salads",             name:"Sababa Mango Salad",                units:0, price:15, cost:3.75,  fc:0.2500, rev:0, foodCost:0, gm:0, gmUnit:11.25, gmPct:0.7500, eng:"puzzle"    },
-  // --- Fish & Seafood ---
-  { cat:"Fish & Seafood",     name:"Salmon Tower (for 2)",              units:0, price:35, cost:12.25, fc:0.3500, rev:0, foodCost:0, gm:0, gmUnit:22.75, gmPct:0.6500, eng:"star"      },
-  { cat:"Fish & Seafood",     name:"Gravlax",                           units:0, price:21, cost:7.98,  fc:0.3800, rev:0, foodCost:0, gm:0, gmUnit:13.02, gmPct:0.6200, eng:"puzzle"    },
-  { cat:"Fish & Seafood",     name:"Salmon Tartar",                     units:0, price:21, cost:7.98,  fc:0.3800, rev:0, foodCost:0, gm:0, gmUnit:13.02, gmPct:0.6200, eng:"puzzle"    },
-  // --- Sides ---
-  { cat:"Sides",              name:"Challah & Butter",                  units:0, price:4,  cost:0.72,  fc:0.1800, rev:0, foodCost:0, gm:0, gmUnit:3.28,  gmPct:0.8200, eng:"plowhorse" },
-  { cat:"Sides",              name:"Matzah Ball Soup",                  units:0, price:12, cost:2.76,  fc:0.2300, rev:0, foodCost:0, gm:0, gmUnit:9.24,  gmPct:0.7700, eng:"plowhorse" },
-  // --- Beverages ---
-  { cat:"Beverages",          name:"Coffee",                            units:0, price:4,  cost:0.60,  fc:0.1500, rev:0, foodCost:0, gm:0, gmUnit:3.40,  gmPct:0.8500, eng:"star"      },
-  { cat:"Beverages",          name:"Almond Coffee",                     units:0, price:6,  cost:1.02,  fc:0.1700, rev:0, foodCost:0, gm:0, gmUnit:4.98,  gmPct:0.8300, eng:"star"      },
-  { cat:"Beverages",          name:"Iced Coffee",                       units:0, price:6,  cost:0.90,  fc:0.1500, rev:0, foodCost:0, gm:0, gmUnit:5.10,  gmPct:0.8500, eng:"star"      },
-  { cat:"Beverages",          name:"Fresh Orange Juice",                units:0, price:7,  cost:1.40,  fc:0.2000, rev:0, foodCost:0, gm:0, gmUnit:5.60,  gmPct:0.8000, eng:"star"      },
-  // --- Desserts ---
-  { cat:"Desserts",           name:"Babka & Ice Cream",                 units:0, price:12, cost:2.76,  fc:0.2300, rev:0, foodCost:0, gm:0, gmUnit:9.24,  gmPct:0.7700, eng:"puzzle"    },
-];
-
-// Estimated avg FC% across Arthur's menu (for dashboard display)
-const ARTHUR_AVG_FC_EST = (ARTHUR_MENU_ITEMS.reduce((s,i)=>s+i.fc,0)/ARTHUR_MENU_ITEMS.length*100).toFixed(1);
+// Arthur's menu — empty until POS (Cluster) is connected and real data flows in.
+// No estimated costs — all data comes from POS sync + invoice parsing.
+let ARTHUR_MENU_ITEMS = [];
+const ARTHUR_AVG_FC_EST = '—';
 
 const ARTHUR_ORDER_DATA = [
   { supplier:"GFS Canada", schedule:"Order Mon for Wed delivery", color:"#4F8EF7", items:[
