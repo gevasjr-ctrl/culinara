@@ -4289,8 +4289,8 @@ function initCharts() {
     options:{ cutout:'74%', plugins:{legend:{display:false}}, elements:{arc:{borderRadius:3}} }
   });
 
-  // Top 10 bar
-  const top10 = [...MENU_ITEMS].sort((a,b)=>b.rev-a.rev).slice(0,10);
+  // Top 10 bar (food only)
+  const top10 = [...MENU_ITEMS].filter(i=>i.cat!=='Beverages').sort((a,b)=>b.rev-a.rev).slice(0,10);
   new Chart(document.getElementById('chartTop').getContext('2d'), {
     type:'bar',
     data:{ labels:top10.map(i=>i.name), datasets:[
