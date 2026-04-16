@@ -5310,6 +5310,13 @@ function switchSocialTab(tab) {
 }
 
 function renderSocialMedia() {
+  if (ACTIVE_SLUG !== 'botte') {
+    const socialBotte = document.getElementById('social-botte-content');
+    const socialArthurs = document.getElementById('social-arthurs-placeholder');
+    if (socialBotte) socialBotte.style.display = 'none';
+    if (socialArthurs) socialArthurs.style.display = '';
+    return;
+  }
   // Push list
   const pushEl = document.getElementById('social-push-list');
   if (pushEl) {
@@ -5838,6 +5845,20 @@ function switchRecipeTab(tab) {
 }
 
 function renderRecipes() {
+  // Show empty state for restaurants without recipe data
+  if (ACTIVE_SLUG !== 'botte') {
+    const container = document.getElementById('section-recipes');
+    if (!container) return;
+    const panel = container.querySelector('[id^="rpanel-"]')?.parentElement;
+    if (panel) panel.innerHTML = `
+      <div style="text-align:center;padding:60px 20px;">
+        <div style="font-size:40px;margin-bottom:14px;">📋</div>
+        <div style="font-size:17px;font-weight:700;color:var(--text);margin-bottom:8px;">No recipes yet</div>
+        <div style="font-size:13px;color:var(--muted);max-width:380px;margin:0 auto;line-height:1.6;">Add your ingredients and build recipe cards to track portion costs. Start by importing your POS data, then add recipes for each menu item.</div>
+        <button class="btn-primary" style="margin-top:20px;" onclick="showCSVUploadModal()">Import POS Data →</button>
+      </div>`;
+    return;
+  }
   switchRecipeTab(activeRecipeTab);
 }
 
