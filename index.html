@@ -756,6 +756,17 @@ tr:last-child td { border-bottom: none; }
   </div>
   <div style="padding:24px 32px;">
 
+  <!-- Weekly CSV Upload Reminder Banner -->
+  <div id="csv-reminder-banner" style="display:none;background:linear-gradient(135deg,rgba(245,166,35,0.12),rgba(245,166,35,0.06));border:1px solid rgba(245,166,35,0.3);border-radius:12px;padding:14px 20px;margin-bottom:18px;align-items:center;gap:14px;">
+    <div style="font-size:22px;flex-shrink:0;">⚠️</div>
+    <div style="flex:1;">
+      <div style="font-size:13px;font-weight:700;color:#F5A623;margin-bottom:3px;">Your data is <span id="csv-reminder-days">—</span> days old</div>
+      <div style="font-size:12px;color:#8B92A5;line-height:1.5;">Upload this week's POS export to keep insights accurate. Fresh data = better decisions.</div>
+    </div>
+    <button onclick="showCSVUploadModal()" style="flex-shrink:0;background:#F5A623;color:#1a1d2a;border:none;border-radius:8px;padding:9px 16px;font-size:12.5px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:inherit;">Upload CSV →</button>
+    <button onclick="dismissCSVReminder()" style="flex-shrink:0;background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer;padding:0 4px;" title="Dismiss for 24 hours">×</button>
+  </div>
+
   <!-- Proforma Banner (Arthur's — hidden by default) -->
   <div id="proforma-banner" style="display:none;background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.2);border-radius:12px;padding:14px 20px;margin-bottom:18px;align-items:center;gap:14px;">
     <div style="font-size:22px;flex-shrink:0;">📊</div>
@@ -3565,6 +3576,46 @@ async function doLogin() {
   showScreen('restaurants');
 }
 
+// ==================== CSV UPLOAD REMINDER ====================
+async function checkCSVFreshness() {
+  const banner = document.getElementById('csv-reminder-banner');
+  if (!banner) return;
+
+  // Hide if dismissed in last 24 hours
+  const dismissedAt = localStorage.getItem('csv_reminder_dismissed_' + ACTIVE_SLUG);
+  if (dismissedAt && (Date.now() - parseInt(dismissedAt)) < 24 * 60 * 60 * 1000) {
+    banner.style.display = 'none';
+    return;
+  }
+
+  try {
+    const { data } = await sb.from('restaurants').select('last_csv_upload').eq('id', ACTIVE_SLUG).single();
+    if (!data || !data.last_csv_upload) {
+      // Never uploaded — show reminder
+      const daysEl = document.getElementById('csv-reminder-days');
+      if (daysEl) daysEl.textContent = 'never uploaded — no data';
+      banner.style.display = 'flex';
+      return;
+    }
+    const daysSince = Math.floor((Date.now() - new Date(data.last_csv_upload).getTime()) / (1000 * 60 * 60 * 24));
+    if (daysSince >= 7) {
+      const daysEl = document.getElementById('csv-reminder-days');
+      if (daysEl) daysEl.textContent = daysSince;
+      banner.style.display = 'flex';
+    } else {
+      banner.style.display = 'none';
+    }
+  } catch (e) {
+    console.warn('Could not check CSV freshness:', e);
+  }
+}
+
+function dismissCSVReminder() {
+  localStorage.setItem('csv_reminder_dismissed_' + ACTIVE_SLUG, Date.now().toString());
+  const banner = document.getElementById('csv-reminder-banner');
+  if (banner) banner.style.display = 'none';
+}
+
 async function doLogout() {
   await sb.auth.signOut();
   SB_USER = null; SB_PROFILE = null; SB_RESTAURANT = null; ACTIVE_SLUG = 'botte';
@@ -3947,6 +3998,9 @@ function navigate(id) {
   }
   // Global guard: apply restaurant-specific visibility before rendering
   applyRestaurantGuard();
+
+  // Check CSV upload freshness (shows reminder banner if >7 days old)
+  if (id === 'dashboard') checkCSVFreshness();
 
   const fns = { dashboard: initCharts, snapshot: renderSnapshot, profitability: () => renderTable('all'), engineering: renderEngineering, prep: renderPrep, yield: renderYield, recipes: renderRecipes, orders: renderOrders, invoices: () => { renderInvoices(); renderFRENTranslator(); }, social: renderSocialMedia, ask: renderAsk };
   if (fns[id]) fns[id]();
@@ -7595,7 +7649,7 @@ async function importCSVToSupabase() {
   statusEl.innerHTML = '<span style="color:#34C97A;font-weight:700;">' + items.length + ' items imported successfully!</span>';
 
   // Update onboarding progress
-  await sb.from('restaurants').update({ onboarding_pct: 40 }).eq('id', restId);
+  await sb.from('restaurants').update({ onboarding_pct: 40, last_csv_upload: new Date().toISOString() }).eq('id', restId);
 
   // Reload menu data
   const sbItems = await loadMenuFromSupabase(restId);
