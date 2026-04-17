@@ -27,3 +27,4 @@ memory/
 data/_debug_*
 agents/__pycache__/
 __pycache__/
+supabase/.temp/
