@@ -73,8 +73,7 @@ Key tables (public schema, Supabase):
   Commit immediately after adding.
 -->
 
-- **Login footer slogan (EN):** `Built by operators, for operators` — locked 2026-04-16
-- **Login footer slogan (FR):** `Par des restaurateurs, pour des restaurateurs` — locked 2026-04-16
+- **Login footer slogan:** BLANK — user is deciding the final wording. DO NOT put placeholder text in the footer. Leave empty until user gives exact words.
 
 ## Anti-patterns (seen in past sessions — avoid)
 
