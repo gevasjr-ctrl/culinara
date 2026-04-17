@@ -157,6 +157,32 @@ Deno.serve(async (req) => {
       .from('invoices')
       .update({ attachments: attachmentRefs, status: 'pending_extraction' })
       .eq('id', invoice.id)
+
+    // Fire-and-forget: trigger extraction worker. We don't await the extraction
+    // itself (Claude call can take 10-30s) — just fire the request so the worker
+    // runs asynchronously and this webhook responds fast to Postmark.
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!
+    const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+    try {
+      // We intentionally don't await. Use EdgeRuntime.waitUntil if available
+      // so the runtime keeps the worker alive until it resolves.
+      const extractionPromise = fetch(`${supabaseUrl}/functions/v1/extract-invoice`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${serviceKey}`,
+        },
+        body: JSON.stringify({ invoice_id: invoice.id }),
+      }).catch((e) => console.error('extract-invoice trigger failed', e))
+
+      // @ts-ignore — EdgeRuntime is available in Supabase edge functions
+      if (typeof EdgeRuntime !== 'undefined' && EdgeRuntime.waitUntil) {
+        // @ts-ignore
+        EdgeRuntime.waitUntil(extractionPromise)
+      }
+    } catch (e) {
+      console.error('failed to schedule extraction', e)
+    }
   }
 
   return new Response(
