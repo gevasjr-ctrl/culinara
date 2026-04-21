@@ -74,6 +74,13 @@ Key tables (public schema, Supabase):
 -->
 
 - **Login footer slogan:** BLANK — user is deciding the final wording. DO NOT put placeholder text in the footer. Leave empty until user gives exact words.
+- **Naming (locked 2026-04-20):**
+  - **Legal entity (planned):** `Culinara Inc.` (Quebec: `Culinara inc.`) — NOT YET INCORPORATED
+  - **Brand / product name (customer-facing):** `CulinaraOS` (capital O, capital S)
+  - **Domain:** `culinaraos.com`
+  - **Email address style:** `<restaurant-slug>@invoices.culinaraos.com`
+  - Rationale: Legal entity is short and flexible (like "Stripe Inc." operating as "Stripe"). Brand can evolve; entity stays stable.
+  - In UI / marketing: always write `CulinaraOS`. Never write "Culinara OS" (with a space) or "Culinaraos" (lowercase os).
 
 ## Anti-patterns (seen in past sessions — avoid)
 

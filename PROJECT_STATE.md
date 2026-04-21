@@ -13,8 +13,10 @@ Personal session memory lives in `~/.claude/projects/.../memory/MEMORY.md` (loca
 
 ## Product
 
-**Culinara / CulinaraOS** — Restaurant operations intelligence platform.
+**CulinaraOS** (brand) — Restaurant operations intelligence platform.
 
+- **Legal entity (planned, not yet incorporated):** `Culinara Inc.` (Quebec: `Culinara inc.`)
+- **Brand / product:** `CulinaraOS` — always write with capital O + capital S. Never "Culinara OS" or "Culinaraos".
 - **Live:** `www.culinaraos.com`
 - **Repo:** github.com/gevasjr-ctrl/culinara (branch `main`)
 - **Hosting:** Vercel (`culinara-app`) auto-deploys on push to `main`
@@ -95,6 +97,8 @@ Ordered by priority:
 5. **Lightspeed POS OAuth** (~1 day) — auto-sync sales data
 6. **QuickBooks Online OAuth** (~1 day) — auto-sync accounting
 7. **Login footer slogan** — user decides the final wording (currently blank, see `CLAUDE.md` decisions section)
+8. **Incorporate `Culinara Inc.` legally** — REQ (Quebec) or federal CBCA. Also: open business bank account, set up accounting, register for GST/QST if applicable. Consult a Quebec small-business lawyer (or use Ownr / LegalZoom Canada).
+9. **Register trademark** for `CulinaraOS` with CIPO (Canadian Intellectual Property Office) — protects the brand from competitors using the same name.
 
 ## Design system
 
