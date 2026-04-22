@@ -7713,16 +7713,47 @@ function handleCSVFile(file) {
   const reader = new FileReader();
   reader.onload = function(e) {
     const text = e.target.result;
-    const lines = text.split('\n').filter(l => l.trim());
+    const lines = text.split(/\r?\n/).filter(l => l.trim());
     if (lines.length < 2) {
       document.getElementById('csv-status').textContent = 'File appears empty.';
       return;
     }
 
-    const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
+    // Auto-detect delimiter: tab > semicolon > comma, based on first row counts.
+    // Quebec/French POS exports (Cluster, Lightspeed FR) use ';' because ',' is the decimal separator.
+    const firstLine = lines[0];
+    const tabCount = (firstLine.match(/\t/g) || []).length;
+    const semiCount = (firstLine.match(/;/g) || []).length;
+    const commaCount = (firstLine.match(/,/g) || []).length;
+    let delim = ',';
+    if (tabCount > semiCount && tabCount > commaCount) delim = '\t';
+    else if (semiCount > commaCount) delim = ';';
+    window._lastDetectedDelim = delim;
+
+    const splitCSV = (line) => {
+      // Handles quoted fields containing the delimiter.
+      const out = [];
+      let cur = '';
+      let inQuote = false;
+      for (let i = 0; i < line.length; i++) {
+        const c = line[i];
+        if (c === '"') {
+          if (inQuote && line[i+1] === '"') { cur += '"'; i++; }
+          else inQuote = !inQuote;
+        } else if (c === delim && !inQuote) {
+          out.push(cur); cur = '';
+        } else {
+          cur += c;
+        }
+      }
+      out.push(cur);
+      return out.map(v => v.trim().replace(/^"|"$/g, ''));
+    };
+
+    const headers = splitCSV(lines[0]);
     const rows = [];
     for (let i = 1; i < lines.length; i++) {
-      const vals = lines[i].split(',').map(v => v.trim().replace(/"/g, ''));
+      const vals = splitCSV(lines[i]);
       if (vals.length >= 2) {
         const obj = {};
         headers.forEach((h, idx) => { obj[h] = vals[idx] || ''; });
@@ -7781,10 +7812,10 @@ async function importCSVToSupabase() {
     amtCol = headers.find(h => h.toLowerCase().includes('transaction amount'));
     priceCol = null; // compute from amount/qty
   } else {
-    nameCol = headers.find(h => /item|name|product/i.test(h)) || headers[0];
-    qtyCol = headers.find(h => /qty|quantity|units|sold/i.test(h));
-    amtCol = headers.find(h => /amount|revenue|sales|total/i.test(h));
-    priceCol = headers.find(h => /price/i.test(h));
+    nameCol  = headers.find(h => /item|name|product|nom|produit|article|description/i.test(h)) || headers[0];
+    qtyCol   = headers.find(h => /qty|quantity|units|sold|quantit|vendu|nombre/i.test(h));
+    amtCol   = headers.find(h => /amount|revenue|sales|total|montant|ventes|chiffre|ca\b/i.test(h));
+    priceCol = headers.find(h => /price|prix|tarif/i.test(h));
   }
 
   const items = csvParsedRows.map(row => {
