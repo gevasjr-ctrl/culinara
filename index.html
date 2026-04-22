@@ -3200,7 +3200,7 @@ const ORDER_DATA = [
   ]},
 ];
 
-const INVOICES = [
+let INVOICES = [
   // Real invoices — Jan 1 – Apr 13, 2026
   { id:"9033232423", supplier:"Gordon Food Service", date:"Mar 12", amount:1091.57, status:"review",  note:"Fior di latte ×2 $124.86, Gorgonzola $140.54, Mozz shred ×2 $303.50, Pepperoni $105.12, GF crust $64.02" },
   { id:"F577879",    supplier:"Les Jardins QS",       date:"Mar 12", amount:121.00,  status:"review",  note:"Basilic $24.50, Kale $42.00, Citron case $49.00, Concombre ×2 $5.50" },
@@ -4563,6 +4563,79 @@ function renderInvoices() {
       <div style="font-weight:800;font-size:14px;letter-spacing:-0.01em;">$${inv.amount.toFixed(2)}</div>
       <span class="inv-status ${s[inv.status]}">${l[inv.status]}</span>
     </div>`).join('');
+
+  // Async: fetch real email-parsed invoices from Supabase and prepend them
+  fetchRealInvoices(ACTIVE_SLUG).catch(e => console.warn('fetchRealInvoices failed', e));
+}
+
+// ===== Real invoice loader (from Supabase) =====
+// Pulls rows from public.invoices where source='email' and prepends them to the
+// list. Safe to call on any restaurant — filters by slug. Non-blocking.
+async function fetchRealInvoices(slug) {
+  if (!slug || !sb) return;
+  const { data, error } = await sb
+    .from('invoices')
+    .select('id, restaurant_id, source, status, from_email, from_name, subject, supplier_name, invoice_number, invoice_date, total_amount, currency, line_items, received_at')
+    .eq('restaurant_id', slug)
+    .eq('source', 'email')
+    .order('received_at', { ascending: false })
+    .limit(100);
+  if (error) { console.warn('invoice fetch error', error); return; }
+  if (!data || data.length === 0) return;
+
+  const el = document.getElementById('invoice-list');
+  if (!el) return;
+
+  const statusMap = {
+    received: 'pending', pending_extraction: 'pending', extracting: 'pending',
+    extracted: 'review', approved: 'matched', error: 'review',
+  };
+  const sClass = { review:'s-review', pending:'s-pending', matched:'s-matched' };
+  const sLabel = { review: t('inv_status_review'), pending: t('inv_status_pending'), matched: t('inv_status_matched') };
+
+  const formatDate = (iso) => {
+    if (!iso) return '—';
+    try {
+      const d = new Date(iso);
+      return d.toLocaleString('en-US', { month:'short', day:'numeric' });
+    } catch { return iso; }
+  };
+
+  const buildNote = (inv) => {
+    const items = Array.isArray(inv.line_items) ? inv.line_items : [];
+    if (items.length === 0) {
+      if (inv.status === 'extracting' || inv.status === 'pending_extraction') return 'Extracting line items…';
+      if (inv.status === 'error') return 'Extraction error';
+      return inv.subject || 'Email received';
+    }
+    return items.slice(0, 3).map(li => {
+      const desc = li.description || '';
+      const total = (li.total != null) ? ` $${Number(li.total).toFixed(2)}` : '';
+      return `${desc}${total}`;
+    }).join(', ') + (items.length > 3 ? `, +${items.length-3} more` : '');
+  };
+
+  const realRowsHtml = data.map(inv => {
+    const status = statusMap[inv.status] || 'pending';
+    const displayId = inv.invoice_number || ('📧 ' + (inv.id || '').slice(0, 8));
+    const supplier = inv.supplier_name || inv.from_name || inv.from_email || 'Email invoice';
+    const date = formatDate(inv.invoice_date || inv.received_at);
+    const amt = (inv.total_amount != null) ? Number(inv.total_amount) : null;
+    const note = buildNote(inv);
+    return `
+      <div class="inv-row" style="border-left:3px solid #4F8EF7;padding-left:11px;" onclick="alert('${(inv.subject||'').replace(/'/g, "\\'")}\\n\\n${note.replace(/'/g, "\\'")}')">
+        <div style="font-family:monospace;font-size:12px;font-weight:700;color:#4F8EF7;min-width:72px;">${displayId}</div>
+        <div style="flex:1;">
+          <div style="font-weight:600;font-size:13px;">${supplier}</div>
+          <div style="font-size:11.5px;color:var(--muted);margin-top:1px;">${date} · ${note}</div>
+        </div>
+        <div style="font-weight:800;font-size:14px;letter-spacing:-0.01em;">${amt != null ? '$' + amt.toFixed(2) : '—'}</div>
+        <span class="inv-status ${sClass[status]}">${sLabel[status]}</span>
+      </div>`;
+  }).join('');
+
+  // Prepend live invoices above hardcoded historical list
+  el.innerHTML = realRowsHtml + el.innerHTML;
 }
 
 // ==================== CHARTS ====================
