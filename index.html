@@ -7712,11 +7712,21 @@ let csvParsedRows = [];
 function handleCSVFile(file) {
   const reader = new FileReader();
   reader.onload = function(e) {
-    const text = e.target.result;
-    const lines = text.split(/\r?\n/).filter(l => l.trim());
+    let text = e.target.result;
+    // Strip BOM
+    if (text.charCodeAt(0) === 0xFEFF) text = text.slice(1);
+    let lines = text.split(/\r?\n/).filter(l => l.trim());
     if (lines.length < 2) {
       document.getElementById('csv-status').textContent = 'File appears empty.';
       return;
+    }
+
+    // Handle Excel sep= directive (e.g. "sep=\t" or "sep=;") — skip that line and force delimiter
+    let forcedDelim = null;
+    const sepMatch = lines[0].match(/^sep=(.)/i);
+    if (sepMatch) {
+      forcedDelim = sepMatch[1];
+      lines = lines.slice(1);
     }
 
     // Auto-detect delimiter: tab > semicolon > comma, based on first row counts.
@@ -7725,9 +7735,11 @@ function handleCSVFile(file) {
     const tabCount = (firstLine.match(/\t/g) || []).length;
     const semiCount = (firstLine.match(/;/g) || []).length;
     const commaCount = (firstLine.match(/,/g) || []).length;
-    let delim = ',';
-    if (tabCount > semiCount && tabCount > commaCount) delim = '\t';
-    else if (semiCount > commaCount) delim = ';';
+    let delim = forcedDelim || ',';
+    if (!forcedDelim) {
+      if (tabCount > semiCount && tabCount > commaCount) delim = '\t';
+      else if (semiCount > commaCount) delim = ';';
+    }
     window._lastDetectedDelim = delim;
 
     const splitCSV = (line) => {
@@ -7813,16 +7825,19 @@ async function importCSVToSupabase() {
     priceCol = null; // compute from amount/qty
   } else {
     nameCol  = headers.find(h => /item|name|product|nom|produit|article|description/i.test(h)) || headers[0];
-    qtyCol   = headers.find(h => /qty|quantity|units|sold|quantit|vendu|nombre/i.test(h));
+    // Prefer exact "Quantity" match first to avoid "Unit Type" being caught by /units/
+    qtyCol   = headers.find(h => /^quantity$/i.test(h.trim()))
+            || headers.find(h => /qty|units sold|quantit|vendu|nombre/i.test(h));
     amtCol   = headers.find(h => /amount|revenue|sales|total|montant|ventes|chiffre|ca\b/i.test(h));
     priceCol = headers.find(h => /price|prix|tarif/i.test(h));
   }
 
+  const parseNum = (v) => parseFloat((v || '').toString().replace(/,/g, '')) || 0;
   const items = csvParsedRows.map(row => {
     const name = row[nameCol] || 'Unknown';
-    const qty = parseInt(row[qtyCol]) || 0;
-    const amt = parseFloat(row[amtCol]) || 0;
-    const price = priceCol ? parseFloat(row[priceCol]) : (qty > 0 ? Math.round(amt / qty * 100) / 100 : 0);
+    const qty = parseInt((row[qtyCol] || '').replace(/,/g, '')) || 0;
+    const amt = parseNum(row[amtCol]);
+    const price = priceCol ? parseNum(row[priceCol]) : (qty > 0 ? Math.round(amt / qty * 100) / 100 : 0);
     return {
       restaurant_id: restId,
       name: name,
