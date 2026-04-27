@@ -15,6 +15,7 @@ serve.py
 
 # Claude internal
 .claude/
+.superpowers/
 
 # Node (for future)
 node_modules/
