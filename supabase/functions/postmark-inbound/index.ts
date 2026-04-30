@@ -39,6 +39,35 @@ function normalizeEmail(e: string): string {
   return (e ?? '').trim().toLowerCase()
 }
 
+function looksLikeSalesCsv(att: PostmarkAttachment): boolean {
+  const name = (att.Name ?? '').toLowerCase()
+  const type = (att.ContentType ?? '').toLowerCase()
+  if (!name.endsWith('.csv') && !type.includes('csv') && !type.includes('text/plain')) {
+    return false
+  }
+  // Sample headers: strip base64 whitespace, take a chunk that decodes cleanly,
+  // then scan only the first few lines (where headers live).
+  let headerLine = ''
+  try {
+    const clean = (att.Content ?? '').replace(/\s+/g, '')
+    const chunkLen = Math.min(clean.length, 4000) - (Math.min(clean.length, 4000) % 4)
+    const sample = atob(clean.slice(0, chunkLen)).toLowerCase()
+    headerLine = sample.split('\n').slice(0, 3).join(' ')
+  } catch {
+    return false
+  }
+  // Strong sales-only signals: phrases that appear in POS exports but NOT on
+  // typical vendor invoice CSVs. Avoid bare "item"/"product"/"sales" — those
+  // collide with invoice line-item headers ("sales tax", "item code", etc.).
+  const salesHints = [
+    'revenue', 'gross sales', 'net sales',
+    'menu item', 'plu', 'modifier',
+    'qty sold', 'quantity sold', 'units sold', 'tickets sold',
+    'ventes nettes', 'ventes brutes', 'chiffre d',  // "chiffre d'affaires"
+  ]
+  return salesHints.some((h) => headerLine.includes(h))
+}
+
 Deno.serve(async (req) => {
   const url = new URL(req.url)
   const token = url.searchParams.get('token') ?? ''
@@ -152,36 +181,63 @@ Deno.serve(async (req) => {
     }
   }
 
+  // Detect if any attachment looks like a sales CSV.
+  const salesAtts = (payload.Attachments ?? []).filter(looksLikeSalesCsv)
+  const hasSalesCsv = salesAtts.length > 0
+
   if (attachmentRefs.length) {
     await supabase
       .from('invoices')
-      .update({ attachments: attachmentRefs, status: 'pending_extraction' })
+      .update({
+        attachments: attachmentRefs,
+        status: hasSalesCsv ? 'sales_csv_received' : 'pending_extraction',
+      })
       .eq('id', invoice.id)
 
-    // Fire-and-forget: trigger extraction worker. We don't await the extraction
-    // itself (Claude call can take 10-30s) — just fire the request so the worker
-    // runs asynchronously and this webhook responds fast to Postmark.
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!
     const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
-    try {
-      // We intentionally don't await. Use EdgeRuntime.waitUntil if available
-      // so the runtime keeps the worker alive until it resolves.
-      const extractionPromise = fetch(`${supabaseUrl}/functions/v1/extract-invoice`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${serviceKey}`,
-        },
-        body: JSON.stringify({ invoice_id: invoice.id }),
-      }).catch((e) => console.error('extract-invoice trigger failed', e))
 
+    // Branch: route to sales processor OR invoice extractor (or both if mixed)
+    const triggers: Promise<unknown>[] = []
+
+    if (hasSalesCsv) {
+      triggers.push(
+        fetch(`${supabaseUrl}/functions/v1/process-sales-csv`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${serviceKey}`,
+          },
+          body: JSON.stringify({ invoice_id: invoice.id }),
+        }).catch((e) => console.error('process-sales-csv trigger failed', e))
+      )
+    }
+
+    // If there are non-CSV attachments OR no CSV at all, also run invoice extraction
+    const hasNonCsv = attachmentRefs.some(
+      (a) => !a.name.toLowerCase().endsWith('.csv')
+    )
+    if (!hasSalesCsv || hasNonCsv) {
+      triggers.push(
+        fetch(`${supabaseUrl}/functions/v1/extract-invoice`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${serviceKey}`,
+          },
+          body: JSON.stringify({ invoice_id: invoice.id }),
+        }).catch((e) => console.error('extract-invoice trigger failed', e))
+      )
+    }
+
+    try {
       // @ts-ignore — EdgeRuntime is available in Supabase edge functions
       if (typeof EdgeRuntime !== 'undefined' && EdgeRuntime.waitUntil) {
         // @ts-ignore
-        EdgeRuntime.waitUntil(extractionPromise)
+        for (const t of triggers) EdgeRuntime.waitUntil(t)
       }
     } catch (e) {
-      console.error('failed to schedule extraction', e)
+      console.error('failed to schedule downstream', e)
     }
   }
 
