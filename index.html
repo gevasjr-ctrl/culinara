@@ -7569,41 +7569,57 @@ function filterFREN(val) {
   </div>`).join('')}</div>`;
 }
 
-// Restore session on page reload
+// Restore session on page reload.
+// Profile fetch is best-effort: profiles.restaurant_id is UUID but restaurants.id
+// is TEXT (slug), so the embed `restaurants(*)` doesn't resolve, and most users
+// don't have a profiles row at all. Session must still restore without it.
 (async function restoreSession() {
   const { data: { session } } = await sb.auth.getSession();
-  if (session) {
-    SB_USER = session.user;
-    const { data: profile } = await sb
+  if (!session) return;
+
+  SB_USER = session.user;
+
+  let profile = null;
+  try {
+    const { data } = await sb
       .from('profiles')
-      .select('*, restaurants(*)')
+      .select('*')
       .eq('id', session.user.id)
-      .single();
-    if (profile) {
-      SB_PROFILE = profile;
-      SB_RESTAURANT = profile.restaurants;
-      ACTIVE_SLUG = profile.restaurants?.slug || 'botte';
-      const displayName = profile.full_name || session.user.email.split('@')[0];
-      const greetEl = document.getElementById('rest-greeting');
-      if (greetEl) greetEl.textContent = 'Good morning, ' + displayName + ' 👋';
-      // Restore currentUser for selector compatibility
-      currentUser = {
-        name: profile.full_name || displayName,
-        firstName: (profile.full_name || displayName).split(' ')[0],
-        initials: (profile.full_name || displayName).split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2),
-        email: session.user.email,
-        role: profile.role || 'admin',
-        restaurants: ['botte'] // default, updated below
-      };
-      // Fetch user's linked restaurants
-      try {
-        const { data: urData } = await sb.from('user_restaurants').select('restaurant_id').eq('user_id', session.user.id);
-        if (urData && urData.length > 0) currentUser.restaurants = urData.map(r => r.restaurant_id);
-      } catch (e) { console.warn('Failed to load user restaurants:', e); }
-      renderRestaurantSelector();
-      showScreen('restaurants');
+      .maybeSingle();
+    profile = data;
+  } catch (e) { console.warn('profile fetch failed:', e); }
+  SB_PROFILE = profile;
+
+  const displayName = profile?.full_name || session.user.email.split('@')[0];
+  const greetEl = document.getElementById('rest-greeting');
+  if (greetEl) greetEl.textContent = 'Good morning, ' + displayName + ' 👋';
+
+  currentUser = {
+    name: profile?.full_name || displayName,
+    firstName: (profile?.full_name || displayName).split(' ')[0],
+    initials: (profile?.full_name || displayName).split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2),
+    email: session.user.email,
+    role: profile?.role || 'admin',
+    restaurants: []
+  };
+
+  try {
+    const { data: urData } = await sb
+      .from('user_restaurants')
+      .select('restaurant_id')
+      .eq('user_id', session.user.id);
+    if (urData && urData.length > 0) {
+      currentUser.restaurants = urData.map(r => r.restaurant_id);
+      ACTIVE_SLUG = urData[0].restaurant_id;
     }
+  } catch (e) { console.warn('Failed to load user restaurants:', e); }
+
+  if (currentUser.restaurants.length > 0) {
+    SB_RESTAURANT = { id: ACTIVE_SLUG };
   }
+
+  renderRestaurantSelector();
+  showScreen('restaurants');
 })();
 
 // ── Mobile Menu Toggle ───────────────────────────────────
