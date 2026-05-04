@@ -355,7 +355,19 @@ tr:last-child td { border-bottom: none; }
 .pre-eng-output { background:rgba(52,201,122,0.07);border:1px solid rgba(52,201,122,0.2);border-radius:12px;padding:20px 24px;margin-top:16px; }
 .builder-row { display:grid;grid-template-columns:1fr 80px 70px 70px 28px;gap:8px;align-items:center;margin-bottom:8px; }
 .builder-summary { position:sticky;bottom:0;background:var(--bg-card);border-top:1px solid var(--border);padding:14px 24px;display:flex;gap:24px;align-items:center; }
+/* Hide login screen on reload if a Supabase session is in localStorage —
+   prevents the login flash before async restoreSession() flips screens. */
+html.has-session #screen-login { display: none !important; }
 </style>
+<script>
+  // Synchronous pre-render check: tag <html> if a session token exists so the
+  // login screen stays hidden during the restoreSession() roundtrip.
+  try {
+    if (localStorage.getItem('sb-qexjxndommlfqzngxqym-auth-token')) {
+      document.documentElement.classList.add('has-session');
+    }
+  } catch (e) { /* localStorage blocked — fall through, login renders */ }
+</script>
 </head>
 <body>
 
@@ -7575,7 +7587,12 @@ function filterFREN(val) {
 // don't have a profiles row at all. Session must still restore without it.
 (async function restoreSession() {
   const { data: { session } } = await sb.auth.getSession();
-  if (!session) return;
+  if (!session) {
+    // Stored token was invalid/expired. Drop the pre-render hint and show login.
+    document.documentElement.classList.remove('has-session');
+    showScreen('login');
+    return;
+  }
 
   SB_USER = session.user;
 
